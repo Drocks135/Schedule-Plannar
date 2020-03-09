@@ -8,23 +8,23 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 
 /**
- * The View which displays all of the months for the user to select from. Will also be
- * able to display an expanded view which will display a selection of past and future
- * years.
+ *The View which displays all of the months for the user to select from. Will
+ *also be able to display an expanded view which will display a selection of
+ *past and future years.
  */
-public class YearView{
+public class YearView {
     /**
-     * Holds the string for each month
+     * Holds the string for each month.
      */
-    private final String[] MONTHS = {"January", "February",
+    private final String[] months = {"January", "February",
             "March", "April", "May", "June", "July",
             "August", "September", "October", "November",
             "December"};
 
     /**
-     * Default constructor is empty
+     * Default constructor is empty.
      */
-    public YearView(){ }
+    public YearView() { }
 
     /**
      * Display will handle the window that displays the months of the year.
@@ -37,15 +37,15 @@ public class YearView{
         MonthView monthView = new MonthView();
         GridPane layout = new GridPane();
         Stage yearView = new Stage();
-        for(int i = 0; i < 12; i++){
+        for (int i = 0; i < 12; i++) {
             int month = i;
-            Button monthBtn = new Button(MONTHS[i]);
+            Button monthBtn = new Button(months[i]);
             monthBtn.setPrefSize(150, 50);
             monthBtn.setOnAction(e -> {
                 monthView.display(date.withMonth(month + 1));
                 yearView.close();
             });
-            GridPane.setConstraints(monthBtn,(i % 3), (i / 3));
+            GridPane.setConstraints(monthBtn, (i % 3), (i / 3));
             layout.getChildren().add(monthBtn);
         }
 
