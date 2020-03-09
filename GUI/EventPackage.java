@@ -7,7 +7,7 @@ public class EventPackage {
     private String eventContactName;
 
 
-    public  EventPackage(){
+    public  EventPackage() {
         eventName = null;
     }
 
@@ -15,23 +15,23 @@ public class EventPackage {
         return eventName;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setEventName(String name) {
+        this.eventName = name;
     }
 
     public String getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(String eventDate) {
-        this.eventDate = eventDate;
+    public void setEventDate(String date) {
+        this.eventDate = date;
     }
 
     public String getEventContactName() {
         return eventContactName;
     }
 
-    public void setEventContactName(String eventContactName) {
-        this.eventContactName = eventContactName;
+    public void setEventContactName(String contactName) {
+        this.eventContactName = contactName;
     }
 }
