@@ -1,4 +1,3 @@
-
 package GUI;
 
 import javafx.scene.Scene;
@@ -13,7 +12,7 @@ import java.time.LocalDate;
  * Will also give the user the option of creating a new event or edit saved
  * events.
  */
-public class DayView{
+public class DayView {
 
     /**
      * Display will show the current events and allow for user to edit them.
