@@ -1,4 +1,3 @@
-
 package GUI;
 
 import javafx.scene.Scene;
@@ -13,8 +12,9 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 
 /**
- * MonthView is a display which will act as the home screen for the user. It displays the individual
- * days of the month and will have an indicator for each event on any given day.
+ * MonthView is a display which will act as the home screen for the user.
+ * It displays the individual days of the month and will have an indicator
+ * for each event on any given day.
  */
 public class MonthView {
 
@@ -24,15 +24,16 @@ public class MonthView {
     private Button nextMonthBtn;
     private Button prevMonthBtn;
     private Button addEventBtn;
-    private final int[] DAYS_IN_MONTH = {29, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    private final String [] DAYS_OF_THE_WEEK = {"Sunday", "Monday", "Tuesday", "Wednesday",
-            "Thursday", "Friday", "Saturday"};
+    private final int[] DAYS_IN_MONTH = {29, 31, 28, 31, 30, 31, 30, 31, 31,
+            30, 31, 30, 31};
+    private final String[] DAYS_OF_THE_WEEK = {"Sunday", "Monday", "Tuesday",
+            "Wednesday", "Thursday", "Friday", "Saturday"};
 
 
     /**
      * MonthView will default to the current month.
      */
-    public MonthView(){
+    public MonthView() {
         date = LocalDate.now();
     }
 
@@ -40,7 +41,7 @@ public class MonthView {
      * Created an overload of display to allow for the month to be changed.
      * @param date A LocalDate object representation of the desired month.
      */
-    public void display(LocalDate date){
+    public void display(LocalDate date) {
         this.date = date;
         display();
     }
@@ -54,7 +55,7 @@ public class MonthView {
      *      "<" --> MonthView--
      *      Button for each day --> DayView
      */
-    public void display(){
+    public void display() {
         YearView yearView = new YearView();
         EventCreatorView eventCreatorView = new EventCreatorView();
 
@@ -65,7 +66,7 @@ public class MonthView {
         HBox daysOfWeek = new HBox();
 
         //Creating the labels for the days of the week
-        for(int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             Label day = new Label();
             day.setText(DAYS_OF_THE_WEEK[i]);
             day.setTextAlignment(TextAlignment.CENTER);
@@ -88,7 +89,7 @@ public class MonthView {
         nextMonthBtn = new Button(" > ");
         nextMonthBtn.setOnAction(e -> {
             monthView.close();
-            if(date.getMonthValue() == 12){
+            if (date.getMonthValue() == 12) {
                 this.display(date.withYear(date.getYear() + 1).withMonth(1));
             } else {
                 this.display(date.withMonth(date.getMonthValue() + 1));
@@ -99,14 +100,15 @@ public class MonthView {
         prevMonthBtn = new Button(" < ");
         prevMonthBtn.setOnAction(e -> {
             monthView.close();
-            if(date.getMonthValue() == 1){
+            if (date.getMonthValue() == 1) {
                 this.display(date.withYear(date.getYear() - 1).withMonth(12));
             } else {
                 this.display(date.withMonth(date.getMonthValue() - 1));
             }
         });
 
-        topBtns.getChildren().addAll(monthBtn, prevMonthBtn, nextMonthBtn, addEventBtn);
+        topBtns.getChildren().addAll(monthBtn, prevMonthBtn, nextMonthBtn,
+                addEventBtn);
 
         VBox top = new VBox();
         top.getChildren().addAll(topBtns, daysOfWeek);
@@ -121,10 +123,10 @@ public class MonthView {
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                if(dayCnt > DAYS_IN_MONTH[date.getMonthValue()]){
+                if (dayCnt > DAYS_IN_MONTH[date.getMonthValue()]) {
                     break;
                 }
-                if(i == 0 && j < day){
+                if (i == 0 && j < day) {
                     dayButtons[i][j] = new Button("");
                     dayButtons[i][j].setVisible(false);
                     GridPane.setConstraints(dayButtons[i][j], j, i);
@@ -153,6 +155,6 @@ public class MonthView {
         int y = year - (14 - month) / 12;
         int x = y + y / 4 - y / 100 + y / 400;
         int m = month + 12 * ((14 - month) / 12) - 2;
-        return (1 + x + (31*m) / 12) % 7;
+        return (1 + x + (31 * m) / m) % 7;
     }
 }
