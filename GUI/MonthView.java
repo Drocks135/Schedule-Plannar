@@ -64,6 +64,7 @@ public class MonthView {
         HBox topBtns = new HBox();
         HBox daysOfWeek = new HBox();
 
+        //Creating the labels for the days of the week
         for(int i = 0; i < 7; i++){
             Label day = new Label();
             day.setText(DAYS_OF_THE_WEEK[i]);
@@ -72,25 +73,37 @@ public class MonthView {
             daysOfWeek.getChildren().add(day);
         }
 
+        //Month button  will display current month and year view when clicked
         monthBtn = new Button(date.getMonth().toString());
         monthBtn.setOnAction(e -> {
-            yearView.display();
+            yearView.display(date);
             monthView.close();
         });
 
+        //Add button will take user to event creator view
         addEventBtn = new Button(" + ");
         addEventBtn.setOnAction(e -> eventCreatorView.display());
 
+        //Next button will take user to the next month
         nextMonthBtn = new Button(" > ");
         nextMonthBtn.setOnAction(e -> {
             monthView.close();
-            this.display(date.withMonth(date.getMonthValue() + 1));
+            if(date.getMonthValue() == 12){
+                this.display(date.withYear(date.getYear() + 1).withMonth(1));
+            } else {
+                this.display(date.withMonth(date.getMonthValue() + 1));
+            }
         });
 
+        //Previous button will take user to the previous month
         prevMonthBtn = new Button(" < ");
         prevMonthBtn.setOnAction(e -> {
             monthView.close();
-            this.display(date.withMonth(date.getMonthValue() - 1));
+            if(date.getMonthValue() == 1){
+                this.display(date.withYear(date.getYear() - 1).withMonth(12));
+            } else {
+                this.display(date.withMonth(date.getMonthValue() - 1));
+            }
         });
 
         topBtns.getChildren().addAll(monthBtn, prevMonthBtn, nextMonthBtn, addEventBtn);
@@ -99,13 +112,16 @@ public class MonthView {
         top.getChildren().addAll(topBtns, daysOfWeek);
         layout.setTop(top);
 
+        //An array to hold the buttons for each day in the month
         dayButtons = new Button[6][7];
 
+        //Day will represent the day of the week the month starts on
         int day = dayMonthBegins(date.getMonthValue(), date.getYear());
-        int count = 1;
+        int dayCnt = 1;
+
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                if(count > DAYS_IN_MONTH[date.getMonthValue()]){
+                if(dayCnt > DAYS_IN_MONTH[date.getMonthValue()]){
                     break;
                 }
                 if(i == 0 && j < day){
@@ -113,15 +129,14 @@ public class MonthView {
                     dayButtons[i][j].setVisible(false);
                     GridPane.setConstraints(dayButtons[i][j], j, i);
                     dayBtns.getChildren().add(dayButtons[i][j]);
-
                 } else {
-                    dayButtons[i][j] = new Button("" + count);
+                    dayButtons[i][j] = new Button("" + dayCnt);
                     Button days = dayButtons[i][j];
                     days.setOnAction(e -> DayView.display());
                     days.setPrefSize(65, 60);
                     GridPane.setConstraints(days, j, i);
                     dayBtns.getChildren().add(days);
-                    count++;
+                    dayCnt++;
                 }
             }
         }
@@ -136,8 +151,8 @@ public class MonthView {
 
     private int dayMonthBegins(int month, int year) {
         int y = year - (14 - month) / 12;
-        int x = y + y/4 - y/100 + y/400;
+        int x = y + y / 4 - y / 100 + y / 400;
         int m = month + 12 * ((14 - month) / 12) - 2;
-        return (1 + x + (31*m)/12) % 7;
+        return (1 + x + (31*m) / 12) % 7;
     }
 }

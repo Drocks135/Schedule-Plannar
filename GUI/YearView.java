@@ -9,14 +9,12 @@ import java.time.LocalDate;
 
 /**
  * The View which displays all of the months for the user to select from. Will also be
- * able to diplay an expanded view which will display a selection of past and furure
+ * able to display an expanded view which will display a selection of past and future
  * years.
  */
 public class YearView{
-    private LocalDate date = LocalDate.now();
-    private int year;
     /**
-     * A
+     * Holds the string for each month
      */
     private final String[] MONTHS = {"January", "February",
             "March", "April", "May", "June", "July",
@@ -24,18 +22,17 @@ public class YearView{
             "December"};
 
     /**
-     *
+     * Default constructor is empty
      */
+    public YearView(){ }
 
-    public YearView(){
-        this.year = date.getYear();
-    }
-
+    /**
+     * Display will handle the window that displays the months of the year.
+     *      Buttons include:
+     *          One for each button -> month view of that month
+     * @param date Holds the current year of the Scheduler.
+     */
     public void display(LocalDate date) {
-        this.date = date;
-        display();
-    }
-        public void display() {
 
         MonthView monthView = new MonthView();
         GridPane layout = new GridPane();
@@ -52,7 +49,7 @@ public class YearView{
             layout.getChildren().add(monthBtn);
         }
 
-        yearView.setTitle("" + year);
+        yearView.setTitle("" + date.getYear());
         yearView.setScene(new Scene(layout));
         yearView.show();
 
