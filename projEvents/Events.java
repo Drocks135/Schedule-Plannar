@@ -4,20 +4,20 @@ import java.util.Date;
 /**
  @author: Ayden Martin
  @Version: 1.0
- * Events is a class that will be the default object that is created for the schedule planner, 
- * All other objects that are created for the calander will be an implementation of Events
- * Thus all calander objects will have a 
- * Name, Details, and Date attached to them
+  * Events is a class that will be the default object that is created for the
+  * schedule planner, All other objects that are created for the calander will
+  * be an implementation of Events. Thus all calander objects will have a
+  * Name, Details, and Date attached to them.
  */
 
 
-public class Events{
+public class Events {
 
-    /** name: The name of the Event */
+    /** name: The name of the Event. */
     String name;
-    /** details: Details of this Event */
+    /** details: Details of this Event. */
     String details;
-    /** due: When will this Event occur */
+    /** due: When will this Event occur. */
     Date due;
 
     /**
@@ -25,19 +25,17 @@ public class Events{
      name: The name of the event
      details: What is the event about
      due: When is the vent happening
-     @return none
      */
-    public Events(String name, String details, Date due){
+    public Events(String name, String details, Date due) {
         setDetails(details);
         setName(name);
         setDue(due);
     }
 
-    /** Default constructor of Events */
-    public Events(){}
+    /** Default constructor of Events. */
+    public Events() { }
 
     /**
-     @param none
      @return due: This is when the Event is going to happen
      */
     public Date getDue() {
@@ -45,7 +43,6 @@ public class Events{
     }
 
     /**
-     @param none
      @return details: This desscribes what the Event is about
      */
     public String getDetails() {
@@ -53,7 +50,6 @@ public class Events{
     }
 
     /**
-     @param none
      @return turnInPlace: Where should this homework assignment be turned in
      */
     public String getName() {
