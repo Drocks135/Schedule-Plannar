@@ -12,10 +12,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * EventCreatorView will diplay a window based on the user's selected event type.
- * There is still a bunch of work to be done here, but the idea is to have a user
- * enter in the required info, then relay that info to main, which will in turn create
- * an event to be stored for later use.
+ * EventCreatorView will diplay a window based on the user's selected event
+ * type. There is still a bunch of work to be done here, but the idea is to
+ * have a user enter in the required info, then relay that info to main,
+ * which will in turn create an event to be stored for later use.
  */
 public class EventCreatorView {
     private static EventPackage dummy;
@@ -26,19 +26,22 @@ public class EventCreatorView {
      * Based on what the user selects, this method will then call the window,
      * which is where the user will be prompted for info about the new event.
      */
-    public void display () {
+    public void display() {
 
         Stage addEventStage = new Stage();
         addEventStage.initModality(Modality.APPLICATION_MODAL);
 
         VBox layout = new VBox();
-        layout.setPadding(new Insets(10, 10, 10, 10));
+        int paddingSize = 10;
+        layout.setPadding(new Insets(paddingSize, paddingSize, paddingSize,
+                paddingSize));
 
         ComboBox<String> eTypeDropBx = new ComboBox<>();
         eTypeDropBx.setPromptText("Event Type");
-        eTypeDropBx.getItems().addAll("Homework", "Business", "Entertainment", "Custom");
+        eTypeDropBx.getItems().addAll("Homework", "Business", "Entertainment",
+                "Custom");
         eTypeDropBx.setOnAction(e -> {
-            switch(e.getSource().toString()) {
+            switch (e.getSource().toString()) {
                 case "Homework":
 //                    ????????????????????????????????????
                     break;
@@ -78,13 +81,14 @@ public class EventCreatorView {
 
 
         saveBtn.setOnAction(e -> {
-            if(eName.getText().equals("")){
+            if (eName.getText().equals("")) {
                 AlertView.display("Event Needs A Name");
                 return;
-            } else if( eContact.getText().equals("")){
-                AlertView.display("Doesn't need a contact, but if you'd humor me..");
+            } else if (eContact.getText().equals("")) {
+                AlertView.display("Doesn't need a contact, but if you'd "
+                        + "humor me..");
                 return;
-            } else if(eDate.getEditor().getText().equals("")){
+            } else if (eDate.getEditor().getText().equals("")) {
                 AlertView.display("Event Needs A valid date 'MM/DD,YYY'");
                 return;
             } else {
@@ -96,9 +100,10 @@ public class EventCreatorView {
             addEventStage.close();
         });
 
-        layout.getChildren().addAll(title, eTypeDropBx, eName, eContact, eDate, buttons);
-
-        addEventStage.setScene(new Scene(layout, 250, 250));
+        layout.getChildren().addAll(title, eTypeDropBx, eName, eContact,
+                eDate, buttons);
+        int sceneSize = 250;
+        addEventStage.setScene(new Scene(layout, sceneSize, sceneSize));
         addEventStage.showAndWait();
     }
 }
