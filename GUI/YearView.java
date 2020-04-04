@@ -13,10 +13,8 @@ import java.time.LocalDate;
  * years.
  */
 public class YearView{
-    private LocalDate date;
-    private int year;
     /**
-     * A
+     * Holds the string for each month
      */
     private final String[] MONTHS = {"January", "February",
             "March", "April", "May", "June", "July",
@@ -24,11 +22,16 @@ public class YearView{
             "December"};
 
     /**
-     *
+     * Default constructor is empty
      */
-
     public YearView(){ }
 
+    /**
+     * Display will handle the window that displays the months of the year.
+     *      Buttons include:
+     *          One for each button -> month view of that month
+     * @param date Holds the current year of the Scheduler.
+     */
     public void display(LocalDate date) {
 
         MonthView monthView = new MonthView();

@@ -10,6 +10,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import projEvents.Errors;
 
 /**
  * EventCreatorView will diplay a window based on the user's selected event type.
@@ -33,13 +34,17 @@ public class EventCreatorView {
         VBox layout = new VBox();
         layout.setPadding(new Insets(10, 10, 10, 10));
 
+        Text title = new Text("Create Event:");
+        title.setFont(Font.font("", FontWeight.NORMAL, 20));
+
         ComboBox<String> eTypeDropBx = new ComboBox<>();
         eTypeDropBx.setPromptText("Event Type");
         eTypeDropBx.getItems().addAll("Homework", "Business", "Entertainment", "Custom");
+
         eTypeDropBx.setOnAction(e -> {
-            switch(e.getSource().toString()) {
+            switch(eTypeDropBx.getValue()) {
                 case "Homework":
-//                    ????????????????????????????????????
+                    System.out.println("????????????????????????????????????");
                     break;
                 case "Business":
                     // code block
@@ -55,9 +60,8 @@ public class EventCreatorView {
             }
         });
 
+        layout.getChildren().addAll(title, eTypeDropBx);
 
-        Text title = new Text("Create Event:");
-        title.setFont(Font.font("", FontWeight.NORMAL, 20));
 
         TextField eName = new TextField();
         eName.setPromptText("Name of Event");
@@ -68,23 +72,23 @@ public class EventCreatorView {
         DatePicker eDate = new DatePicker();
         eContact.requestFocus();
 
-        HBox buttons = new HBox();
         Button saveBtn = new Button("Save Event");
         Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e -> addEventStage.close());
 
-        buttons.getChildren().addAll(saveBtn, cancelBtn);
-
 
         saveBtn.setOnAction(e -> {
             if(eName.getText().equals("")){
-                AlertView.display("Event Needs A Name");
+                Errors.setError("Need to enter a name for the event.");
+                AlertView.display();
                 return;
             } else if( eContact.getText().equals("")){
-                AlertView.display("Doesn't need a contact, but if you'd humor me..");
+                Errors.setError("Missing contact name for the Event.");
+                AlertView.display();
                 return;
             } else if(eDate.getEditor().getText().equals("")){
-                AlertView.display("Event Needs A valid date 'MM/DD,YYY'");
+                Errors.setError("Event Needs A valid date 'MM/DD,YYY'");
+                AlertView.display();
                 return;
             } else {
                 dummy = new EventPackage();
@@ -95,7 +99,7 @@ public class EventCreatorView {
             addEventStage.close();
         });
 
-        layout.getChildren().addAll(title, eTypeDropBx, eName, eContact, eDate, buttons);
+        layout.getChildren().addAll(eName, eContact, eDate, cancelBtn, saveBtn);
 
         addEventStage.setScene(new Scene(layout, 250, 250));
         addEventStage.showAndWait();
