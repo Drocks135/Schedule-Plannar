@@ -47,7 +47,7 @@ public class MonthView {
     }
 
     /**
-     * Display will deplay the current month to the user.
+     * Display will display the current month to the user.
      * Buttons include:
      *      "Current month" --> yearView
      *      "+" --> EventCreatorView

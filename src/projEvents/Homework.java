@@ -1,4 +1,5 @@
 package projEvents;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -35,7 +36,7 @@ public class Homework extends Events {
      turnInPlace: Where should this homework assignment be turned in
      classFor: What class is this homework assignment for
      */
-    public Homework(String name, String details, Date due, String turnInPlace,
+    public Homework(String name, String details, LocalDate due, String turnInPlace,
                     String classFor) {
         setName(name);
         setDetails(details);
@@ -56,7 +57,7 @@ public class Homework extends Events {
      classFor: What class is this homework assignment for
      gradeOut: How many points are possible to get in this homework assignment
      */
-    public Homework(String name, String details, Date due, String turnInPlace,
+    public Homework(String name, String details, LocalDate due, String turnInPlace,
                     String classFor, int gradeOut) {
         setName(name);
         setDetails(details);

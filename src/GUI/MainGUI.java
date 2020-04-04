@@ -11,7 +11,7 @@ public class MainGUI extends Application {
 
     private MonthView monthView = new MonthView();
 
-    public static void main(String[] args) {
+    public static void launchGUI(String[] args){
         launch(args);
     }
 
@@ -58,7 +58,7 @@ public class MainGUI extends Application {
 
     public EventPackage[] load() throws IOException {
         // We could use any other way to load a file i just threw this one here for testing
-        String data = readFileAsString("C:\\Users\\lard2\\IdeaProjects\\Schedule-Plannar-master\\save_load.txt");
+        String data = readFileAsString("Schedule-Plannar-master\\save_load.txt");
         String[] events = data.split(";"); // split file into different events
         EventPackage[] eventPacs = new EventPackage[events.length];
         for (int i = 0; i < events.length; i++) {

@@ -1,5 +1,5 @@
 package projEvents;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  @author: Ayden Martin
@@ -18,7 +18,7 @@ public class Events {
     /** details: Details of this Event. */
     String details;
     /** due: When will this Event occur. */
-    Date due;
+    LocalDate due;
 
     /**
      @param
@@ -26,7 +26,7 @@ public class Events {
      details: What is the event about
      due: When is the vent happening
      */
-    public Events(String name, String details, Date due) {
+    public Events(String name, String details, LocalDate due) {
         setDetails(details);
         setName(name);
         setDue(due);
@@ -38,7 +38,7 @@ public class Events {
     /**
      @return due: This is when the Event is going to happen
      */
-    public Date getDue() {
+    public LocalDate getDue() {
         return this.due;
     }
 
@@ -68,7 +68,7 @@ public class Events {
      @param due: Sets when this variable will occur
      @return none
      */
-    public void setDue(Date due) {
+    public void setDue(LocalDate due) {
         this.due = due;
     }
 
