@@ -1,0 +1,3 @@
+#Ignores ide specific file and compiled files
+out/
+.idea/
