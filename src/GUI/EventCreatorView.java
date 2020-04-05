@@ -26,7 +26,6 @@ import java.util.Date;
  * an event to be stored for later use.
  */
 public class EventCreatorView {
-    private static EventPackage dummy;
     private TextField eName = new TextField();
     private TextField eContact = new TextField();
     private Button cancelBtn = new Button("Cancel");
@@ -81,11 +80,12 @@ public class EventCreatorView {
 
         layout.getChildren().add(cancelBtn);
 
-        addEventStage.setScene(new Scene(layout, 250, 250));
+        addEventStage.setScene(new Scene(layout));
         addEventStage.showAndWait();
     }
 
     private void createHomework(Stage stage){
+        EventStorage events = new EventStorage();
         VBox layout = new VBox();
         layout.setPadding(new Insets(10, 10, 10, 10));
 
@@ -105,6 +105,7 @@ public class EventCreatorView {
 
         Button saveBtn = new Button("Save Event");
         saveBtn.setOnAction(e -> {
+
             if(eDate.getEditor().getText().equals("")) {
                 Errors.setError("Please select a date");     //This should probably be handled in the homework class
                 AlertView.display();
@@ -112,19 +113,19 @@ public class EventCreatorView {
                 Homework newEvent = new Homework(eName.getText(), eDetails.getText(),
                         LocalDate.parse(eDate.getEditor().getText(), dateBuilder.toFormatter()),
                         turnInPlace.getText(), classFor.getText());
+                if(Errors.getBool()){
+                    AlertView.display();
+                }else{
+                    events.addEvent(newEvent.getDue(), newEvent);
+                    System.out.println("Stuff did things");
+                }
             }
-            if(Errors.getBool()){
-                AlertView.display();
-            }else{
-                //Do the save thing here
-            }
+
         });
 
 
         cancelBtn.setOnAction(e -> stage.close());
-
         layout.getChildren().addAll(eName, classFor, eContact, eDate, turnInPlace, eDetails, saveBtn, cancelBtn);
-
-        stage.setScene(new Scene(layout, 250, 250));
+        stage.setScene(new Scene(layout));
     }
 }
