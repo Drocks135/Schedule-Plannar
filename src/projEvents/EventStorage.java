@@ -1,7 +1,5 @@
 package projEvents;
 
-import jdk.jfr.Event;
-
 import java.util.HashMap;
 import java.time.LocalDate;
 import java.util.LinkedList;

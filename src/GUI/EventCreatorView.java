@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projEvents.Errors;
+import projEvents.EventStorage;
 import projEvents.Homework;
 
 import java.text.DateFormat;
@@ -26,10 +27,11 @@ import java.util.Date;
  */
 public class EventCreatorView {
     private static EventPackage dummy;
-    TextField eName = new TextField();
-    TextField eContact = new TextField();
-    DatePicker eDate = new DatePicker();
-    DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder()
+    private TextField eName = new TextField();
+    private TextField eContact = new TextField();
+    private Button cancelBtn = new Button("Cancel");
+    private DatePicker eDate = new DatePicker();
+    private DateTimeFormatterBuilder dateBuilder = new DateTimeFormatterBuilder()
             .appendPattern("[M/d/yyyy]")
             .appendPattern("[MM/d/yyyy]")
             .appendPattern("[M/dd/yyyy]")
@@ -75,10 +77,9 @@ public class EventCreatorView {
 
         layout.getChildren().addAll(title, eTypeDropBx);
 
-        Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e -> addEventStage.close());
 
-//        layout.getChildren().add(cancelBtn);
+        layout.getChildren().add(cancelBtn);
 
         addEventStage.setScene(new Scene(layout, 250, 250));
         addEventStage.showAndWait();
@@ -95,42 +96,35 @@ public class EventCreatorView {
         classFor.setPromptText("Name of class");
 
         TextField eDetails = new TextField();
+        eDetails.minHeight(classFor.getHeight() * 2);
         eDetails.setPromptText("Details of the Assignment");
 
         eName.setPromptText("Name of Assignment");
         eContact.setPromptText("Name of Professor");
         eDate.setPromptText("Assignment due date");
-        eDate.requestFocus();
-
 
         Button saveBtn = new Button("Save Event");
         saveBtn.setOnAction(e -> {
             if(eDate.getEditor().getText().equals("")) {
-                Errors.setError("Please select a date");
+                Errors.setError("Please select a date");     //This should probably be handled in the homework class
                 AlertView.display();
             } else {
                 Homework newEvent = new Homework(eName.getText(), eDetails.getText(),
-                        LocalDate.parse(eDate.getEditor().getText(), builder.toFormatter()), turnInPlace.getText(), classFor.getText());
+                        LocalDate.parse(eDate.getEditor().getText(), dateBuilder.toFormatter()),
+                        turnInPlace.getText(), classFor.getText());
             }
-            if(!Errors.getBool()){
-                //save the new event, however it is one would do that
-            }else{
+            if(Errors.getBool()){
                 AlertView.display();
+            }else{
+                //Do the save thing here
             }
         });
 
-        Button cancelBtn = new Button("Cancel");
+
         cancelBtn.setOnAction(e -> stage.close());
 
-        layout.getChildren().addAll(eName, classFor, eContact, eDate, turnInPlace, saveBtn, cancelBtn);
+        layout.getChildren().addAll(eName, classFor, eContact, eDate, turnInPlace, eDetails, saveBtn, cancelBtn);
 
         stage.setScene(new Scene(layout, 250, 250));
     }
-
-    private void inputChecks(){
-
-    }
-
-
-
 }
