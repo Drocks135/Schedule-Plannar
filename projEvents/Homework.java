@@ -58,7 +58,7 @@ public class Homework extends Events {
 
     public void setclassFor(String classFor) {
         Errors e = Errors.getInstance();
-        if(classFor.length() == 0 | classFor.length() > 50){
+        if(classFor.length() == 0 || classFor.length() > 50){
             e.setError("enter valid class name");
         }
         else

@@ -132,6 +132,10 @@ public class MonthView {
                 } else {
                     dayButtons[i][j] = new Button("" + dayCnt);
                     Button days = dayButtons[i][j];
+                    if (LocalDate.now().getDayOfMonth() == dayCnt &&
+                            LocalDate.now().getMonthValue() == date.getMonthValue()) {
+                        dayButtons[i][j].setStyle("-fx-border-color: #ff0000; -fx-border-widty: 5px;");
+                    }
                     days.setOnAction(e -> DayView.display());
                     days.setPrefSize(65, 60);
                     GridPane.setConstraints(days, j, i);
