@@ -1,82 +1,54 @@
 package projEvents;
-import java.time.LocalDate;
 
-/**
- @author: Ayden Martin
- @Version: 1.0
-  * Events is a class that will be the default object that is created for the
-  * schedule planner, All other objects that are created for the calander will
-  * be an implementation of Events. Thus all calander objects will have a
-  * Name, Details, and Date attached to them.
- */
+
+import java.time.LocalDate;
 
 
 public class Events {
 
-    /** name: The name of the Event. */
-    String name;
-    /** details: Details of this Event. */
-    String details;
-    /** due: When will this Event occur. */
-    LocalDate due;
+    private String name=null;
+    private String details=null;
+    private LocalDate due=null;
 
-    /**
-     @param
-     name: The name of the event
-     details: What is the event about
-     due: When is the vent happening
-     */
-    public Events(String name, String details, LocalDate due) {
-        setDetails(details);
-        setName(name);
-        setDue(due);
-    }
-
-    /** Default constructor of Events. */
-    public Events() { }
-
-    /**
-     @return due: This is when the Event is going to happen
-     */
     public LocalDate getDue() {
         return this.due;
     }
 
-    /**
-     @return details: This desscribes what the Event is about
-     */
     public String getDetails() {
         return this.details;
     }
 
-    /**
-     @return turnInPlace: Where should this homework assignment be turned in
-     */
     public String getName() {
         return this.name;
     }
 
-    /**
-     @param details: Sets the details of this Event
-     @return none
-     */
     public void setDetails(String details) {
-        this.details = details;
+        Errors e = Errors.getInstance();
+        if(details.length() > 250){
+            e.setError("Event details cannot be over 250 characters long");
+        }
+        else
+            this.details = details;
     }
 
-    /**
-     @param due: Sets when this variable will occur
-     @return none
-     */
     public void setDue(LocalDate due) {
-        this.due = due;
+        Errors e = Errors.getInstance();
+        if(due.compareTo(LocalDate.now()) < 0){
+            e.setError("Cannot set date to less than current date");
+        }
+        else
+            this.due = due;
     }
 
-    /**
-     @param name: Sets what this Event is called
-     @return none
-     */
     public void setName(String name) {
-        this.name = name;
+        Errors e = Errors.getInstance();
+        if(name.length() > 50){
+            e.setError("Event name cannot be over 50 characters long");
+        }
+        else if(name.length() == 0){
+            e.setError("Event name cannot be blank");
+        }
+        else
+            this.name = name;
     }
 }
