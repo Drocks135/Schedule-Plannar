@@ -13,11 +13,9 @@ import projEvents.Errors;
 import projEvents.EventStorage;
 import projEvents.Homework;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.util.Date;
+
 
 /**
  * EventCreatorView will diplay a window based on the user's selected event type.
