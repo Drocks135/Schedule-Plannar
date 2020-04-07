@@ -1,6 +1,7 @@
 package projEvents;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class Homework extends Events {
@@ -88,5 +89,15 @@ public class Homework extends Events {
         }
         else
             this.gradeOut = gradeOut;
+    }
+    
+    public String toString() {
+        String eventString = "";
+        DateTimeFormatter ft = DateTimeFormatter.ofPattern("dMMyyyy");
+        String date = this.getDue().format(ft);
+        eventString += (this.getName() + "," + this.getDetails() + "," +
+                date + "," + this.getturnInPlace() + "," + this.getclassFor() +
+                "," + this.gradeGot() + "," + this.gradeOut() + ";");
+        return eventString;
     }
 }
