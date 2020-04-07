@@ -2,6 +2,7 @@ package projEvents;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class Events {
@@ -9,7 +10,15 @@ public class Events {
     private String name=null;
     private String details=null;
     private LocalDate due=null;
+    
+    public Events() { }
 
+    public Events(String name, String details, LocalDate due) {
+        setDetails(details);
+        setName(name);
+        setDue(due);
+    }
+    
     public LocalDate getDue() {
         return this.due;
     }
@@ -50,5 +59,14 @@ public class Events {
         }
         else
             this.name = name;
+    }
+    
+    public String toString() {
+        String eventString = "";
+        DateTimeFormatter ft = DateTimeFormatter.ofPattern("dMMyyyy");
+        String date = this.getDue().format(ft);
+        eventString += (this.getName() + "," + this.getDetails() + "," +
+                date);
+        return eventString;
     }
 }
