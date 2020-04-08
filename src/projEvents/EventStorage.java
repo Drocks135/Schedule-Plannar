@@ -12,7 +12,9 @@ public class EventStorage {
        EventMap = new HashMap<>();
     }
 
-    public void addEvent(LocalDate date, Events event){
+    public void addEvent(Events event){
+        LocalDate date = event.getDue();
+
         String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
         LinkedList<Events> list = CreateList(event);
         if(EventMap.containsKey(key)){

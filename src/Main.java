@@ -1,8 +1,10 @@
-import GUI.MonthView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import projEvents.Events;
 import projEvents.Homework;
+
+import GUI.MainGUI;
+import projEvents.EventStorage;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,10 +14,11 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import java.util.*;
 
 
-public class Main extends Application {
+public class Main{
 
     private MonthView monthView = new MonthView();
 
@@ -23,18 +26,8 @@ public class Main extends Application {
         Main gui = new Main();
         gui.launchGUI(args);
 
-    }
 
-    public static void launchGUI(String[] args){
-        launch(args);
-    }
-    public void createEvent(){
-
-    }
-
-    @Override
-    public void start(Stage stage) {
-        monthView.display();
+        EventStorage eventStorage = new EventStorage();
     }
 
     public static String readFileAsString(String fileName) throws IOException {
