@@ -1,12 +1,10 @@
 
-import GUI.MainGUI;
+import GUI.GUI_Launcher;
 import projEvents.EventStorage;
-
-import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        MainGUI gui = new MainGUI();
+        GUI_Launcher gui = new GUI_Launcher();
         gui.launchGUI(args);
 
         EventStorage eventStorage = new EventStorage();
