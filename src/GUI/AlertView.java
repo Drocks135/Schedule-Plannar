@@ -5,10 +5,11 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
+import projEvents.Errors;
 
 public class AlertView {
 
-    public static void display(String message) {
+    public static void display() {
         Stage alert = new Stage();
 
         alert.initModality(Modality.APPLICATION_MODAL);
@@ -16,7 +17,7 @@ public class AlertView {
         alert.setMinWidth(250);
 
         Label label = new Label();
-        label.setText(message);
+        label.setText(Errors.getError());
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> alert.close());
 
