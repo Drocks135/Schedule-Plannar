@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
   * All other objects that are created for the calander will be an implementation of Events
   * Thus all calander objects will have a
   * Name, Details, and Date attached to them
- **************************************************************************************************/
+ *************************************************************************************************/
 
 public class Events {
 
@@ -22,20 +22,20 @@ public class Events {
     
     public Events() { }
 
-    /**************************************************************************************************
+    /**********************************************************************************************
      * @param
      * name: The name of the event
      * details: What is the event about
      * due: When is the vent happening
      * @return none
-     **************************************************************************************************/
+     *********************************************************************************************/
     public Events(String name, String details, LocalDate due) {
         setDetails(details);
         setName(name);
         setDue(due);
     }
 
-     /**
+     /*********************************************************************************************
      * @return due: This is when the Event is going to happen
      */
     public LocalDate getDue() {

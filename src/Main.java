@@ -32,8 +32,8 @@ public class Main {
     public void save(Events[] events) throws IOException {
         File file = new File("save_load.txt");
         StringBuilder eventString = new StringBuilder();
-        for (int i = 0; i < events.length; i++) {
-            eventString.append(events[i].toString());
+        for (Events event : events) {
+            eventString.append(event.toString());
         }
         // overwrites in case file already exists.
         FileOutputStream fos = new FileOutputStream(file, false);
