@@ -1,7 +1,6 @@
 package projEvents;
 
-import javafx.event.Event;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
