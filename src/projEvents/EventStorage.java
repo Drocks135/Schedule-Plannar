@@ -7,16 +7,23 @@ import java.util.LinkedList;
 public class EventStorage {
     HashMap<String, LinkedList<Events>> EventMap;
 
+    private static EventStorage storage;
 
-    public EventStorage(){
+    private EventStorage(){
        EventMap = new HashMap<>();
+    }
+
+    public static EventStorage getInstance(){
+        if (storage == null)
+            storage = new EventStorage();
+        return storage;
     }
 
     public void addEvent(Events event){
         LocalDate date = event.getDue();
 
         String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
-        LinkedList<Events> list = CreateList(event);
+        LinkedList<Events> list;
         if(EventMap.containsKey(key)){
             list = EventMap.get(key);
             list.add(event);
