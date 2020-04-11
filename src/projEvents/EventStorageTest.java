@@ -1,5 +1,6 @@
 package projEvents;
 
+import javafx.event.Event;
 import org.junit.Test;
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -10,7 +11,7 @@ public class EventStorageTest {
 
         @Test
         public void TestOneEventCreation(){
-            EventStorage storage = new EventStorage();
+            EventStorage storage = EventStorage.getInstance();
 
             LocalDate date = LocalDate.of(2020, 4, 16);
             Events event = new Events("Birthday", "Mom's Birthday", date);
@@ -28,7 +29,7 @@ public class EventStorageTest {
 
         @Test
         public void TestMultipleEventsOnOneDay(){
-            EventStorage storage = new EventStorage();
+            EventStorage storage = EventStorage.getInstance();
 
             LocalDate date = LocalDate.of(2020, 4, 16);
             Events event = new Events("Birthday", "Mom's Birthday", date);
@@ -60,7 +61,7 @@ public class EventStorageTest {
 
         @Test
         public void TestMultipleEventsOn30DifferentDays(){
-            EventStorage storage = new EventStorage();
+            EventStorage storage = EventStorage.getInstance();
 
             LocalDate date = LocalDate.of(2020, 4, 20);
 
