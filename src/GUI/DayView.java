@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
-/**
+/**************************************************************************************************
  * DayView will show the user the events corresponding to the day they select.
  * Will also give the user the option of creating a new event or edit saved
  * events.
@@ -23,7 +23,7 @@ public class DayView {
      */
     public static void display() {
         Stage dayView = new Stage();
-        dayView.setTitle(LocalDate.now().toString());
+        dayView.setTitle("");
 
         Label dayLabel = new Label("" + LocalDate.now().getDayOfMonth());
         GridPane gPane = new GridPane();

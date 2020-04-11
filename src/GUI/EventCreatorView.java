@@ -82,7 +82,7 @@ public class EventCreatorView {
         addEventStage.showAndWait();
     }
 
-    //**
+
     private void createHomework(Stage stage){
 
         VBox layout = new VBox();
