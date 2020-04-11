@@ -1,8 +1,6 @@
 package projEvents;
 
-import javafx.event.Event;
 import org.junit.Test;
-
 import java.time.LocalDate;
 import java.util.LinkedList;
 
@@ -25,7 +23,7 @@ public class EventStorageTest {
 
             list2.add(event);
 
-            assertEquals(list.getFirst().name, list2.getFirst().name);
+            assertEquals(list.getFirst().getName(), list2.getFirst().getName());
         }
 
         @Test
@@ -52,10 +50,10 @@ public class EventStorageTest {
             list2.add(event3);
             list2.add(event4);
 
-            assertEquals(list.remove().name, list2.remove().name);
-            assertEquals(list.remove().name, list2.remove().name);
-            assertEquals(list.remove().name, list2.remove().name);
-            assertEquals(list.remove().name, list2.remove().name);
+            assertEquals(list.remove().getName(), list2.remove().getName());
+            assertEquals(list.remove().getName(), list2.remove().getName());
+            assertEquals(list.remove().getName(), list2.remove().getName());
+            assertEquals(list.remove().getName(), list2.remove().getName());
             assertEquals(list.size(), 0);
             assertEquals(list2.size(), 0);
         }
@@ -89,7 +87,7 @@ public class EventStorageTest {
                 Events assertEvent = trueList.remove();
                 Events retrievedEvent = storage.GetListOfDay(date).remove();
 
-                assertEquals(retrievedEvent.name, assertEvent.name);
+                assertEquals(retrievedEvent.getName(), assertEvent.getName());
             }
         }
 
