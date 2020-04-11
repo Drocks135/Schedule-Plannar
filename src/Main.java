@@ -15,11 +15,12 @@ import java.time.format.DateTimeFormatter;
 public class Main {
     public static void main(String[] args) {
         GUI_Launcher gui = new GUI_Launcher();
+        EventStorage eventStorage = EventStorage.getInstance();
 
         gui.launchGUI(args);
 
 
-        EventStorage eventStorage = EventStorage.getInstance();
+
     }
 
     public static String readFileAsString(String fileName) throws IOException {
