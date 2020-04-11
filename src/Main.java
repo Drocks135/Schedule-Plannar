@@ -15,11 +15,12 @@ import java.time.format.DateTimeFormatter;
 public class Main {
     public static void main(String[] args) {
         GUI_Launcher gui = new GUI_Launcher();
+        EventStorage eventStorage = EventStorage.getInstance();
 
         gui.launchGUI(args);
 
 
-        EventStorage eventStorage = new EventStorage();
+
     }
 
     public static String readFileAsString(String fileName) throws IOException {
@@ -29,7 +30,7 @@ public class Main {
     }
 
     public void save(Events[] events) throws IOException {
-        File file = new File("C:\\Users\\Lard2\\save_load.txt");
+        File file = new File("save_load.txt");
         StringBuilder eventString = new StringBuilder();
         for (int i = 0; i < events.length; i++) {
             eventString.append(events[i].toString());
@@ -61,7 +62,7 @@ public class Main {
 
     public Events[] load() throws IOException, ParseException {
         // We could use any other way to load a file i just threw this one here for testing
-        String data = readFileAsString("C:\\Users\\Lard2\\save_load.txt");
+        String data = readFileAsString("save_load.txt");
         String[] events = data.split(";"); // split file into different events
         Events[] eventBois = new Events[events.length];
         for (int i = 0; i < events.length; i++) {

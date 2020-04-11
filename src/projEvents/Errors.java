@@ -26,6 +26,7 @@ public class Errors {
     public static boolean getBool(){
         return newError;
     }
+
     public static String getError() {
         if (newError == true) {
             newError = false;

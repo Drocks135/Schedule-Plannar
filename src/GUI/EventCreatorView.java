@@ -83,7 +83,7 @@ public class EventCreatorView {
     }
 
     private void createHomework(Stage stage){
-        EventStorage events = new EventStorage();
+        EventStorage events = EventStorage.getInstance();
         VBox layout = new VBox();
         layout.setPadding(new Insets(10, 10, 10, 10));
 
@@ -114,7 +114,7 @@ public class EventCreatorView {
                 if(Errors.getBool()){
                     AlertView.display();
                 }else{
-                    events.addEvent(newEvent.getDue(), newEvent);
+                    events.addEvent(newEvent);
                     System.out.println("Stuff did things");
                 }
             }
