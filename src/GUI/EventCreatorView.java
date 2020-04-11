@@ -53,13 +53,16 @@ public class EventCreatorView {
         eTypeDropBx.setPromptText("Event Type");
         eTypeDropBx.getItems().addAll("Homework", "Business", "Entertainment", "Custom");
 
+        eName.clear();
+        eContact.clear();
+        
         eTypeDropBx.setOnAction(e -> {
             switch(eTypeDropBx.getValue()) {
                 case "Homework":
                     createHomework(addEventStage);
                     break;
                 case "Business":
-                    // code block
+                    createBusiness(addEventStage);
                     break;
                 case "Entertainment":
                     // code block
@@ -126,6 +129,59 @@ public class EventCreatorView {
         cancelBtn.setOnAction(e -> stage.close());
         layout.getChildren().addAll(eName, classFor, eContact, eDate, turnInPlace, eDetails,
                 saveBtn, cancelBtn);
+        stage.setScene(new Scene(layout));
+    }
+    
+    private void createBusiness(Stage stage){
+        EventStorage events = EventStorage.getInstance();
+        VBox layout = new VBox();
+        layout.setPadding(new Insets(10, 10, 10, 10));
+
+        TextField Location = new TextField();
+        Location.setPromptText("Location of Meeting");
+
+        TextField Duration = new TextField();
+        Duration.setPromptText("Length of Meeting (Hours)");
+
+        TextField eDetails = new TextField();
+        eDetails.minHeight(Location.getHeight() * 2);
+        eDetails.setPromptText("Details of the Meeting");
+
+        eName.setPromptText("Name of Company");
+        eContact.setPromptText("Name of Contact");
+        eDate.setPromptText("Meeting Date");
+
+        Button saveBtn = new Button("Save Event");
+        saveBtn.setOnAction(e -> {
+            double temp = 0.0;
+            try {
+                temp = Double.parseDouble(Duration.getText());
+            }
+            catch (Exception e1){
+                Errors.setError("Please enter a number for the duration");
+                AlertView.display();
+            }
+            Business newEvent = new Business(eName.getText(), eDetails.getText(),
+                    LocalDate.parse(eDate.getEditor().getText(), dateBuilder.toFormatter()),
+                    Location.getText(), temp);
+            if(eDate.getEditor().getText().equals("")) {
+                Errors.setError("Please select a date");     //This should probably be handled in the homework class
+                AlertView.display();
+            } else {
+
+                if(Errors.getBool()){
+                    AlertView.display();
+                }else{
+                    EventStorage.getInstance().addEvent(newEvent);
+                    stage.close();
+                }
+            }
+
+        });
+
+
+        cancelBtn.setOnAction(e -> stage.close());
+        layout.getChildren().addAll(eName, Location, eContact, eDate, Duration, eDetails, saveBtn, cancelBtn);
         stage.setScene(new Scene(layout));
     }
 }
