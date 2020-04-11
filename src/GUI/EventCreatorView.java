@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatterBuilder;
 
 
 /**
- * EventCreatorView will diplay a window based on the user's selected event type.
+ * EventCreatorView will display a window based on the user's selected event type.
  * There is still a bunch of work to be done here, but the idea is to have a user
  * enter in the required info, then relay that info to main, which will in turn create
  * an event to be stored for later use.
@@ -82,8 +82,9 @@ public class EventCreatorView {
         addEventStage.showAndWait();
     }
 
+    //**
     private void createHomework(Stage stage){
-        EventStorage events = EventStorage.getInstance();
+
         VBox layout = new VBox();
         layout.setPadding(new Insets(10, 10, 10, 10));
 
@@ -114,8 +115,8 @@ public class EventCreatorView {
                 if(Errors.getBool()){
                     AlertView.display();
                 }else{
-                    events.addEvent(newEvent);
-                    System.out.println("Stuff did things");
+                    EventStorage.getInstance().addEvent(newEvent);
+                    stage.close();
                 }
             }
 
@@ -123,7 +124,8 @@ public class EventCreatorView {
 
 
         cancelBtn.setOnAction(e -> stage.close());
-        layout.getChildren().addAll(eName, classFor, eContact, eDate, turnInPlace, eDetails, saveBtn, cancelBtn);
+        layout.getChildren().addAll(eName, classFor, eContact, eDate, turnInPlace, eDetails,
+                saveBtn, cancelBtn);
         stage.setScene(new Scene(layout));
     }
 }

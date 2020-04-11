@@ -40,6 +40,9 @@ public class YearView {
         for (int i = 0; i < 12; i++) {
             int month = i;
             Button monthBtn = new Button(months[i]);
+            if(date.getMonthValue() == LocalDate.now().getMonthValue()){
+                monthBtn.setStyle("-fx-border-color: #ff0000; -fx-border-widty: 5px;");
+            }
             monthBtn.setPrefSize(150, 50);
             monthBtn.setOnAction(e -> {
                 monthView.display(date.withMonth(month + 1));
