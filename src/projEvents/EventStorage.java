@@ -4,8 +4,15 @@ import java.util.HashMap;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
+/**************************************************************************************************
+ *  @author: Dalton Claybaugh
+ *  @Version: 1.0
+ *  EventStorage is a data structure designed to store Events. It's implementation is a hash map
+ *  of linked list. A hash of a specific day will return the head to a linked list that contains
+ *  an unsorted list of all events that will occur on a specific day.
+ **************************************************************************************************/
 public class EventStorage {
-    HashMap<String, LinkedList<Events>> EventMap;
+    private HashMap<String, LinkedList<Events>> EventMap;
 
     private static EventStorage storage;
 
@@ -13,12 +20,22 @@ public class EventStorage {
        EventMap = new HashMap<>();
     }
 
+    /**********************************************************************************************
+     *  This is a singleton implementation of EventStorage, by calling getInstance the return will
+     *  either be a new instance if one does not exist or the existing instance.
+     * @return The EventStorage object that the program is currently using
+     *********************************************************************************************/
     public static EventStorage getInstance(){
         if (storage == null)
             storage = new EventStorage();
         return storage;
     }
 
+    /**********************************************************************************************
+     *  Adds an event into the EventStorage container. If the key exists it will append it to the
+     *  end of the linked list of all events that exist with that key.
+     * @param event: An Events object
+     *********************************************************************************************/
     public void addEvent(Events event){
         LocalDate date = event.getDue();
 
@@ -33,6 +50,11 @@ public class EventStorage {
         }
     }
 
+    /**********************************************************************************************
+     *  Retrieves the head of a linked list that contains all the events for a particular day
+     * @param date: A LocalDate object for the day of events to be retrieved
+     * @return The head of a linked list of Events that contains all the Events of a specific day
+     *********************************************************************************************/
     public LinkedList<Events> GetListOfDay(LocalDate date){
         String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
         return EventMap.get(key);
