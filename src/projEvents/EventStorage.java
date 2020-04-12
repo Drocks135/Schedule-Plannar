@@ -1,8 +1,7 @@
 package projEvents;
 
-import java.util.HashMap;
+import java.util.*;
 import java.time.LocalDate;
-import java.util.LinkedList;
 
 /**************************************************************************************************
  *  @author: Dalton Claybaugh
@@ -12,12 +11,14 @@ import java.util.LinkedList;
  *  an unsorted list of all events that will occur on a specific day.
  **************************************************************************************************/
 public class EventStorage {
-    private HashMap<String, LinkedList<Events>> EventMap;
+    private final HashMap<String, LinkedList<Events>> EventMap;
 
     private static EventStorage storage;
+    private int size;
 
     private EventStorage(){
        EventMap = new HashMap<>();
+       size = 0;
     }
 
     /**********************************************************************************************
@@ -44,9 +45,11 @@ public class EventStorage {
         if(EventMap.containsKey(key)){
             list = EventMap.get(key);
             list.add(event);
+            size++;
         } else {
             list = CreateList(event);
             EventMap.put(key, list);
+            size++;
         }
     }
 
@@ -58,6 +61,22 @@ public class EventStorage {
     public LinkedList<Events> GetListOfDay(LocalDate date){
         String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
         return EventMap.get(key);
+    }
+
+    /**********************************************************************************************
+     * Creates an ArrayList of all events that exist in EventStorage
+     * @return An ArrayList containing all events in EventStorage
+     *********************************************************************************************/
+    public ArrayList<Events> toArray(){
+        ArrayList<Events> allEvents = new ArrayList<>(size);
+        Set<String> keySet = EventMap.keySet();
+
+        for (String s : keySet) {
+            LinkedList<Events> temp = EventMap.get(s);
+            allEvents.addAll(temp);
+        }
+
+        return allEvents;
     }
 
     private LinkedList<Events> CreateList(Events event){
