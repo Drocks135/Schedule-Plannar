@@ -1,5 +1,7 @@
 package projEvents;
 
+import javafx.event.Event;
+
 import java.util.*;
 import java.time.LocalDate;
 
@@ -61,6 +63,24 @@ public class EventStorage {
     public LinkedList<Events> GetListOfDay(LocalDate date){
         String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
         return EventMap.get(key);
+    }
+
+    /**********************************************************************************************
+     * Deletes an Event from the EventStorage object
+     * @param date: A LocalDate that the event that you want to remove is on
+     * @param name: The name of an event that you want to remove
+     *********************************************************************************************/
+    public void DeleteEvent(LocalDate date, String name){
+        String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
+        if(EventMap.containsKey(key)){
+            LinkedList<Events> temp = EventMap.get(key);
+            ListIterator<Events> iter = temp.listIterator(0);
+            while (iter.hasNext()){
+                Events e = iter.next();
+                if(e.getName() == name)
+                    iter.remove();
+            }
+        }
     }
 
     /**********************************************************************************************
