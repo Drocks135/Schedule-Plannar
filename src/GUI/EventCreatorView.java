@@ -51,7 +51,7 @@ public class EventCreatorView {
 
         ComboBox<String> eTypeDropBx = new ComboBox<>();
         eTypeDropBx.setPromptText("Event Type");
-        eTypeDropBx.getItems().addAll("Homework", "Business", "Entertainment", "Custom");
+        eTypeDropBx.getItems().addAll("Homework", "Business");
 
         eTypeDropBx.setOnAction(e -> {
             switch(eTypeDropBx.getValue()) {
@@ -59,12 +59,6 @@ public class EventCreatorView {
                     createHomework(addEventStage);
                     break;
                 case "Business":
-                    // code block
-                    break;
-                case "Entertainment":
-                    // code block
-                    break;
-                case "Custom":
                     // code block
                     break;
                 default:
@@ -86,7 +80,7 @@ public class EventCreatorView {
     private void createHomework(Stage stage){
 
         VBox layout = new VBox();
-        layout.setPadding(new Insets(10, 10, 10, 10));
+        layout.setPadding(new Insets(10));
 
         TextField turnInPlace = new TextField();
         turnInPlace.setPromptText("Where to turn in Assignment");
@@ -95,7 +89,6 @@ public class EventCreatorView {
         classFor.setPromptText("Name of class");
 
         TextField eDetails = new TextField();
-        eDetails.minHeight(classFor.getHeight() * 2);
         eDetails.setPromptText("Details of the Assignment");
 
         eName.setPromptText("Name of Assignment");
@@ -104,7 +97,6 @@ public class EventCreatorView {
 
         Button saveBtn = new Button("Save Event");
         saveBtn.setOnAction(e -> {
-
             if(eDate.getEditor().getText().equals("")) {
                 Errors.setError("Please select a date");     //This should probably be handled in the homework class
                 AlertView.display();
@@ -119,7 +111,6 @@ public class EventCreatorView {
                     stage.close();
                 }
             }
-
         });
 
 

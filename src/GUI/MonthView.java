@@ -4,12 +4,12 @@ package GUI;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 
 /**
@@ -24,6 +24,9 @@ public class MonthView {
     private Button nextMonthBtn;
     private Button prevMonthBtn;
     private Button addEventBtn;
+    private final String IDLE_BUTTON_STYLE = "-fx-background-color: transparent;";
+    private final String HOVERED_BUTTON_STYLE = "-fx-background-color: " +
+            "-fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;";
     private final int[] DAYS_IN_MONTH = {29, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     private final String [] DAYS_OF_THE_WEEK = {"Sunday", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday"};
@@ -56,6 +59,7 @@ public class MonthView {
      */
     public void display(){
         YearView yearView = new YearView();
+        DayView dayView = new DayView();
         EventCreatorView eventCreatorView = new EventCreatorView();
 
         Stage monthView = new Stage();
@@ -68,8 +72,8 @@ public class MonthView {
         for(int i = 0; i < 7; i++){
             Label day = new Label();
             day.setText(DAYS_OF_THE_WEEK[i]);
+            day.setPrefSize(75, 25);
             day.setTextAlignment(TextAlignment.CENTER);
-            day.setPrefSize(65, 25);
             daysOfWeek.getChildren().add(day);
         }
 
@@ -87,6 +91,7 @@ public class MonthView {
         //Next button will take user to the next month
         nextMonthBtn = new Button(" > ");
         nextMonthBtn.setOnAction(e -> {
+            System.out.println(date.getMonth().name() + ": (" + monthView.getHeight() + ", " + monthView.getWidth() + ")");
             monthView.close();
             if(date.getMonthValue() == 12){
                 this.display(date.withYear(date.getYear() + 1).withMonth(1));
@@ -132,26 +137,30 @@ public class MonthView {
                 } else {
                     dayButtons[i][j] = new Button("" + dayCnt);
                     Button days = dayButtons[i][j];
+                    days.setBackground(Background.EMPTY);
                     if (LocalDate.now().getDayOfMonth() == dayCnt &&
-
                             LocalDate.now().getMonthValue() == date.getMonthValue() &&
                             LocalDate.now().getYear() == date.getYear()) {
-
                         dayButtons[i][j].setStyle("-fx-border-color: #ff0000; -fx-border-widty: 5px;");
                     }
-                    days.setOnAction(e -> DayView.display());
-                    days.setPrefSize(65, 60);
+                    days.setOnMouseEntered(e -> days.setStyle(HOVERED_BUTTON_STYLE));
+                    days.setOnMouseExited(e -> days.setStyle(IDLE_BUTTON_STYLE));
+                    days.setOnAction(e -> dayView.display(date.withDayOfMonth(Integer.parseInt((days.getText())))));
+                    days.setPrefSize(75, 60);
                     GridPane.setConstraints(days, j, i);
                     dayBtns.getChildren().add(days);
                     dayCnt++;
                 }
             }
         }
+
         layout.setCenter(dayBtns);
 
         Scene scene = new Scene(layout);
 
-        monthView.setTitle("Scheduling App");
+//        monthView.minHeightProperty().setValue(500);
+//        monthView.minWidthProperty().setValue(460);
+        monthView.setTitle("" + date.getYear());
         monthView.setScene(scene);
         monthView.show();
     }

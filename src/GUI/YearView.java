@@ -40,10 +40,7 @@ public class YearView {
         for (int i = 0; i < 12; i++) {
             int month = i;
             Button monthBtn = new Button(months[i]);
-            if(date.getMonthValue() == LocalDate.now().getMonthValue()){
-                monthBtn.setStyle("-fx-border-color: #ff0000; -fx-border-widty: 5px;");
-            }
-            monthBtn.setPrefSize(150, 50);
+            monthBtn.setPrefSize(150, 45);
             monthBtn.setOnAction(e -> {
                 monthView.display(date.withMonth(month + 1));
                 yearView.close();
@@ -52,8 +49,9 @@ public class YearView {
             layout.getChildren().add(monthBtn);
         }
 
+        yearView.setResizable(true);
         yearView.setTitle("" + date.getYear());
-        yearView.setScene(new Scene(layout));
+        yearView.setScene(new Scene(layout, 400, 150));
         yearView.show();
 
     }
