@@ -51,7 +51,7 @@ public class YearView {
 
         yearView.setResizable(true);
         yearView.setTitle("" + date.getYear());
-        yearView.setScene(new Scene(layout, 400, 150));
+        yearView.setScene(new Scene(layout));
         yearView.show();
 
     }

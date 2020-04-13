@@ -4,18 +4,13 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import projEvents.EventStorage;
 import projEvents.Events;
-
-import javax.swing.text.Style;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 import java.util.LinkedList;
 
@@ -40,7 +35,7 @@ public class DayView {
      *      ***********
      */
     public void display(LocalDate date) {
-        EventCreatorView eventCreatorView = new EventCreatorView();
+        EventCreatorView eventCreatorView = new EventCreatorView(date);
 
         LinkedList<Events> events = EventStorage.getInstance().GetListOfDay(date);
 

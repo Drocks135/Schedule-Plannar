@@ -1,15 +1,12 @@
 
 package GUI;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
-import javax.swing.*;
-import java.awt.*;
 import java.time.LocalDate;
 
 /**
@@ -72,13 +69,15 @@ public class MonthView {
         for(int i = 0; i < 7; i++){
             Label day = new Label();
             day.setText(DAYS_OF_THE_WEEK[i]);
+            day.setAlignment(Pos.CENTER);
             day.setPrefSize(75, 25);
-            day.setTextAlignment(TextAlignment.CENTER);
             daysOfWeek.getChildren().add(day);
         }
 
         //Month button  will display current month and year view when clicked
-        monthBtn = new Button(date.getMonth().toString());
+        monthBtn = new Button(date.getMonth().name());
+        monthBtn.setPrefSize(150, 50);
+        prettyButton(monthBtn);
         monthBtn.setOnAction(e -> {
             yearView.display(date);
             monthView.close();
@@ -86,12 +85,13 @@ public class MonthView {
 
         //Add button will take user to event creator view
         addEventBtn = new Button(" + ");
+        prettyButton(addEventBtn);
         addEventBtn.setOnAction(e -> eventCreatorView.display());
 
         //Next button will take user to the next month
         nextMonthBtn = new Button(" > ");
+        prettyButton(nextMonthBtn);
         nextMonthBtn.setOnAction(e -> {
-            System.out.println(date.getMonth().name() + ": (" + monthView.getHeight() + ", " + monthView.getWidth() + ")");
             monthView.close();
             if(date.getMonthValue() == 12){
                 this.display(date.withYear(date.getYear() + 1).withMonth(1));
@@ -102,6 +102,7 @@ public class MonthView {
 
         //Previous button will take user to the previous month
         prevMonthBtn = new Button(" < ");
+        prettyButton(prevMonthBtn);
         prevMonthBtn.setOnAction(e -> {
             monthView.close();
             if(date.getMonthValue() == 1){
@@ -156,10 +157,9 @@ public class MonthView {
 
         layout.setCenter(dayBtns);
 
-        Scene scene = new Scene(layout);
+        Scene scene = new Scene(layout, 530, 440);
 
-//        monthView.minHeightProperty().setValue(500);
-//        monthView.minWidthProperty().setValue(460);
+
         monthView.setTitle("" + date.getYear());
         monthView.setScene(scene);
         monthView.show();
@@ -170,5 +170,13 @@ public class MonthView {
         int x = y + y / 4 - y / 100 + y / 400;
         int m = month + 12 * ((14 - month) / 12) - 2;
         return (1 + x + (31*m) / 12) % 7;
+    }
+
+    private Button prettyButton(Button uglyButton){
+        uglyButton.setStyle(IDLE_BUTTON_STYLE);
+        uglyButton.setOnMouseEntered(e -> uglyButton.setStyle(HOVERED_BUTTON_STYLE));
+        uglyButton.setOnMouseExited(e -> uglyButton.setStyle(IDLE_BUTTON_STYLE));
+
+        return uglyButton;
     }
 }
