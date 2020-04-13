@@ -3,6 +3,7 @@ package GUI;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -24,15 +25,20 @@ import java.time.format.DateTimeFormatterBuilder;
  * an event to be stored for later use.
  */
 public class EventCreatorView {
-    private TextField eName = new TextField();
-    private TextField eContact = new TextField();
-    private Button cancelBtn = new Button("Cancel");
-    private DatePicker eDate = new DatePicker();
-    private DateTimeFormatterBuilder dateBuilder = new DateTimeFormatterBuilder()
-            .appendPattern("[M/d/yyyy]")
-            .appendPattern("[MM/d/yyyy]")
-            .appendPattern("[M/dd/yyyy]")
-            .appendPattern("[MM/dd/yyyy]");
+    private DatePicker eDate;
+    private final DateTimeFormatterBuilder DATE_BUILDER = new DateTimeFormatterBuilder()
+                .appendPattern("[M/d/yyyy]")
+                .appendPattern("[MM/d/yyyy]")
+                .appendPattern("[M/dd/yyyy]")
+                .appendPattern("[MM/dd/yyyy]");
+
+    public EventCreatorView(){
+        eDate = new DatePicker(LocalDate.now());
+    }
+
+    public EventCreatorView(LocalDate date){
+        eDate = new DatePicker(date);
+    }
     /**
      * This method will be called when the user chooses to create a new event.
      * Based on what the user selects, this method will then call the window,
@@ -51,7 +57,7 @@ public class EventCreatorView {
 
         ComboBox<String> eTypeDropBx = new ComboBox<>();
         eTypeDropBx.setPromptText("Event Type");
-        eTypeDropBx.getItems().addAll("Homework", "Business", "Entertainment", "Custom");
+        eTypeDropBx.getItems().addAll("Homework", "Business");
 
         eName.clear();
         eContact.clear();
@@ -64,19 +70,13 @@ public class EventCreatorView {
                 case "Business":
                     createBusiness(addEventStage);
                     break;
-                case "Entertainment":
-                    // code block
-                    break;
-                case "Custom":
-                    // code block
-                    break;
                 default:
-                    // code block
             }
         });
 
         layout.getChildren().addAll(title, eTypeDropBx);
 
+        Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e -> addEventStage.close());
 
         layout.getChildren().add(cancelBtn);
@@ -89,7 +89,7 @@ public class EventCreatorView {
     private void createHomework(Stage stage){
 
         VBox layout = new VBox();
-        layout.setPadding(new Insets(10, 10, 10, 10));
+        layout.setPadding(new Insets(10));
 
         TextField turnInPlace = new TextField();
         turnInPlace.setPromptText("Where to turn in Assignment");
@@ -98,22 +98,28 @@ public class EventCreatorView {
         classFor.setPromptText("Name of class");
 
         TextField eDetails = new TextField();
-        eDetails.minHeight(classFor.getHeight() * 2);
         eDetails.setPromptText("Details of the Assignment");
 
+        TextField eName = new TextField();
         eName.setPromptText("Name of Assignment");
+
+        TextField eContact = new TextField();
         eContact.setPromptText("Name of Professor");
+
         eDate.setPromptText("Assignment due date");
 
+        HBox bottomBtns = new HBox();
+
+        Button cancelBtn = new Button("Cancel");
+        cancelBtn.setOnAction(e -> stage.close());
         Button saveBtn = new Button("Save Event");
         saveBtn.setOnAction(e -> {
-
             if(eDate.getEditor().getText().equals("")) {
                 Errors.setError("Please select a date");     //This should probably be handled in the homework class
                 AlertView.display();
             } else {
                 Homework newEvent = new Homework(eName.getText(), eDetails.getText(),
-                        LocalDate.parse(eDate.getEditor().getText(), dateBuilder.toFormatter()),
+                        LocalDate.parse(eDate.getEditor().getText(), DATE_BUILDER.toFormatter()),
                         turnInPlace.getText(), classFor.getText());
                 if(Errors.getBool()){
                     AlertView.display();
@@ -122,13 +128,11 @@ public class EventCreatorView {
                     stage.close();
                 }
             }
-
         });
+        bottomBtns.getChildren().addAll(saveBtn, cancelBtn);
 
-
-        cancelBtn.setOnAction(e -> stage.close());
         layout.getChildren().addAll(eName, classFor, eContact, eDate, turnInPlace, eDetails,
-                saveBtn, cancelBtn);
+                bottomBtns);
         stage.setScene(new Scene(layout));
     }
     
