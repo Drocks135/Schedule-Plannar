@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -49,20 +50,27 @@ public class DayView {
         VBox lilBox = new VBox();
 
         HBox topStuff = new HBox();
+        Label eventNum = new Label();
+        eventNum.setTooltip(new Tooltip("Number of Events"));
 
         Button nextEvent = new Button(">");
+        nextEvent.setTooltip(new Tooltip("Next Event"));
         nextEvent.setStyle(IDLE_BUTTON_STYLE);
         nextEvent.setOnMouseEntered(e -> nextEvent.setStyle(HOVERED_BUTTON_STYLE));
         nextEvent.setOnMouseExited(e -> nextEvent.setStyle(IDLE_BUTTON_STYLE));
 
         Button prevEvent = new Button("<");
+        prevEvent.setTooltip(new Tooltip("Previous Event"));
         prevEvent.setStyle(IDLE_BUTTON_STYLE);
         prevEvent.setOnMouseEntered(e -> prevEvent.setStyle(HOVERED_BUTTON_STYLE));
         prevEvent.setOnMouseExited(e -> prevEvent.setStyle(IDLE_BUTTON_STYLE));
 
+
         if(events == null) {
             lilBox.getChildren().add(new Label("No Events Today"));
+            eventNum.setText("None");
         } else {
+            eventNum.setText("" + (index + 1) + "/" + events.size());
             nextEvent.setOnAction(e -> {
                 if (index + 1 <= events.size() - 1) {
                     index++;
@@ -71,6 +79,7 @@ public class DayView {
                     index = 0;
                     showEvent(events, index, lilBox);
                 }
+                eventNum.setText("" + (index + 1) + "/" + events.size());
             });
             prevEvent.setOnAction(e -> {
                 if (index - 1 >= 0) {
@@ -80,10 +89,11 @@ public class DayView {
                     index = events.size() - 1;
                     showEvent(events, index, lilBox);
                 }
+                eventNum.setText("" + (index + 1) + "/" + events.size());
             });
             showEvent(events, index, lilBox);
         }
-        topStuff.getChildren().addAll(prettyDay, prevEvent, nextEvent);
+        topStuff.getChildren().addAll(prettyDay, prevEvent, nextEvent, eventNum);
 
         HBox bottomBtns = new HBox();
         Button closeBtn = new Button("Close");
