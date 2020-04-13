@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import projEvents.EventStorage;
+
 import java.time.LocalDate;
 
 /**
@@ -139,13 +141,25 @@ public class MonthView {
                     dayButtons[i][j] = new Button("" + dayCnt);
                     Button days = dayButtons[i][j];
                     days.setBackground(Background.EMPTY);
-                    if (LocalDate.now().getDayOfMonth() == dayCnt &&
-                            LocalDate.now().getMonthValue() == date.getMonthValue() &&
-                            LocalDate.now().getYear() == date.getYear()) {
+                    if (EventStorage.getInstance().GetListOfDay(date.withDayOfMonth(dayCnt)) != null){
                         dayButtons[i][j].setStyle("-fx-border-color: #ff0000; -fx-border-widty: 5px;");
                     }
-                    days.setOnMouseEntered(e -> days.setStyle(HOVERED_BUTTON_STYLE));
-                    days.setOnMouseExited(e -> days.setStyle(IDLE_BUTTON_STYLE));
+                    days.setOnMouseEntered(e -> {
+                        if(EventStorage.getInstance().GetListOfDay(date.withDayOfMonth
+                                (Integer.parseInt((days.getText())))) == null) {
+                            days.setStyle(HOVERED_BUTTON_STYLE);
+                        } else {
+                            days.setStyle(HOVERED_BUTTON_STYLE + "-fx-border-color: #ff0000; -fx-border-widty: 5px;");
+                        }
+                    });
+                    days.setOnMouseExited(e -> {
+                        if(EventStorage.getInstance().GetListOfDay(date.withDayOfMonth
+                                (Integer.parseInt((days.getText())))) != null) {
+                            days.setStyle(IDLE_BUTTON_STYLE + "-fx-border-color: #ff0000; -fx-border-widty: 5px;");
+                        } else {
+                            days.setStyle(IDLE_BUTTON_STYLE);
+                        }
+                    });
                     days.setOnAction(e -> dayView.display(date.withDayOfMonth(Integer.parseInt((days.getText())))));
                     days.setPrefSize(75, 60);
                     GridPane.setConstraints(days, j, i);
@@ -178,5 +192,9 @@ public class MonthView {
         uglyButton.setOnMouseExited(e -> uglyButton.setStyle(IDLE_BUTTON_STYLE));
 
         return uglyButton;
+    }
+
+    private void buttonCheck(Button btn){
+
     }
 }

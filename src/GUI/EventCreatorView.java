@@ -46,14 +46,14 @@ public class EventCreatorView {
      */
     public void display () {
 
+        Text title = new Text("Create Event:");
+        title.setFont(Font.font("", FontWeight.NORMAL, 20));
         Stage addEventStage = new Stage();
+        addEventStage.setTitle(title.getText());
         addEventStage.initModality(Modality.APPLICATION_MODAL);
 
         VBox layout = new VBox();
         layout.setPadding(new Insets(10, 10, 10, 10));
-
-        Text title = new Text("Create Event:");
-        title.setFont(Font.font("", FontWeight.NORMAL, 20));
 
         ComboBox<String> eTypeDropBx = new ComboBox<>();
         eTypeDropBx.setPromptText("Event Type");

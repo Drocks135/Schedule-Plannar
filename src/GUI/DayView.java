@@ -21,6 +21,7 @@ import java.util.LinkedList;
  */
 public class DayView {
 
+    private final String IDLE_BUTTON_STYLE = "-fx-background-color: transparent;";
     private final String HOVERED_BUTTON_STYLE = "-fx-background-color: " +
             "-fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;";
     private static int index = 0;
@@ -50,14 +51,14 @@ public class DayView {
         HBox topStuff = new HBox();
 
         Button nextEvent = new Button(">");
-        nextEvent.setStyle("-fx-background-color: transparent;");
+        nextEvent.setStyle(IDLE_BUTTON_STYLE);
         nextEvent.setOnMouseEntered(e -> nextEvent.setStyle(HOVERED_BUTTON_STYLE));
-        nextEvent.setOnMouseExited(e -> nextEvent.setStyle("-fx-background-color: transparent;"));
+        nextEvent.setOnMouseExited(e -> nextEvent.setStyle(IDLE_BUTTON_STYLE));
 
         Button prevEvent = new Button("<");
-        prevEvent.setStyle("-fx-background-color: transparent;");
+        prevEvent.setStyle(IDLE_BUTTON_STYLE);
         prevEvent.setOnMouseEntered(e -> prevEvent.setStyle(HOVERED_BUTTON_STYLE));
-        prevEvent.setOnMouseExited(e -> prevEvent.setStyle("-fx-background-color: transparent;"));
+        prevEvent.setOnMouseExited(e -> prevEvent.setStyle(IDLE_BUTTON_STYLE));
 
         if(events == null) {
             lilBox.getChildren().add(new Label("No Events Today"));
