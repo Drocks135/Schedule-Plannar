@@ -26,13 +26,7 @@ public class EventStorage {
     private EventStorage(){
        EventMap = new HashMap<>();
        size = 0;
-        try {
-            File SaveLocation = new File("Save.txt");
-            if (SaveLocation.exists())
-                storage.load();
-        } catch (Exception e){
-            System.out.println("Invalid Load");
-        }
+
     }
 
     /**********************************************************************************************
@@ -43,8 +37,16 @@ public class EventStorage {
      * @return The EventStorage object that the program is currently using
      *********************************************************************************************/
     public static EventStorage getInstance(){
-        if (storage == null)
+        if (storage == null) {
             storage = new EventStorage();
+            try {
+                File SaveLocation = new File("Save.txt");
+                if (SaveLocation.exists())
+                    storage.load();
+            } catch (Exception e) {
+                System.out.println("Invalid Load");
+            }
+        }
         return storage;
     }
 
@@ -140,7 +142,7 @@ public class EventStorage {
      *
      *********************************************************************************************/
     private void save() throws IOException {
-        File file = new File("save.txt");
+        File file = new File("Save.txt");
         StringBuilder eventString = new StringBuilder();
         ArrayList<Events> events = EventStorage.getInstance().toArray();
         for (int i = 0; i < size; i++) {
@@ -180,7 +182,7 @@ public class EventStorage {
      *
      *********************************************************************************************/
     private void load() throws IOException, ParseException {
-        String data = readFileAsString("save_load.txt");
+        String data = readFileAsString("Save.txt");
         String[] events = data.split(";"); // split file into different events
         for (int i = 0; i < events.length; i++) {
             EventStorage.getInstance().addEvent(stringTo(events[i]));
