@@ -1,7 +1,5 @@
 package projEvents;
 
-import javafx.event.Event;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,11 +26,20 @@ public class EventStorage {
     private EventStorage(){
        EventMap = new HashMap<>();
        size = 0;
+        try {
+            File SaveLocation = new File("Save.txt");
+            if (SaveLocation.exists())
+                storage.load();
+        } catch (Exception e){
+            System.out.println("Invalid Load");
+        }
     }
 
     /**********************************************************************************************
      *  This is a singleton implementation of EventStorage, by calling getInstance the return will
-     *  either be a new instance if one does not exist or the existing instance.
+     *  either be a new instance if one does not exist or the existing instance. On program start
+     *  the program will check for an existing save file and if it exists, will load from that
+     *  into EventStorage.
      * @return The EventStorage object that the program is currently using
      *********************************************************************************************/
     public static EventStorage getInstance(){
@@ -59,6 +66,11 @@ public class EventStorage {
             list = CreateList(event);
             EventMap.put(key, list);
             size++;
+        }
+        try {
+            storage.save();
+        } catch (Exception e){
+            System.out.println("Program did not save");
         }
     }
 
@@ -127,8 +139,8 @@ public class EventStorage {
     /**********************************************************************************************
      *
      *********************************************************************************************/
-    public void save() throws IOException {
-        File file = new File("save_load.txt");
+    private void save() throws IOException {
+        File file = new File("save.txt");
         StringBuilder eventString = new StringBuilder();
         ArrayList<Events> events = EventStorage.getInstance().toArray();
         for (int i = 0; i < size; i++) {
@@ -167,7 +179,7 @@ public class EventStorage {
     /**********************************************************************************************
      *
      *********************************************************************************************/
-    public void load() throws IOException, ParseException {
+    private void load() throws IOException, ParseException {
         String data = readFileAsString("save_load.txt");
         String[] events = data.split(";"); // split file into different events
         for (int i = 0; i < events.length; i++) {
