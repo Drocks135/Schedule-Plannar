@@ -10,6 +10,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import projEvents.Business;
 import projEvents.Errors;
 import projEvents.EventStorage;
 import projEvents.Homework;
@@ -60,9 +61,6 @@ public class EventCreatorView {
         ComboBox<String> eTypeDropBx = new ComboBox<>();
         eTypeDropBx.setPromptText("Event Type");
         eTypeDropBx.getItems().addAll("Homework", "Business");
-
-        eName.clear();
-        eContact.clear();
         
         eTypeDropBx.setOnAction(e -> {
             switch(eTypeDropBx.getValue()) {
@@ -157,7 +155,10 @@ public class EventCreatorView {
         eDetails.minHeight(Location.getHeight() * 2);
         eDetails.setPromptText("Details of the Meeting");
 
+        TextField eName = new TextField();
         eName.setPromptText("Name of Company");
+
+        TextField eContact = new TextField();
         eContact.setPromptText("Name of Contact");
         eDate.setPromptText("Meeting Date");
 
@@ -172,7 +173,7 @@ public class EventCreatorView {
                 AlertView.display();
             }
             Business newEvent = new Business(eName.getText(), eDetails.getText(),
-                    LocalDate.parse(eDate.getEditor().getText(), dateBuilder.toFormatter()),
+                    LocalDate.parse(eDate.getEditor().getText(), DATE_BUILDER.toFormatter()),
                     Location.getText(), temp);
             if(eDate.getEditor().getText().equals("")) {
                 Errors.setError("Please select a date");     //This should probably be handled in the homework class
@@ -189,7 +190,7 @@ public class EventCreatorView {
 
         });
 
-
+        Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e -> stage.close());
         layout.getChildren().addAll(eName, Location, eContact, eDate, Duration, eDetails, saveBtn, cancelBtn);
         stage.setScene(new Scene(layout));
