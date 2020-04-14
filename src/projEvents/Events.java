@@ -105,9 +105,9 @@ public class Events {
      */
     public String toString() {
         String eventString = "";
-        DateTimeFormatter ft = DateTimeFormatter.ofPattern("dMMyyyy");
+        DateTimeFormatter ft = DateTimeFormatter.ofPattern("ddMMyyyy");
         String date = this.getDue().format(ft);
-        eventString += (this.getName() + "," + this.getDetails() + "," +
+        eventString += ("e," + this.getName() + "," + this.getDetails() + "," +
                 date);
         return eventString;
     }

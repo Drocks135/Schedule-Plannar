@@ -159,9 +159,9 @@ public class Homework extends Events {
     ***********************************************************************************************/
     public String toString() {
         String eventString = "";
-        DateTimeFormatter ft = DateTimeFormatter.ofPattern("dMMyyyy");
+        DateTimeFormatter ft = DateTimeFormatter.ofPattern("ddMMyyyy");
         String date = this.getDue().format(ft);
-        eventString += (this.getName() + "," + this.getDetails() + "," +
+        eventString += ("h," + this.getName() + "," + this.getDetails() + "," +
                 date + "," + this.getturnInPlace() + "," + this.getclassFor() +
                 "," + this.gradeGot() + "," + this.gradeOut() + ";");
         return eventString;
