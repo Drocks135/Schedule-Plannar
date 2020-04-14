@@ -18,11 +18,6 @@ import java.time.LocalDate;
 public class MonthView {
 
     private LocalDate date;
-    private Button[][] dayButtons;
-    private Button monthBtn;
-    private Button nextMonthBtn;
-    private Button prevMonthBtn;
-    private Button addEventBtn;
     private final String IDLE_BUTTON_STYLE = "-fx-background-color: transparent;";
     private final String HOVERED_BUTTON_STYLE = "-fx-background-color: " +
             "-fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;";
@@ -65,6 +60,7 @@ public class MonthView {
         BorderPane layout = new BorderPane();
         GridPane dayBtns = new GridPane();
         HBox topBtns = new HBox();
+        topBtns.setSpacing(5);
         HBox daysOfWeek = new HBox();
 
         //Creating the labels for the days of the week
@@ -77,7 +73,8 @@ public class MonthView {
         }
 
         //Month button  will display current month and year view when clicked
-        monthBtn = new Button(date.getMonth().name());
+
+        Button monthBtn = new Button(date.getMonth().name());
         monthBtn.setPrefSize(150, 50);
         prettyButton(monthBtn);
         monthBtn.setOnAction(e -> {
@@ -86,12 +83,12 @@ public class MonthView {
         });
 
         //Add button will take user to event creator view
-        addEventBtn = new Button(" + ");
+        Button addEventBtn = new Button(" + ");
         prettyButton(addEventBtn);
         addEventBtn.setOnAction(e -> eventCreatorView.display());
 
         //Next button will take user to the next month
-        nextMonthBtn = new Button(" > ");
+        Button nextMonthBtn = new Button(" > ");
         prettyButton(nextMonthBtn);
         nextMonthBtn.setOnAction(e -> {
             monthView.close();
@@ -103,7 +100,7 @@ public class MonthView {
         });
 
         //Previous button will take user to the previous month
-        prevMonthBtn = new Button(" < ");
+        Button prevMonthBtn = new Button(" < ");
         prettyButton(prevMonthBtn);
         prevMonthBtn.setOnAction(e -> {
             monthView.close();
@@ -121,7 +118,7 @@ public class MonthView {
         layout.setTop(top);
 
         //An array to hold the buttons for each day in the month
-        dayButtons = new Button[6][7];
+        Button[][] dayButtons = new Button[6][7];
 
         //Day will represent the day of the week the month starts on
         int day = dayMonthBegins(date.getMonthValue(), date.getYear());
@@ -186,15 +183,9 @@ public class MonthView {
         return (1 + x + (31*m) / 12) % 7;
     }
 
-    private Button prettyButton(Button uglyButton){
+    private void prettyButton(Button uglyButton){
         uglyButton.setStyle(IDLE_BUTTON_STYLE);
         uglyButton.setOnMouseEntered(e -> uglyButton.setStyle(HOVERED_BUTTON_STYLE));
         uglyButton.setOnMouseExited(e -> uglyButton.setStyle(IDLE_BUTTON_STYLE));
-
-        return uglyButton;
-    }
-
-    private void buttonCheck(Button btn){
-
     }
 }

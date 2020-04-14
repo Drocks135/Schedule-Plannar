@@ -37,7 +37,7 @@ public class DayView {
      *      ***********
      */
     public void display(LocalDate date) {
-        EventCreatorView eventCreatorView = new EventCreatorView(date);
+        EventCreatorView eventCreatorView = new EventCreatorView();
 
         LinkedList<Events> events = EventStorage.getInstance().GetListOfDay(date);
 
@@ -48,6 +48,8 @@ public class DayView {
         Font dayFont = new Font(15);
         prettyDay.setFont(dayFont);
         VBox lilBox = new VBox();
+        lilBox.setPadding(new Insets(5));
+        lilBox.setSpacing(5);
 
         HBox topStuff = new HBox();
         Label eventNum = new Label();
@@ -96,28 +98,37 @@ public class DayView {
         topStuff.getChildren().addAll(prettyDay, prevEvent, nextEvent, eventNum);
 
         HBox bottomBtns = new HBox();
+        bottomBtns.setSpacing(5);
+        bottomBtns.setPadding(new Insets(5));
         Button closeBtn = new Button("Close");
         closeBtn.setOnAction(e -> dayView.close());
         Button addBtn = new Button("Add Event");
         addBtn.setOnAction(e -> {
             dayView.close();
-            eventCreatorView.display();
+            eventCreatorView.display(date);
         });
         bottomBtns.getChildren().addAll(closeBtn, addBtn);
+        bottomBtns.setSpacing(10);
 
         VBox bigBox = new VBox();
 
         bigBox.getChildren().addAll(topStuff, lilBox, bottomBtns);
-        dayView.setScene(new Scene(bigBox, 200, 200));
+        dayView.setScene(new Scene(bigBox));
         dayView.show();
     }
 
     private void showEvent(LinkedList<Events> eventList, int index, VBox eventDisplay){
         eventDisplay.getChildren().clear();
+
         Events event = eventList.get(index);
+
         Label eName = new Label(event.getName());
         Label eDetail = new Label(event.getDetails());
+
+        eDetail.setPadding(new Insets(10));
         eDetail.setWrapText(true);
+
+
 
         eventDisplay.getChildren().addAll(eName, eDetail);
     }

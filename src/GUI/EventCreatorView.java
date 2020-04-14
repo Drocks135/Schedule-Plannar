@@ -36,9 +36,11 @@ public class EventCreatorView {
         eDate = new DatePicker(LocalDate.now());
     }
 
-    public EventCreatorView(LocalDate date){
+    public void display(LocalDate date){
         eDate = new DatePicker(date);
+        display();
     }
+
     /**
      * This method will be called when the user chooses to create a new event.
      * Based on what the user selects, this method will then call the window,
@@ -46,14 +48,14 @@ public class EventCreatorView {
      */
     public void display () {
 
-        Text title = new Text("Create Event:");
+        Text title = new Text("Add Event:");
         title.setFont(Font.font("", FontWeight.NORMAL, 20));
         Stage addEventStage = new Stage();
-        addEventStage.setTitle(title.getText());
         addEventStage.initModality(Modality.APPLICATION_MODAL);
 
         VBox layout = new VBox();
-        layout.setPadding(new Insets(10, 10, 10, 10));
+        layout.setPadding(new Insets(5));
+        layout.setSpacing(5);
 
         ComboBox<String> eTypeDropBx = new ComboBox<>();
         eTypeDropBx.setPromptText("Event Type");
@@ -87,6 +89,7 @@ public class EventCreatorView {
 
         VBox layout = new VBox();
         layout.setPadding(new Insets(10));
+        layout.setSpacing(10);
 
         TextField turnInPlace = new TextField();
         turnInPlace.setPromptText("Where to turn in Assignment");
@@ -94,8 +97,10 @@ public class EventCreatorView {
         TextField classFor = new TextField();
         classFor.setPromptText("Name of class");
 
-        TextField eDetails = new TextField();
+        TextArea eDetails = new TextArea();
         eDetails.setPromptText("Details of the Assignment");
+        eDetails.setWrapText(true);
+        eDetails.setPrefColumnCount(1);
 
         TextField eName = new TextField();
         eName.setPromptText("Name of Assignment");
@@ -106,6 +111,7 @@ public class EventCreatorView {
         eDate.setPromptText("Assignment due date");
 
         HBox bottomBtns = new HBox();
+        bottomBtns.setSpacing(50);
 
         Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e -> stage.close());
