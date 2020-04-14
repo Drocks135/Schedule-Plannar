@@ -2,6 +2,13 @@ package projEvents;
 
 import javafx.event.Event;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 
@@ -99,10 +106,72 @@ public class EventStorage {
         return allEvents;
     }
 
+    /**********************************************************************************************
+     *
+     *********************************************************************************************/
     private LinkedList<Events> CreateList(Events event){
         LinkedList<Events> list = new LinkedList<>();
         list.add(event);
         return list;
     }
 
+    /**********************************************************************************************
+     *
+     *********************************************************************************************/
+    public static String readFileAsString(String fileName) throws IOException {
+        String data;
+        data = new String(Files.readAllBytes(Paths.get(fileName)));
+        return data;
+    }
+
+    /**********************************************************************************************
+     *
+     *********************************************************************************************/
+    public void save() throws IOException {
+        File file = new File("save_load.txt");
+        StringBuilder eventString = new StringBuilder();
+        ArrayList<Events> events = EventStorage.getInstance().toArray();
+        for (int i = 0; i < size; i++) {
+            eventString.append(events.get(i).toString());
+        }
+        // overwrites in case file already exists.
+        FileOutputStream fos = new FileOutputStream(file, false);
+        fos.write(eventString.toString().getBytes());
+        fos.close();
+        System.out.println("saved");
+    }
+
+    /**********************************************************************************************
+     *
+     *********************************************************************************************/
+    public Events stringTo(String event) throws ParseException {
+        // Splits events into an array of Strings.
+        String[] temp = event.split(",");
+        DateTimeFormatter ft = DateTimeFormatter.ofPattern("dMMyyyy");
+        LocalDate d = LocalDate.parse(temp[2], ft);
+        // for a basic Events object.
+        if(temp.length == 3) {
+            return new Events(temp[0], temp[1], d);
+        }
+        // for a Business object
+        else if(temp.length == 5) {
+            return new Business(temp[0], temp[1], d, temp[3], Double.parseDouble(temp[4]));
+        }
+        // for a Homework object with a gradeOut.
+        else if(temp.length == 6) {
+            return new Homework(temp[0], temp[1], d, temp[3], temp[4], Integer.parseInt(temp[5]));
+        }
+        return new Events("something", "went_wrong", d);
+    }
+
+    /**********************************************************************************************
+     *
+     *********************************************************************************************/
+    public void load() throws IOException, ParseException {
+        String data = readFileAsString("save_load.txt");
+        String[] events = data.split(";"); // split file into different events
+        for (int i = 0; i < events.length; i++) {
+            EventStorage.getInstance().addEvent(stringTo(events[i]));
+        }
+    }
 }
