@@ -18,10 +18,6 @@ public class Business extends Events{
     public Business() {
     }
 
-
-    /*
-    Bunch of get methods to return attributes of homework specific events
-    */
     public String getLocation() {
         return Location;
     }
