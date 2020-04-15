@@ -19,7 +19,7 @@ public class Events {
     private String name=null;
     private String details=null;
     private LocalDate due=null;
-    
+
     public Events() { }
 
     /**********************************************************************************************
@@ -35,7 +35,7 @@ public class Events {
         setDue(due);
     }
 
-     /*********************************************************************************************
+    /*********************************************************************************************
      * @return due: This is when the Event is going to happen
      */
     public LocalDate getDue() {
@@ -105,9 +105,9 @@ public class Events {
      */
     public String toString() {
         String eventString = "";
-        DateTimeFormatter ft = DateTimeFormatter.ofPattern("dMMyyyy");
+        DateTimeFormatter ft = DateTimeFormatter.ofPattern("ddMMyyyy");
         String date = this.getDue().format(ft);
-        eventString += (this.getName() + "," + this.getDetails() + "," +
+        eventString += ("e," + this.getName() + "," + this.getDetails() + "," +
                 date);
         return eventString;
     }

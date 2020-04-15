@@ -15,6 +15,10 @@ public class Business extends Events{
         setDuration(duration);
     }
 
+    public Business() {
+    }
+
+
     /*
     Bunch of get methods to return attributes of homework specific events
     */
@@ -42,9 +46,9 @@ public class Business extends Events{
 
     public String toString() {
         String eventString = "";
-        DateTimeFormatter ft = DateTimeFormatter.ofPattern("dMMyyyy");
+        DateTimeFormatter ft = DateTimeFormatter.ofPattern("ddMMyyyy");
         String date = this.getDue().format(ft);
-        eventString += (this.getName() + "," + this.getDetails() + "," +
+        eventString += ("b," + this.getName() + "," + this.getDetails() + "," +
                 date + "," + this.getLocation() + "," + this.getDuration() + ";");
         return eventString;
     }
