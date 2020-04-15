@@ -1,5 +1,9 @@
 package projEvents;
 
+<<<<<<< Updated upstream
+=======
+//import org.testng.annotations.Test;
+>>>>>>> Stashed changes
 import org.testng.annotations.Test;
 import java.time.LocalDate;
 import java.util.LinkedList;
