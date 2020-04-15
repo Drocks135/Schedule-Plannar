@@ -15,10 +15,6 @@ public class Business extends Events{
         setDuration(duration);
     }
 
-    public Business() {
-    }
-
-
     /*
     Bunch of get methods to return attributes of homework specific events
     */
