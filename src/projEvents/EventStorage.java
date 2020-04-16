@@ -60,12 +60,11 @@ public class EventStorage {
         if (EventMap.containsKey(key)) {
             list = EventMap.get(key);
             list.add(event);
-            size++;
         } else {
             list = CreateList(event);
             EventMap.put(key, list);
-            size++;
         }
+        size++;
         storage.save();
 
     }
@@ -74,6 +73,7 @@ public class EventStorage {
      *  Retrieves the head of a linked list that contains all the events for a particular day
      * @param date: A LocalDate object for the day of events to be retrieved
      * @return The head of a linked list of Events that contains all the Events of a specific day
+     * or returns null if no event is on that day.
      *********************************************************************************************/
     public LinkedList<Events> GetListOfDay(LocalDate date) {
         String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
@@ -92,7 +92,7 @@ public class EventStorage {
             ListIterator<Events> iter = temp.listIterator(0);
             while (iter.hasNext()) {
                 Events e = iter.next();
-                if (e.getName() == name)
+                if (e.getName().equals(name))
                     iter.remove();
                     size--;
             }
@@ -115,6 +115,10 @@ public class EventStorage {
         return allEvents;
     }
 
+    public void Clear(){
+        storage = null;
+    }
+
     /**********************************************************************************************
      *
      *********************************************************************************************/
@@ -127,7 +131,7 @@ public class EventStorage {
     /**********************************************************************************************
      *
      *********************************************************************************************/
-    public static String readFileAsString(String fileName) throws IOException {
+    private static String readFileAsString(String fileName) throws IOException {
         String data;
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
@@ -148,7 +152,6 @@ public class EventStorage {
             FileOutputStream fos = new FileOutputStream(file, false);
             fos.write(eventString.toString().getBytes());
             fos.close();
-            System.out.println("saved");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -190,7 +193,7 @@ public class EventStorage {
             String data = readFileAsString("Save.txt");
             String[] events = data.split(";"); // split file into different events
             for (String event : events) {
-                EventStorage.getInstance().addEvent(stringTo(event));
+                storage.addEvent(stringTo(event));
             }
         } catch (Exception e){
             e.printStackTrace();
