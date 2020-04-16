@@ -42,10 +42,34 @@ public class Business extends Events{
 
     public String toString() {
         String eventString = "";
-        DateTimeFormatter ft = DateTimeFormatter.ofPattern("dMMyyyy");
+        DateTimeFormatter ft = DateTimeFormatter.ofPattern("ddMMyyyy");
         String date = this.getDue().format(ft);
-        eventString += (this.getName() + "," + this.getDetails() + "," +
+        eventString += ("b," + this.getName() + "," + this.getDetails() + "," +
                 date + "," + this.getLocation() + "," + this.getDuration() + ";");
         return eventString;
+    }
+
+    @Override
+    /**********************************************************************************************
+     * Compares an Object to Business objects and returns if their members are equal
+     * @param o: Any object to compare to a Business
+     * @return returns true if every field in the objects are equal returns false else
+     **********************************************************************************************/
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Events)) {
+            return false;
+        }
+
+        Business c = (Business) o;
+
+        return this.getName().equals(c.getName())
+                && this.getDue().equals(c.getDue())
+                && this.getDetails().equals(c.getDetails())
+                && this.duration == c.getDuration()
+                && this.Location.equals(c.Location);
     }
 }
