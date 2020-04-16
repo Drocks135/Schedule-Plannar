@@ -11,9 +11,9 @@ import projEvents.EventStorage;
 
 import java.time.LocalDate;
 
-/**
- * MonthView is a display which will act as the home screen for the user. It displays the individual
- * days of the month and will have an indicator for each event on any given day.
+/**************************************************************************************************
+ * MonthView is a display which will act as the home screen for the user. It displays the
+ * individual days of the month and will have an indicator for each event on any given day.
  */
 public class MonthView {
 
@@ -79,8 +79,13 @@ public class MonthView {
         monthBtn.setPrefSize(160, 50);
         prettyButton(monthBtn);
         monthBtn.setStyle(IDLE_BUTTON_STYLE + "-fx-font-size:24");
-        monthBtn.setOnMouseEntered(e -> monthBtn.setStyle(HOVERED_BUTTON_STYLE + "-fx-font-size:24"));
-        monthBtn.setOnMouseExited(e -> monthBtn.setStyle(IDLE_BUTTON_STYLE + "-fx-font-size:24"));
+
+        monthBtn.setOnMouseEntered(e ->
+                monthBtn.setStyle(HOVERED_BUTTON_STYLE + "-fx-font-size:24"));
+
+        monthBtn.setOnMouseExited(e ->
+                monthBtn.setStyle(IDLE_BUTTON_STYLE + "-fx-font-size:24"));
+
         monthBtn.setOnAction(e -> {
             yearView.display(date);
             monthView.close();
@@ -90,9 +95,9 @@ public class MonthView {
         Button addEventBtn = new Button(" + ");
         prettyButton(addEventBtn);
         addEventBtn.setOnAction(e -> {
-                eventCreatorView.display();
-                monthView.close();
-                this.display();
+            eventCreatorView.display();
+            monthView.close();
+            this.display();
         });
 
         //Next button will take user to the next month
@@ -166,7 +171,7 @@ public class MonthView {
                         }
                     });
                     days.setOnAction(e -> {
-                            dayView.display(date.withDayOfMonth(Integer.parseInt((days.getText()))));
+                        dayView.display(date.withDayOfMonth(Integer.parseInt((days.getText()))));
                     });
                     days.setPrefSize(75, 60);
                     GridPane.setConstraints(days, j, i);

@@ -26,12 +26,11 @@ public class Homework extends Events {
 
 
     /**********************************************************************************************
-     @paramname:
-     The name of the homework assignment, extended from Events
-     details: What is the homework assignment about, extended from Events
-     due: When should this homework assignment be turned in, extended from Events
-     turnInPlace: Where should this homework assignment be turned in
-     classFor: What class is this homework assignment for
+     @param name: The name of the homework assignment, extended from Events
+     @param details: What is the homework assignment about, extended from Events
+     @param due: When should this homework assignment be turned in, extended from Events
+     @param turnInPlace: Where should this homework assignment be turned in
+     @param classFor: What class is this homework assignment for
      @return none
      ***********************************************************************************************/
     public Homework(String name, String details, LocalDate due, String turnInPlace, String classFor) {
@@ -47,13 +46,12 @@ public class Homework extends Events {
     }
 
     /**********************************************************************************************
-     @param
-     name: The name of the homework assignment, extended from Events
-     details: What is the homework assignment about, extended from Events
-     due: When should this homework assignment be turned in, extended from Events
-     turnInPlace: Where should this homework assignment be turned in
-     classFor: What class is this homework assignment for
-     gradeOut: How many points are possible to get in this homework assignment
+     @param name: The name of the homework assignment, extended from Events
+     @param details: What is the homework assignment about, extended from Events
+     @param due: When should this homework assignment be turned in, extended from Events
+     @param turnInPlace: Where should this homework assignment be turned in
+     @param classFor: What class is this homework assignment for
+     @param gradeOut: How many points are possible to get in this homework assignment
      @return none
      ***********************************************************************************************/
     public Homework(String name, String details, LocalDate due, String turnInPlace, String classFor, int gradeOut) {
@@ -67,7 +65,6 @@ public class Homework extends Events {
 
 
     /**********************************************************************************************
-     @param none
      @return turnInPlace: Where should this homework assignment be turned in
      ***********************************************************************************************/
     public String getturnInPlace() {
@@ -75,7 +72,6 @@ public class Homework extends Events {
     }
 
     /**********************************************************************************************
-     @param none
      @return classFor: What class is this homework assignment for
      ***********************************************************************************************/
     public String getclassFor() {
@@ -83,7 +79,6 @@ public class Homework extends Events {
     }
 
     /**********************************************************************************************
-     @param none
      @return gradeGot: How many points the user got in this homework assignment
      ***********************************************************************************************/
     public int gradeGot() {
@@ -91,7 +86,6 @@ public class Homework extends Events {
     }
 
     /**********************************************************************************************
-     @param none
      @return gradeOut: How many points are possible to get in this homework assignment
      ***********************************************************************************************/
     public int gradeOut() {
@@ -101,7 +95,6 @@ public class Homework extends Events {
 
     /**********************************************************************************************
      @param turnInPlace: sets Where should this homework assignment be turned in
-     @return none
      ***********************************************************************************************/
     public void setturnInPlace(String turnInPlace) {
         this.turnInPlace = turnInPlace;
@@ -109,7 +102,6 @@ public class Homework extends Events {
 
     /**********************************************************************************************
      @param classFor: sets What class is this homework assignment for
-     @return none
       * Follows some basic error checking, to make sure the class isn't left blank or too long
      ***********************************************************************************************/
     public void setclassFor(String classFor) {
@@ -122,7 +114,6 @@ public class Homework extends Events {
     }
     /**********************************************************************************************
      @param gradeGot: Sets How many points the user got in this homework assignment
-     @return none
       * Follows some basic error checking, Make sure you don't get over a 100% or below a 0%
      ***********************************************************************************************/
     public void setgradeGot(int gradeGot) {
@@ -154,8 +145,7 @@ public class Homework extends Events {
             this.gradeOut = gradeOut;
     }
     /**********************************************************************************************
-     @param
-     @return none
+     *
      ***********************************************************************************************/
     public String toString() {
         String eventString = "";
