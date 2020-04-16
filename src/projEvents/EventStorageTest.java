@@ -1,7 +1,11 @@
 package projEvents;
 
 //import org.testng.annotations.Test;
+import jdk.jfr.Event;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.File;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
@@ -11,6 +15,9 @@ public class EventStorageTest {
 
         @Test
         public void TestOneEventCreation(){
+            File file = new File("Save.txt");
+            file.delete();
+
             EventStorage storage = EventStorage.getInstance();
 
             LocalDate date = LocalDate.of(2020, 4, 16);
@@ -25,10 +32,14 @@ public class EventStorageTest {
             list2.add(event);
 
             assertEquals(list.getFirst().getName(), list2.getFirst().getName());
+            storage.Clear();
         }
 
         @Test
         public void TestMultipleEventsOnOneDay(){
+            File file = new File("Save.txt");
+            file.delete();
+
             EventStorage storage = EventStorage.getInstance();
 
             LocalDate date = LocalDate.of(2020, 4, 16);
@@ -57,10 +68,15 @@ public class EventStorageTest {
             assertEquals(list.remove().getName(), list2.remove().getName());
             assertEquals(list.size(), 0);
             assertEquals(list2.size(), 0);
+
+            storage.Clear();
         }
 
         @Test
         public void TestMultipleEventsOn30DifferentDays(){
+            File file = new File("Save.txt");
+            file.delete();
+
             EventStorage storage = EventStorage.getInstance();
 
             LocalDate date = LocalDate.of(2020, 4, 20);
@@ -90,6 +106,36 @@ public class EventStorageTest {
 
                 assertEquals(retrievedEvent.getName(), assertEvent.getName());
             }
+            storage.Clear();
+        }
+
+        @Test
+        public void TestSaveLoad(){
+            File file = new File("Save.txt");
+            file.delete();
+            EventStorage storage = EventStorage.getInstance();
+
+            LocalDate date = LocalDate.of(2020, 4, 20);
+            LocalDate diffDate = LocalDate.of(2020, 8, 20);
+
+            Events e = new Events("Test Event", "details", date);
+            Homework h = new Homework("name", "details", date, "turnInPlace", "classFor");
+            Business b = new Business("business", "details", diffDate, "location", 2.0);
+
+            storage.addEvent(e);
+            storage.addEvent(h);
+            storage.addEvent(b);
+
+            //Force reload of storage
+            storage.Clear();
+            storage = EventStorage.getInstance();
+
+            assertEquals(storage.GetListOfDay(date).pop(), e);
+            assertEquals(storage.GetListOfDay(date).pop(), h);
+            assertEquals(storage.GetListOfDay(diffDate).pop(), b);
+
+            storage.Clear();
+
         }
 
 }
