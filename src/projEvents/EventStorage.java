@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.*;
 import java.time.LocalDate;
 
@@ -40,13 +39,10 @@ public class EventStorage {
     public static EventStorage getInstance() {
         if (storage == null) {
             storage = new EventStorage();
-            try {
                 File SaveLocation = new File("Save.txt");
                 if (SaveLocation.exists())
                     storage.load();
-            } catch (Exception e) {
-                System.out.println("Invalid Load");
-            }
+
         }
         return storage;
     }
@@ -70,11 +66,8 @@ public class EventStorage {
             EventMap.put(key, list);
             size++;
         }
-        try {
-            storage.save();
-        } catch (Exception e) {
-            System.out.println("Program did not save");
-        }
+        storage.save();
+
     }
 
     /**********************************************************************************************
@@ -101,6 +94,7 @@ public class EventStorage {
                 Events e = iter.next();
                 if (e.getName() == name)
                     iter.remove();
+                    size--;
             }
         }
     }
@@ -142,7 +136,7 @@ public class EventStorage {
     /**********************************************************************************************
      *
      *********************************************************************************************/
-    private void save() throws IOException {
+    private void save() {
         File file = new File("Save.txt");
         StringBuilder eventString = new StringBuilder();
         ArrayList<Events> events = EventStorage.getInstance().toArray();
@@ -150,10 +144,15 @@ public class EventStorage {
             eventString.append(events.get(i).toString());
         }
         // overwrites in case file already exists.
-        FileOutputStream fos = new FileOutputStream(file, false);
-        fos.write(eventString.toString().getBytes());
-        fos.close();
-        System.out.println("saved");
+        try {
+            FileOutputStream fos = new FileOutputStream(file, false);
+            fos.write(eventString.toString().getBytes());
+            fos.close();
+            System.out.println("saved");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /**********************************************************************************************
@@ -186,11 +185,15 @@ public class EventStorage {
     /**********************************************************************************************
      *
      *********************************************************************************************/
-    private void load() throws IOException, ParseException {
-        String data = readFileAsString("Save.txt");
-        String[] events = data.split(";"); // split file into different events
-        for (int i = 0; i < events.length; i++) {
-            EventStorage.getInstance().addEvent(stringTo(events[i]));
+    private void load() {
+        try {
+            String data = readFileAsString("Save.txt");
+            String[] events = data.split(";"); // split file into different events
+            for (String event : events) {
+                EventStorage.getInstance().addEvent(stringTo(event));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
