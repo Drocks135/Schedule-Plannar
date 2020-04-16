@@ -108,7 +108,29 @@ public class Events {
         DateTimeFormatter ft = DateTimeFormatter.ofPattern("ddMMyyyy");
         String date = this.getDue().format(ft);
         eventString += ("e," + this.getName() + "," + this.getDetails() + "," +
-                date);
+                date + ";");
         return eventString;
+    }
+
+    @Override
+    /**********************************************************************************************
+     * Compares to Events objects and returns if their members are equal
+     * @param o: Any object to compare to an Events
+     * @return returns true if every field in the objects are equal returns false else
+     **********************************************************************************************/
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Events)) {
+            return false;
+        }
+
+        Events c = (Events) o;
+
+        return this.getName().equals(c.getName())
+                && this.getDue().equals(c.getDue())
+                && this.getDetails().equals(c.getDetails());
     }
 }
