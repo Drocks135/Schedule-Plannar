@@ -35,12 +35,13 @@ public class YearView {
      */
     public void display(LocalDate date) {
 
+        Stage yearView = new Stage();
         MonthView monthView = new MonthView();
         GridPane layout = new GridPane();
         layout.setVgap(5);
         layout.setHgap(5);
         layout.setPadding(new Insets(5));
-        Stage yearView = new Stage();
+
         for (int i = 0; i < 12; i++) {
             int month = i;
             Button monthBtn = new Button(months[i]);
@@ -53,7 +54,6 @@ public class YearView {
             layout.getChildren().add(monthBtn);
         }
 
-        yearView.setResizable(true);
         yearView.setTitle("" + date.getYear());
         yearView.setScene(new Scene(layout));
         yearView.show();

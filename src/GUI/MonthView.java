@@ -15,30 +15,37 @@ import java.time.LocalDate;
 /**************************************************************************************************
  * MonthView is a display which will act as the home screen for the user. It displays the
  * individual days of the month and will have an indicator for each event on any given day.
- */
+ *************************************************************************************************/
 public class MonthView {
-
+    /**Holds the most current date*/
     private LocalDate date;
-    private EventStorage events;
+
+    /**The css code used to style the visuals of an idle button*/
     private final String IDLE_BUTTON_STYLE = "-fx-background-color: transparent;";
+
+    /**The css code used to style the visuals of a button that is being hovered over*/
     private final String HOVERED_BUTTON_STYLE = "-fx-background-color: " +
             "-fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;";
+
+    /**The array that holds the number of days in the corresponding month. [0] == leap year*/
     private final int[] DAYS_IN_MONTH = {29, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    /**The array that holds the string values for each day of the week*/
     private final String [] DAYS_OF_THE_WEEK = {"Sunday", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday"};
 
 
-    /**
-     * MonthView will default to the current month.
-     */
+    /**********************************************************************************************
+     * MonthView's default constructor will set the date to the actual current date.
+     *********************************************************************************************/
     public MonthView(){
         date = LocalDate.now();
     }
 
-    /**
-     * Created an overload of display to allow for the month to be changed.
-     * @param date A LocalDate object representation of the desired month.
-     */
+    /**********************************************************************************************
+     * Created an overload of display to allow for the date to be customized.
+     * @param date A LocalDate object representation of the desired date.
+     *********************************************************************************************/
     public void display(LocalDate date){
         this.date = date;
         display();
@@ -57,7 +64,6 @@ public class MonthView {
         YearView yearView = new YearView();
         DayView dayView = new DayView();
         EventCreatorView eventCreatorView = new EventCreatorView();
-
         Stage monthView = new Stage();
         BorderPane layout = new BorderPane();
         GridPane dayBtnBox = new GridPane();
@@ -99,11 +105,7 @@ public class MonthView {
         //Add button will take user to event creator view
         Button addEventBtn = new Button(" + ");
         prettyButton(addEventBtn);
-        addEventBtn.setOnAction(e -> {
-            eventCreatorView.display();
-            monthView.close();
-            this.display();
-        });
+        addEventBtn.setOnAction(e -> eventCreatorView.display());
 
         //Next button will take user to the next month
         Button nextMonthBtn = new Button(" > ");
@@ -131,8 +133,7 @@ public class MonthView {
 
         topBtns.getChildren().addAll(monthBtn, prevMonthBtn, nextMonthBtn, addEventBtn);
 
-        VBox top = new VBox();
-        top.getChildren().addAll(topBtns, daysOfWeek);
+        VBox top = new VBox(5, topBtns, daysOfWeek);
         layout.setTop(top);
 
         //An array to hold the buttons for each day in the month
@@ -158,7 +159,6 @@ public class MonthView {
                     dayButtons[i][j] = new Button("" + dayCnt);
                     Button days = dayButtons[i][j];
                     days.setBackground(Background.EMPTY);
-
                     if (events.GetListOfDay(date.withDayOfMonth(dayCnt)) != null){
                         days.setStyle("-fx-border-color: #ff0000;" +
                                 "-fx-border-widty: 3px;");
@@ -172,7 +172,6 @@ public class MonthView {
                             days.setStyle(HOVERED_BUTTON_STYLE);
                         }
                     });
-
                     days.setOnMouseExited(e -> {
                         if(events.GetListOfDay(date.withDayOfMonth
                                 (Integer.parseInt((days.getText())))) != null) {
@@ -203,6 +202,13 @@ public class MonthView {
         monthView.show();
     }
 
+    /**********************************************************************************************
+     * This is used to find the day of the week that a month begins on. I didn't create this
+     * formula, it was found online.
+     * @param month The month that you want the starting day of
+     * @param year The year of the month that you want the starting day of
+     * @return Returns an int that represents the day of the week a month starts
+     *********************************************************************************************/
     private int dayMonthBegins(int month, int year) {
         int y = year - (14 - month) / 12;
         int x = y + y / 4 - y / 100 + y / 400;
@@ -210,6 +216,11 @@ public class MonthView {
         return (1 + x + (31*m) / 12) % 7;
     }
 
+    /**
+     * I just made this helper method to save some lines of code. Just sets the styles for the
+     * buttons.
+     * @param uglyButton The button you want to make pretty.
+     */
     private void prettyButton(Button uglyButton){
         uglyButton.setStyle(uglyButton.getStyle() + IDLE_BUTTON_STYLE);
         uglyButton.setOnMouseEntered(e -> uglyButton.setStyle(HOVERED_BUTTON_STYLE));
