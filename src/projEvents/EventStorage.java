@@ -81,7 +81,8 @@ public class EventStorage {
     }
 
     /**********************************************************************************************
-     * Deletes an Event from the EventStorage object
+     * Deletes an Event from the EventStorage object. This will disassociate the key from the
+     * table if the last element of the list is removed.
      * @param date: A LocalDate that the event that you want to remove is on
      * @param name: The name of an event that you want to remove
      *********************************************************************************************/
@@ -92,10 +93,14 @@ public class EventStorage {
             ListIterator<Events> iter = temp.listIterator(0);
             while (iter.hasNext()) {
                 Events e = iter.next();
-                if (e.getName().equals(name))
+                if (e.getName().equals(name)) {
                     iter.remove();
                     size--;
                     storage.save();
+                    if (!iter.hasNext()) {
+                        EventMap.remove(key);
+                    }
+                }
             }
         }
     }
