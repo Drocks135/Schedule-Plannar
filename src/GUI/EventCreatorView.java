@@ -56,11 +56,7 @@ public class EventCreatorView {
         ComboBox<String> eTypeDropBx = new ComboBox<>();
         eTypeDropBx.setPromptText("Event Type");
         eTypeDropBx.getItems().addAll("Homework", "Business");
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> Save-Load-Work
         eTypeDropBx.setOnAction(e -> {
             String s = eTypeDropBx.getValue();
             if ("Homework".equals(s)) {
@@ -154,12 +150,10 @@ public class EventCreatorView {
         eDetails.setWrapText(true);
         eDetails.setPrefColumnCount(1);
 
-<<<<<<< HEAD
-=======
+
         TextField eName = new TextField();
         eName.setPromptText("Name of Company");
 
->>>>>>> Save-Load-Work
         TextField eContact = new TextField();
         eContact.setPromptText("Name of Contact");
 
@@ -179,11 +173,8 @@ public class EventCreatorView {
                 Errors.setError("Please enter a number for the duration");
                 AlertView.display();
             }
-<<<<<<< HEAD
+
             Business newEvent = new Business(eContact.getText(), eDetails.getText(),
-=======
-            Business newEvent = new Business(eName.getText(), eDetails.getText(),
->>>>>>> Save-Load-Work
                     LocalDate.parse(eDate.getEditor().getText(), DATE_BUILDER.toFormatter()),
                     Location.getText(), temp);
             if(eDate.getEditor().getText().equals("")) {
@@ -199,10 +190,7 @@ public class EventCreatorView {
             }
 
         });
-<<<<<<< HEAD
-=======
 
->>>>>>> Save-Load-Work
         Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e -> stage.close());
         bottomBtns.getChildren().addAll(saveBtn, cancelBtn);
