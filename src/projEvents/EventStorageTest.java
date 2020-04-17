@@ -138,4 +138,19 @@ public class EventStorageTest {
 
         }
 
+        @Test
+        public void testDelete(){
+            File file = new File("Save.txt");
+            file.delete();
+            LocalDate date = LocalDate.of(2020, 4, 20);
+            Events e = new Events("Test Event", "details", date);
+            EventStorage storage = EventStorage.getInstance();
+            storage.addEvent(e);
+
+            assertEquals(storage.GetListOfDay(date).peek(), e);
+
+            storage.DeleteEvent(date, "Test Event");
+            assertNull(storage.GetListOfDay(date).peekFirst());
+        }
+
 }

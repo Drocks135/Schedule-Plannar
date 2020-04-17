@@ -95,6 +95,7 @@ public class EventStorage {
                 if (e.getName().equals(name))
                     iter.remove();
                     size--;
+                    storage.save();
             }
         }
     }
