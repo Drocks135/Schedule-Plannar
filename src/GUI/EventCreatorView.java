@@ -252,13 +252,9 @@ public class EventCreatorView {
         eDetails.setWrapText(true);
         eDetails.setPrefColumnCount(1);
 
-<<<<<<< HEAD
-=======
-
         TextField eName = new TextField();
         eName.setPromptText("Name of Company");
 
->>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
         TextField eContact = new TextField();
         eContact.setPromptText("Name of Contact");
 
@@ -270,35 +266,10 @@ public class EventCreatorView {
 
         Button saveBtn = new Button("Save");
         saveBtn.setOnAction(e -> {
-<<<<<<< HEAD
             Business newEvent = businessCheck(companyName, Location, Duration, eDetails);
-            if(newEvent != null){
+            if(newEvent != null) {
                 EventStorage.getInstance().addEvent(newEvent);
                 stage.close();
-=======
-            double temp = 0.0;
-            try {
-                temp = Double.parseDouble(Duration.getText());
-            }
-            catch (Exception e1){
-                Errors.setError("Please enter a number for the duration");
-                AlertView.display();
-            }
-
-            Business newEvent = new Business(eContact.getText(), eDetails.getText(),
-                    LocalDate.parse(eDate.getEditor().getText(), DATE_BUILDER.toFormatter()),
-                    Location.getText(), temp);
-            if(eDate.getEditor().getText().equals("")) {
-                Errors.setError("Please select a date");
-            } else {
-
-                if(Errors.getBool()){
-                    AlertView.display();
-                }else{
-                    EventStorage.getInstance().addEvent(newEvent);
-                    stage.close();
-                }
->>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
             }
         });
 

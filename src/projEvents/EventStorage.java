@@ -94,13 +94,8 @@ public class EventStorage {
                 Events e = iter.next();
                 if (e.getName().equals(name))
                     iter.remove();
-<<<<<<< HEAD
                 size--;
                 storage.save();
-=======
-                    size--;
-                    storage.save();
->>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
             }
         }
     }
@@ -197,14 +192,12 @@ public class EventStorage {
     private void load() {
         try {
             String data = readFileAsString("Save.txt");
-            if(data.isBlank())
-                throw new Exception();
             String[] events = data.split(";"); // split file into different events
             for (String event : events) {
                 storage.addEvent(stringTo(event));
             }
         } catch (Exception e){
-//            e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }
