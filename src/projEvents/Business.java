@@ -21,7 +21,8 @@ public class Business extends Events{
 
     public Business() {
     }
-  
+
+
     public String getLocation() {
         return Location;
     }
