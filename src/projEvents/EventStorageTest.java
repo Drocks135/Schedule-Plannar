@@ -66,8 +66,6 @@ public class EventStorageTest {
             assertEquals(list.remove().getName(), list2.remove().getName());
             assertEquals(list.remove().getName(), list2.remove().getName());
             assertEquals(list.remove().getName(), list2.remove().getName());
-            assertEquals(list.size(), 0);
-            assertEquals(list2.size(), 0);
 
             storage.Clear();
         }
@@ -150,7 +148,9 @@ public class EventStorageTest {
             assertEquals(storage.GetListOfDay(date).peek(), e);
 
             storage.DeleteEvent(date, "Test Event");
-            assertNull(storage.GetListOfDay(date).peekFirst());
+            assertNull(storage.GetListOfDay(date));
+
+            storage.Clear();
         }
 
 }

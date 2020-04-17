@@ -75,11 +75,6 @@ public class Events {
      * @param due: A LocalDate of the day an event will take place on
      */
     public void setDue(LocalDate due) {
-        Errors e = Errors.getInstance();
-        if(due.compareTo(LocalDate.now()) < 0){
-            e.setError("Cannot set date to less than current date");
-        }
-        else
             this.due = due;
     }
 
