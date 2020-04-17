@@ -39,9 +39,9 @@ public class EventStorage {
     public static EventStorage getInstance() {
         if (storage == null) {
             storage = new EventStorage();
-                File SaveLocation = new File("Save.txt");
-                if (SaveLocation.exists())
-                    storage.load();
+            File SaveLocation = new File("Save.txt");
+            if (SaveLocation.exists())
+                storage.load();
 
         }
         return storage;
@@ -186,12 +186,14 @@ public class EventStorage {
     private void load() {
         try {
             String data = readFileAsString("Save.txt");
+            if(data.isBlank())
+                throw new Exception();
             String[] events = data.split(";"); // split file into different events
             for (String event : events) {
                 storage.addEvent(stringTo(event));
             }
         } catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }
