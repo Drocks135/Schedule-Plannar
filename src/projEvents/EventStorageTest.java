@@ -1,21 +1,25 @@
 package projEvents;
-//import org.testng.annotations.Test;
-
-import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class EventStorageTest {
+    @Before
+    @After
+    public void DeleteSave(){
+        File file = new File("Save.txt");
+        file.delete();
+    }
 
     @Test
     public void TestOneEventCreation(){
-        File file = new File("Save.txt");
-        file.delete();
 
         EventStorage storage = EventStorage.getInstance();
 
@@ -36,8 +40,6 @@ public class EventStorageTest {
 
     @Test
     public void TestMultipleEventsOnOneDay(){
-        File file = new File("Save.txt");
-        file.delete();
 
         EventStorage storage = EventStorage.getInstance();
 
@@ -71,9 +73,6 @@ public class EventStorageTest {
 
     @Test
     public void TestMultipleEventsOn30DifferentDays(){
-        File file = new File("Save.txt");
-        file.delete();
-
         EventStorage storage = EventStorage.getInstance();
 
         LocalDate date = LocalDate.of(2020, 4, 20);
@@ -108,8 +107,6 @@ public class EventStorageTest {
 
     @Test
     public void TestSaveLoad(){
-        File file = new File("Save.txt");
-        file.delete();
         EventStorage storage = EventStorage.getInstance();
 
         LocalDate date = LocalDate.of(2020, 4, 20);
@@ -132,13 +129,10 @@ public class EventStorageTest {
         assertEquals(storage.GetListOfDay(diffDate).pop(), b);
 
         storage.Clear();
-
     }
 
     @Test
     public void testDelete(){
-        File file = new File("Save.txt");
-        file.delete();
         LocalDate date = LocalDate.of(2020, 4, 20);
         Events e = new Events("Test Event", "details", date);
         EventStorage storage = EventStorage.getInstance();
