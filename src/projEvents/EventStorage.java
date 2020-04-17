@@ -192,12 +192,14 @@ public class EventStorage {
     private void load() {
         try {
             String data = readFileAsString("Save.txt");
+            if(data.isBlank())
+                throw new Exception();
             String[] events = data.split(";"); // split file into different events
             for (String event : events) {
                 storage.addEvent(stringTo(event));
             }
         } catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }

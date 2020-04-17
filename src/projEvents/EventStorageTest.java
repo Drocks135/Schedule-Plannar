@@ -1,7 +1,5 @@
 package projEvents;
-//import org.testng.annotations.Test;
-
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -9,6 +7,8 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+//import org.testng.annotations.Test;
 
 public class EventStorageTest {
 

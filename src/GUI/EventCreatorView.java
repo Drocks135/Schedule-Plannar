@@ -31,6 +31,10 @@ public class EventCreatorView {
     /**************************************************************************************************
      * Default constructor will set the date for the date picker field to the current date.
      *************************************************************************************************/
+
+    /**************************************************************************************************
+     * Default constructor will set the date for the date picker field to the current date.
+     *************************************************************************************************/
     public EventCreatorView(){
         eDate = new DatePicker(LocalDate.now());
     }
@@ -233,7 +237,6 @@ public class EventCreatorView {
         stage.setScene(new Scene(layout));
         stage.setMaxHeight(340);
     }
-
     /**************************************************************************************************
      *This method is where the event creation window in generated for a business event.
      * Sets all the views to the current stage
