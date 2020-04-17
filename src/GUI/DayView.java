@@ -5,11 +5,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import projEvents.Business;
 import projEvents.EventStorage;
 import projEvents.Events;
+import projEvents.Homework;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -45,8 +49,7 @@ public class DayView {
 
         Label prettyDay = new Label(date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
         prettyDay.setPadding(new Insets(5));
-        Font dayFont = new Font(15);
-        prettyDay.setFont(dayFont);
+        prettyDay.setFont(new Font(15));
         VBox lilBox = new VBox();
         lilBox.setPadding(new Insets(5));
         lilBox.setSpacing(5);
@@ -67,8 +70,21 @@ public class DayView {
         prevEvent.setOnMouseEntered(e -> prevEvent.setStyle(HOVERED_BUTTON_STYLE));
         prevEvent.setOnMouseExited(e -> prevEvent.setStyle(IDLE_BUTTON_STYLE));
 
+        Button closeBtn = new Button("Close");
+        closeBtn.setCancelButton(true);
+        closeBtn.setOnAction(e -> {
+            System.out.println("close button");
+            index = 0;
+            dayView.close();
+        });
+        Button addBtn = new Button("Add Event");
+        addBtn.setOnAction(e -> {
+            dayView.close();
+            eventCreatorView.display(date);
+        });
+        HBox bottomBtns = new HBox(10, closeBtn, addBtn);
 
-        if(events == null) {
+        if(events == null || events.size() == 0) {
             lilBox.getChildren().add(new Label("No Events Today"));
             eventNum.setText("None");
         } else {
@@ -76,61 +92,86 @@ public class DayView {
             nextEvent.setOnAction(e -> {
                 if (index + 1 <= events.size() - 1) {
                     index++;
-                    showEvent(events, index, lilBox);
+                    showEvent(events.get(index), lilBox);
                 } else {
                     index = 0;
-                    showEvent(events, index, lilBox);
+                    showEvent(events.get(index), lilBox);
                 }
                 eventNum.setText("" + (index + 1) + "/" + events.size());
             });
+
             prevEvent.setOnAction(e -> {
                 if (index - 1 >= 0) {
                     index--;
-                    showEvent(events, index, lilBox);
+                    showEvent(events.get(index), lilBox);
                 } else {
                     index = events.size() - 1;
-                    showEvent(events, index, lilBox);
+                    showEvent(events.get(index), lilBox);
                 }
                 eventNum.setText("" + (index + 1) + "/" + events.size());
             });
-            showEvent(events, index, lilBox);
+            Button editEvent = new Button("Edit Event");
+            editEvent.setOnAction(e -> {
+                dayView.close();
+                if(events.get(index).toString().charAt(0) == 'h') {
+                    new EventCreatorView(date).editHomework((Homework) events.get(index));
+                } else {
+                    new EventCreatorView(date).editBusiness((Business) events.get(index));
+                }
+            });
+            bottomBtns.getChildren().add(1, editEvent);
+
+            showEvent(events.get(index), lilBox);
         }
         topStuff.getChildren().addAll(prettyDay, prevEvent, nextEvent, eventNum);
 
-        HBox bottomBtns = new HBox();
-        bottomBtns.setSpacing(5);
-        bottomBtns.setPadding(new Insets(5));
-        Button closeBtn = new Button("Close");
-        closeBtn.setOnAction(e -> dayView.close());
-        Button addBtn = new Button("Add Event");
-        addBtn.setOnAction(e -> {
-            dayView.close();
-            eventCreatorView.display(date);
-        });
-        bottomBtns.getChildren().addAll(closeBtn, addBtn);
-        bottomBtns.setSpacing(10);
+        VBox bigBox = new VBox(10, topStuff, lilBox, bottomBtns);
+        bigBox.setPadding(new Insets(10));
 
-        VBox bigBox = new VBox();
-
-        bigBox.getChildren().addAll(topStuff, lilBox, bottomBtns);
         dayView.setScene(new Scene(bigBox));
+        dayView.setOnCloseRequest(e -> {
+            System.out.println("set on close request");
+            index = 0;
+        });
         dayView.show();
     }
 
-    private void showEvent(LinkedList<Events> eventList, int index, VBox eventDisplay){
+    private void showEvent(Events event, VBox eventDisplay){
         eventDisplay.getChildren().clear();
-        eventDisplay.setSpacing(5);
 
-        Events event = eventList.get(index);
+        if(event.toString().charAt(0) == 'h'){
+            Homework homework = (Homework) event;
 
-        Label eName = new Label(event.getName());
+            Label eName = new Label(homework.getName());
 
-        Label eDetail = new Label(event.getDetails());
-        eDetail.setWrapText(true);
+            Label className = new Label(homework.getclassFor());
+
+            Label turnInPlace = new Label("Turn in at " + homework.getturnInPlace());
+
+            Label detail = new Label(homework.getDetails());
+            detail.wrapTextProperty().setValue(true);
+
+            eventDisplay.getChildren().addAll(eName, className, turnInPlace, detail);
 
 
+        } else {
+            Business business = (Business) event;
 
-        eventDisplay.getChildren().addAll(eName, eDetail);
+            Label eName = new Label(business.getName());
+
+            Label location = new Label(business.getLocation());
+
+            Label duration = new Label("Meeting should last " +
+                    (int)business.getDuration() + " hours");
+
+            Label detail = new Label(business.getDetails());
+            detail.wrapTextProperty().setValue(true);
+
+            eventDisplay.getChildren().addAll(eName, location, duration, detail);
+
+        }
+
+
     }
 
 }

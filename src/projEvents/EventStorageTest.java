@@ -1,15 +1,33 @@
 package projEvents;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+
 //import org.testng.annotations.Test;
+import org.testng.annotations.Test;
+
+import java.io.File;
+=======
+//import org.testng.annotations.Test;
+=======
+//import org.testng.annotations.Test;
+>>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
 import jdk.jfr.Event;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
 
+<<<<<<< HEAD
+>>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
+=======
+>>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+//import org.testng.annotations.Test;
 
 public class EventStorageTest {
 

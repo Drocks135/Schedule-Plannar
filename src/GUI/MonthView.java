@@ -1,6 +1,7 @@
 
 package GUI;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,9 +12,9 @@ import projEvents.EventStorage;
 
 import java.time.LocalDate;
 
-/**
- * MonthView is a display which will act as the home screen for the user. It displays the individual
- * days of the month and will have an indicator for each event on any given day.
+/**************************************************************************************************
+ * MonthView is a display which will act as the home screen for the user. It displays the
+ * individual days of the month and will have an indicator for each event on any given day.
  */
 public class MonthView {
 
@@ -59,9 +60,13 @@ public class MonthView {
 
         Stage monthView = new Stage();
         BorderPane layout = new BorderPane();
-        GridPane dayBtns = new GridPane();
+        GridPane dayBtnBox = new GridPane();
+        dayBtnBox.setVgap(1);
+        dayBtnBox.setHgap(1);
+
         HBox topBtns = new HBox();
-        topBtns.setSpacing(5);
+        topBtns.setPadding(new Insets(5));
+
         HBox daysOfWeek = new HBox();
 
         //Creating the labels for the days of the week
@@ -79,8 +84,13 @@ public class MonthView {
         monthBtn.setPrefSize(160, 50);
         prettyButton(monthBtn);
         monthBtn.setStyle(IDLE_BUTTON_STYLE + "-fx-font-size:24");
-        monthBtn.setOnMouseEntered(e -> monthBtn.setStyle(HOVERED_BUTTON_STYLE + "-fx-font-size:24"));
-        monthBtn.setOnMouseExited(e -> monthBtn.setStyle(IDLE_BUTTON_STYLE + "-fx-font-size:24"));
+
+        monthBtn.setOnMouseEntered(e ->
+                monthBtn.setStyle(HOVERED_BUTTON_STYLE + "-fx-font-size:24"));
+
+        monthBtn.setOnMouseExited(e ->
+                monthBtn.setStyle(IDLE_BUTTON_STYLE + "-fx-font-size:24"));
+
         monthBtn.setOnAction(e -> {
             yearView.display(date);
             monthView.close();
@@ -90,9 +100,9 @@ public class MonthView {
         Button addEventBtn = new Button(" + ");
         prettyButton(addEventBtn);
         addEventBtn.setOnAction(e -> {
-                eventCreatorView.display();
-                monthView.close();
-                this.display();
+            eventCreatorView.display();
+            monthView.close();
+            this.display();
         });
 
         //Next button will take user to the next month
@@ -128,6 +138,7 @@ public class MonthView {
         //An array to hold the buttons for each day in the month
         Button[][] dayButtons = new Button[6][7];
 
+
         //Day will represent the day of the week the month starts on
         int day = dayMonthBegins(date.getMonthValue(), date.getYear());
         int dayCnt = 1;
@@ -141,42 +152,48 @@ public class MonthView {
                     dayButtons[i][j] = new Button("");
                     dayButtons[i][j].setVisible(false);
                     GridPane.setConstraints(dayButtons[i][j], j, i);
-                    dayBtns.getChildren().add(dayButtons[i][j]);
+                    dayBtnBox.getChildren().add(dayButtons[i][j]);
                 } else {
+                    EventStorage events = EventStorage.getInstance();
                     dayButtons[i][j] = new Button("" + dayCnt);
                     Button days = dayButtons[i][j];
                     days.setBackground(Background.EMPTY);
-                    if (EventStorage.getInstance().GetListOfDay(date.withDayOfMonth(dayCnt)) != null){
-                        dayButtons[i][j].setStyle("-fx-border-color: #ff0000; -fx-border-widty: 5px;");
+
+                    if (events.GetListOfDay(date.withDayOfMonth(dayCnt)) != null){
+                        days.setStyle("-fx-border-color: #ff0000;" +
+                                "-fx-border-widty: 3px;");
                     }
                     days.setOnMouseEntered(e -> {
-                        if(EventStorage.getInstance().GetListOfDay(date.withDayOfMonth
-                                (Integer.parseInt((days.getText())))) == null) {
-                            days.setStyle(HOVERED_BUTTON_STYLE);
-                        } else {
+                        if(events.GetListOfDay(date.withDayOfMonth
+                                (Integer.parseInt((days.getText())))) != null) {
                             days.setStyle(HOVERED_BUTTON_STYLE + "-fx-border-color: #ff0000;" +
                                     " -fx-border-widty: 5px;");
+                        } else {
+                            days.setStyle(HOVERED_BUTTON_STYLE);
                         }
                     });
+
                     days.setOnMouseExited(e -> {
-                        if(EventStorage.getInstance().GetListOfDay(date.withDayOfMonth(Integer.parseInt((days.getText())))) != null) {
-                            days.setStyle(IDLE_BUTTON_STYLE + "-fx-border-color: #ff0000; -fx-border-widty: 5px;");
+                        if(events.GetListOfDay(date.withDayOfMonth
+                                (Integer.parseInt((days.getText())))) != null) {
+                            days.setStyle(IDLE_BUTTON_STYLE + "-fx-border-color: #ff0000; " +
+                                    "-fx-border-widty: 5px;");
                         } else {
                             days.setStyle(IDLE_BUTTON_STYLE);
                         }
                     });
-                    days.setOnAction(e -> {
-                            dayView.display(date.withDayOfMonth(Integer.parseInt((days.getText()))));
-                    });
+
+                    days.setOnAction(e -> dayView.display(date.withDayOfMonth(Integer.parseInt((days.getText())))));
+
                     days.setPrefSize(75, 60);
                     GridPane.setConstraints(days, j, i);
-                    dayBtns.getChildren().add(days);
+                    dayBtnBox.getChildren().add(days);
                     dayCnt++;
                 }
             }
         }
 
-        layout.setCenter(dayBtns);
+        layout.setCenter(dayBtnBox);
 
         Scene scene = new Scene(layout, 530, 440);
 
