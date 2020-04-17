@@ -14,14 +14,21 @@ import java.time.format.DateTimeFormatterBuilder;
 
 
 /**
+ * @author FredO
+ * @version 1.0
  * EventCreatorView will display a window based on the user's selected event type.
  * There is still a bunch of work to be done here, but the idea is to have a user
  * enter in the required info, then relay that info to main, which will in turn create
  * an event to be stored for later use.
  */
 public class EventCreatorView {
+    /**The ocmponent that the user uses to set the date of the event */
     private DatePicker eDate;
+
+    /**The current date*/
     private LocalDate date;
+
+    /**Used to parse the information saved in eDate into a new LocalDate*/
     private final DateTimeFormatterBuilder DATE_BUILDER = new DateTimeFormatterBuilder()
             .appendPattern("[M/d/yyyy]")
             .appendPattern("[MM/d/yyyy]")
@@ -68,9 +75,9 @@ public class EventCreatorView {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 
-        VBox layout = new VBox();
+        //Container for all of the textFields and buttons
+        VBox layout = new VBox(10);
         layout.setPadding(new Insets(10));
-        layout.setSpacing(10);
 
         TextField turnInPlace = new TextField(originalEvent.getturnInPlace());
 
@@ -154,11 +161,11 @@ public class EventCreatorView {
         stage.showAndWait();
     }
 
-    /**
+    /**********************************************************************************************
      * This method will be called when the user chooses to create a new event.
      * Based on what the user selects, this method will then call the window,
      * which is where the user will be prompted for info about the new event.
-     */
+     *********************************************************************************************/
     public void display () {
 
         Stage addEventStage = new Stage();
@@ -196,9 +203,9 @@ public class EventCreatorView {
      *************************************************************************************************/
     private void createHomework(Stage stage){
 
-        VBox layout = new VBox();
+        VBox layout = new VBox(10);
         layout.setPadding(new Insets(10));
-        layout.setSpacing(10);
+
 
         TextField turnInPlace = new TextField();
         turnInPlace.setPromptText("Where to turn in Assignment");
@@ -293,6 +300,7 @@ public class EventCreatorView {
      * @param classFor: Holds which class the homework is for.
      * @param eDetails: Holds the details of the homework event.
      * @param eName: Holds the name of the homework event.
+     * @return Returns a Homework event, if there aren't any issues when creating it.
      *************************************************************************************************/
     private Homework homeworkCheck(TextField turnInPlace, TextField classFor,
                                    TextArea eDetails, TextField eName) {
@@ -313,6 +321,15 @@ public class EventCreatorView {
         return newEvent;
     }
 
+    /**********************************************************************************************
+     * This method was created to save some lines of coding. It takes in all of the event
+     * information a user has generated and tries to create a new event object with it.
+     * @param name Name of the event
+     * @param location Location of the event
+     * @param duration Duration of the event in hours
+     * @param details Details of the event
+     * @return Returns a Business event, if there aren't any issues when creating it.
+     **********************************************************************************************/
     private Business businessCheck(TextField name, TextField location,
                                    TextField duration, TextArea details ){
         Business newEvent;
@@ -340,6 +357,14 @@ public class EventCreatorView {
         return newEvent;
     }
 
+    /**********************************************************************************************
+     * This is used to create the delete button and it's action listener. This action will be set
+     * make the user click the delete button again, to make sure that they didn't hit it by
+     * accident.
+     * @param event The event that the user wants to delete
+     * @param stage The stage that is being used when deleting the event
+     * @return Returns a button with the new action listener added.
+     *********************************************************************************************/
     private Button deleteAction(Events event, Stage stage){
         Button deleteBtn = new Button("Delete");
         deleteBtn.setOnAction(e -> {

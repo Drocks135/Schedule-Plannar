@@ -20,26 +20,34 @@ import java.time.format.FormatStyle;
 import java.util.LinkedList;
 
 /**************************************************************************************************
- * DayView will show the user the events corresponding to the day they select.
- * Will also give the user the option of creating a new event or edit saved
- * events.
- */
+ * @author FredO
+ * @version 1.0
+ * DayView will show the user the events corresponding to the day they select. Will also give the
+ * user the option of creating a new event or edit/delete saved events.
+ *************************************************************************************************/
 public class DayView {
 
+    /**The css code used to style the visuals of an idle button*/
     private final String IDLE_BUTTON_STYLE = "-fx-background-color: transparent;";
+
+    /**The css code used to style the visuals of a button that is being hovered over*/
     private final String HOVERED_BUTTON_STYLE = "-fx-background-color: " +
             "-fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;";
+
+    /**This is used to access the events for a given day. I made it static so that I can call it
+       from the lambda functions.*/
     private static int index = 0;
 
-    public DayView(){
-    }
-    /**
+    /**********************************************************************************************
      * Display will show the current events and allow for user to edit them.
      * Buttons include:
-     *      ***********
-     *      ***********
-     *      ***********
-     */
+     *      "<"  --> Shows the previous event on current day
+     *      ">"  --> Shows the next event on current day
+     *      "Close"  --> Will close the current dayView
+     *      "Edit"  --> Calls EventCreatorView.edit**() which allows the user to edit current event
+     *      "Add"  --> Calls EventCreatorView.display() which allows for the creation of new event
+     * @param date The date for the day the user clicks on
+      *********************************************************************************************/
     public void display(LocalDate date) {
         EventCreatorView eventCreatorView = new EventCreatorView();
 
@@ -136,9 +144,15 @@ public class DayView {
         dayView.show();
     }
 
+    /**********************************************************************************************
+     * This is method is used to generate all of the information of a given event.
+     * @param event The event to be displayed to the user
+     * @param eventDisplay The VBox that holds all of the labels for the event information.
+     *********************************************************************************************/
     private void showEvent(Events event, VBox eventDisplay){
         eventDisplay.getChildren().clear();
 
+        //Check to see if the event is homework or business
         if(event.toString().charAt(0) == 'h'){
             Homework homework = (Homework) event;
 
@@ -152,7 +166,6 @@ public class DayView {
             detail.wrapTextProperty().setValue(true);
 
             eventDisplay.getChildren().addAll(eName, className, turnInPlace, detail);
-
 
         } else {
             Business business = (Business) event;
@@ -170,9 +183,6 @@ public class DayView {
             eventDisplay.getChildren().addAll(eName, location, duration, detail);
 
         }
-
-
     }
-
 }
 

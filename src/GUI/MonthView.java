@@ -13,8 +13,10 @@ import projEvents.EventStorage;
 import java.time.LocalDate;
 
 /**************************************************************************************************
+ * @author FredO
+ * @version 1.0
  * MonthView is a display which will act as the home screen for the user. It displays the
- * individual days of the month and will have an indicator for each event on any given day.
+ * individual days of the month and will have an indicator for each day that has an event saved.
  *************************************************************************************************/
 public class MonthView {
     /**Holds the most current date*/
@@ -51,15 +53,16 @@ public class MonthView {
         display();
     }
 
-    /**
-     * Display will deplay the current month to the user.
+    /**********************************************************************************************
+     * Display will display the current month to the user. It will also highlight the days with
+     * events currently saved to the user.
      * Buttons include:
      *      "Current month" --> yearView
      *      "+" --> EventCreatorView
      *      ">" --> MonthView++
      *      "<" --> MonthView--
      *      Button for each day --> DayView
-     */
+     *********************************************************************************************/
     public void display(){
         YearView yearView = new YearView();
         DayView dayView = new DayView();
@@ -204,7 +207,7 @@ public class MonthView {
 
     /**********************************************************************************************
      * This is used to find the day of the week that a month begins on. I didn't create this
-     * formula, it was found online.
+     * formula, it was found online and I reworked it to fit my needs.
      * @param month The month that you want the starting day of
      * @param year The year of the month that you want the starting day of
      * @return Returns an int that represents the day of the week a month starts
@@ -216,11 +219,11 @@ public class MonthView {
         return (1 + x + (31*m) / 12) % 7;
     }
 
-    /**
+    /**********************************************************************************************
      * I just made this helper method to save some lines of code. Just sets the styles for the
      * buttons.
      * @param uglyButton The button you want to make pretty.
-     */
+     *********************************************************************************************/
     private void prettyButton(Button uglyButton){
         uglyButton.setStyle(uglyButton.getStyle() + IDLE_BUTTON_STYLE);
         uglyButton.setOnMouseEntered(e -> uglyButton.setStyle(HOVERED_BUTTON_STYLE));
