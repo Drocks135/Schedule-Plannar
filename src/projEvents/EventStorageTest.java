@@ -1,5 +1,7 @@
 package projEvents;
-import org.testng.annotations.Test;
+//import org.testng.annotations.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -7,8 +9,6 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-//import org.testng.annotations.Test;
 
 public class EventStorageTest {
 
@@ -65,8 +65,6 @@ public class EventStorageTest {
         assertEquals(list.remove().getName(), list2.remove().getName());
         assertEquals(list.remove().getName(), list2.remove().getName());
         assertEquals(list.remove().getName(), list2.remove().getName());
-        assertEquals(list.size(), 0);
-        assertEquals(list2.size(), 0);
 
         storage.Clear();
     }
@@ -149,7 +147,9 @@ public class EventStorageTest {
         assertEquals(storage.GetListOfDay(date).peek(), e);
 
         storage.DeleteEvent(date, "Test Event");
-        assertNull(storage.GetListOfDay(date).peekFirst());
+        assertNull(storage.GetListOfDay(date));
+
+        storage.Clear();
     }
 
 }
