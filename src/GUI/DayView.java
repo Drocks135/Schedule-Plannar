@@ -86,7 +86,7 @@ public class DayView {
             prevEvent.setOnAction(e -> {
                 if (index - 1 >= 0) {
                     index--;
-                    showEvent(events, (index), lilBox);
+                    showEvent(events, index, lilBox);
                 } else {
                     index = events.size() - 1;
                     showEvent(events, index, lilBox);
@@ -119,13 +119,13 @@ public class DayView {
 
     private void showEvent(LinkedList<Events> eventList, int index, VBox eventDisplay){
         eventDisplay.getChildren().clear();
+        eventDisplay.setSpacing(5);
 
         Events event = eventList.get(index);
 
         Label eName = new Label(event.getName());
-        Label eDetail = new Label(event.getDetails());
 
-        eDetail.setPadding(new Insets(10));
+        Label eDetail = new Label(event.getDetails());
         eDetail.setWrapText(true);
 
 

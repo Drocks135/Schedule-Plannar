@@ -15,9 +15,13 @@ public class Business extends Events{
         setDuration(duration);
     }
 
+    /*
+    Bunch of get methods to return attributes of homework specific events
+    */
+
     public Business() {
     }
-
+  
     public String getLocation() {
         return Location;
     }

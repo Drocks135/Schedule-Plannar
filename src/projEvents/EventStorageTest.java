@@ -1,11 +1,19 @@
 package projEvents;
 
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+//import org.testng.annotations.Test;
+>>>>>>> Stashed changes
+import org.testng.annotations.Test;
+=======
 //import org.testng.annotations.Test;
 import jdk.jfr.Event;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
+>>>>>>> Save-Load-Work
 import java.time.LocalDate;
 import java.util.LinkedList;
 
@@ -136,6 +144,21 @@ public class EventStorageTest {
 
             storage.Clear();
 
+        }
+
+        @Test
+        public void testDelete(){
+            File file = new File("Save.txt");
+            file.delete();
+            LocalDate date = LocalDate.of(2020, 4, 20);
+            Events e = new Events("Test Event", "details", date);
+            EventStorage storage = EventStorage.getInstance();
+            storage.addEvent(e);
+
+            assertEquals(storage.GetListOfDay(date).peek(), e);
+
+            storage.DeleteEvent(date, "Test Event");
+            assertNull(storage.GetListOfDay(date).peekFirst());
         }
 
 }
