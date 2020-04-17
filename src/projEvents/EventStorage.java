@@ -107,7 +107,8 @@ public class EventStorage {
 
     /**********************************************************************************************
      * Creates an ArrayList of all events that exist in EventStorage
-     * @return An ArrayList containing all events in EventStorage
+     * @return An ArrayList containing all events in EventStorage. Returns null if list doesn't
+     * exist
      *********************************************************************************************/
     public ArrayList<Events> toArray() {
         ArrayList<Events> allEvents = new ArrayList<>(size);
@@ -121,31 +122,25 @@ public class EventStorage {
         return allEvents;
     }
 
+    /**********************************************************************************************
+     * Clears the EventStorage object
+     *********************************************************************************************/
     public void Clear(){
         storage = null;
     }
 
-    /**********************************************************************************************
-     *
-     *********************************************************************************************/
     private LinkedList<Events> CreateList(Events event) {
         LinkedList<Events> list = new LinkedList<>();
         list.add(event);
         return list;
     }
 
-    /**********************************************************************************************
-     *
-     *********************************************************************************************/
     private static String readFileAsString(String fileName) throws IOException {
         String data;
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
     }
 
-    /**********************************************************************************************
-     *
-     *********************************************************************************************/
     private void save() {
         File file = new File("Save.txt");
         StringBuilder eventString = new StringBuilder();
@@ -164,10 +159,7 @@ public class EventStorage {
 
     }
 
-    /**********************************************************************************************
-     *
-     *********************************************************************************************/
-    public Events stringTo(String event) throws ParseException {
+    private Events stringTo(String event) throws ParseException {
         // Splits events into an array of Strings.
         String[] temp = event.split(",");
         DateTimeFormatter ft = DateTimeFormatter.ofPattern("ddMMyyyy");
@@ -191,9 +183,6 @@ public class EventStorage {
         }
     }
 
-    /**********************************************************************************************
-     *
-     *********************************************************************************************/
     private void load() {
         try {
             String data = readFileAsString("Save.txt");
