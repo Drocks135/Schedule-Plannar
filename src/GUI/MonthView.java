@@ -18,6 +18,7 @@ import java.time.LocalDate;
 public class MonthView {
 
     private LocalDate date;
+    private EventStorage events;
     private final String IDLE_BUTTON_STYLE = "-fx-background-color: transparent;";
     private final String HOVERED_BUTTON_STYLE = "-fx-background-color: " +
             "-fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;";
@@ -75,8 +76,11 @@ public class MonthView {
         //Month button  will display current month and year view when clicked
 
         Button monthBtn = new Button(date.getMonth().name());
-        monthBtn.setPrefSize(150, 50);
+        monthBtn.setPrefSize(160, 50);
         prettyButton(monthBtn);
+        monthBtn.setStyle(IDLE_BUTTON_STYLE + "-fx-font-size:24");
+        monthBtn.setOnMouseEntered(e -> monthBtn.setStyle(HOVERED_BUTTON_STYLE + "-fx-font-size:24"));
+        monthBtn.setOnMouseExited(e -> monthBtn.setStyle(IDLE_BUTTON_STYLE + "-fx-font-size:24"));
         monthBtn.setOnAction(e -> {
             yearView.display(date);
             monthView.close();
@@ -85,7 +89,11 @@ public class MonthView {
         //Add button will take user to event creator view
         Button addEventBtn = new Button(" + ");
         prettyButton(addEventBtn);
-        addEventBtn.setOnAction(e -> eventCreatorView.display());
+        addEventBtn.setOnAction(e -> {
+                eventCreatorView.display();
+                monthView.close();
+                this.display();
+        });
 
         //Next button will take user to the next month
         Button nextMonthBtn = new Button(" > ");
@@ -146,18 +154,20 @@ public class MonthView {
                                 (Integer.parseInt((days.getText())))) == null) {
                             days.setStyle(HOVERED_BUTTON_STYLE);
                         } else {
-                            days.setStyle(HOVERED_BUTTON_STYLE + "-fx-border-color: #ff0000; -fx-border-widty: 5px;");
+                            days.setStyle(HOVERED_BUTTON_STYLE + "-fx-border-color: #ff0000;" +
+                                    " -fx-border-widty: 5px;");
                         }
                     });
                     days.setOnMouseExited(e -> {
-                        if(EventStorage.getInstance().GetListOfDay(date.withDayOfMonth
-                                (Integer.parseInt((days.getText())))) != null) {
+                        if(EventStorage.getInstance().GetListOfDay(date.withDayOfMonth(Integer.parseInt((days.getText())))) != null) {
                             days.setStyle(IDLE_BUTTON_STYLE + "-fx-border-color: #ff0000; -fx-border-widty: 5px;");
                         } else {
                             days.setStyle(IDLE_BUTTON_STYLE);
                         }
                     });
-                    days.setOnAction(e -> dayView.display(date.withDayOfMonth(Integer.parseInt((days.getText())))));
+                    days.setOnAction(e -> {
+                            dayView.display(date.withDayOfMonth(Integer.parseInt((days.getText()))));
+                    });
                     days.setPrefSize(75, 60);
                     GridPane.setConstraints(days, j, i);
                     dayBtns.getChildren().add(days);
@@ -184,8 +194,8 @@ public class MonthView {
     }
 
     private void prettyButton(Button uglyButton){
-        uglyButton.setStyle(IDLE_BUTTON_STYLE);
+        uglyButton.setStyle(uglyButton.getStyle() + IDLE_BUTTON_STYLE);
         uglyButton.setOnMouseEntered(e -> uglyButton.setStyle(HOVERED_BUTTON_STYLE));
-        uglyButton.setOnMouseExited(e -> uglyButton.setStyle(IDLE_BUTTON_STYLE));
+        uglyButton.setOnMouseExited(e -> uglyButton.setStyle(uglyButton.getStyle() + IDLE_BUTTON_STYLE));
     }
 }

@@ -15,13 +15,15 @@ public class Business extends Events{
         setDuration(duration);
     }
 
-    public Business() {
-    }
-
-
+<<<<<<< HEAD
     /*
     Bunch of get methods to return attributes of homework specific events
     */
+=======
+    public Business() {
+    }
+
+>>>>>>> master
     public String getLocation() {
         return Location;
     }
