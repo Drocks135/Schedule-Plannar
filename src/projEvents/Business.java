@@ -15,13 +15,20 @@ public class Business extends Events{
         setDuration(duration);
     }
 
+    /*
+    Bunch of get methods to return attributes of homework specific events
+    */
+<<<<<<< HEAD
+    public Business() {
+    }
+
+=======
+
     public Business() {
     }
 
 
-    /*
-    Bunch of get methods to return attributes of homework specific events
-    */
+>>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
     public String getLocation() {
         return Location;
     }
@@ -51,5 +58,29 @@ public class Business extends Events{
         eventString += ("b," + this.getName() + "," + this.getDetails() + "," +
                 date + "," + this.getLocation() + "," + this.getDuration() + ";");
         return eventString;
+    }
+
+    @Override
+    /**********************************************************************************************
+     * Compares an Object to Business objects and returns if their members are equal
+     * @param o: Any object to compare to a Business
+     * @return returns true if every field in the objects are equal returns false else
+     **********************************************************************************************/
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Events)) {
+            return false;
+        }
+
+        Business c = (Business) o;
+
+        return this.getName().equals(c.getName())
+                && this.getDue().equals(c.getDue())
+                && this.getDetails().equals(c.getDetails())
+                && this.duration == c.getDuration()
+                && this.Location.equals(c.Location);
     }
 }

@@ -86,9 +86,9 @@ public class EventCreatorView {
         saveBtn.setOnAction(e -> {
             Homework newEvent = homeworkCheck(turnInPlace, classFor, eDetails, eName);
             if(newEvent != null){
-                    EventStorage.getInstance().DeleteEvent(date, originalEvent.getName());
-                    EventStorage.getInstance().addEvent(newEvent);
-                    stage.close();
+                EventStorage.getInstance().DeleteEvent(date, originalEvent.getName());
+                EventStorage.getInstance().addEvent(newEvent);
+                stage.close();
             }
         });
 
@@ -236,6 +236,7 @@ public class EventCreatorView {
 
     /**************************************************************************************************
      *This method is where the event creation window in generated for a business event.
+     * Sets all the views to the current stage
      * @param stage: Takes in the stage from display to generate the new window for the user.
      *************************************************************************************************/
     private void createBusiness(Stage stage){
@@ -251,6 +252,13 @@ public class EventCreatorView {
         eDetails.setWrapText(true);
         eDetails.setPrefColumnCount(1);
 
+<<<<<<< HEAD
+=======
+
+        TextField eName = new TextField();
+        eName.setPromptText("Name of Company");
+
+>>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
         TextField eContact = new TextField();
         eContact.setPromptText("Name of Contact");
 
@@ -262,10 +270,35 @@ public class EventCreatorView {
 
         Button saveBtn = new Button("Save");
         saveBtn.setOnAction(e -> {
+<<<<<<< HEAD
             Business newEvent = businessCheck(companyName, Location, Duration, eDetails);
             if(newEvent != null){
                 EventStorage.getInstance().addEvent(newEvent);
                 stage.close();
+=======
+            double temp = 0.0;
+            try {
+                temp = Double.parseDouble(Duration.getText());
+            }
+            catch (Exception e1){
+                Errors.setError("Please enter a number for the duration");
+                AlertView.display();
+            }
+
+            Business newEvent = new Business(eContact.getText(), eDetails.getText(),
+                    LocalDate.parse(eDate.getEditor().getText(), DATE_BUILDER.toFormatter()),
+                    Location.getText(), temp);
+            if(eDate.getEditor().getText().equals("")) {
+                Errors.setError("Please select a date");
+            } else {
+
+                if(Errors.getBool()){
+                    AlertView.display();
+                }else{
+                    EventStorage.getInstance().addEvent(newEvent);
+                    stage.close();
+                }
+>>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
             }
         });
 
@@ -274,7 +307,7 @@ public class EventCreatorView {
         bottomBtns.getChildren().addAll(saveBtn, cancelBtn);
 
         VBox layout = new VBox(10, eContact, Location, companyName, eDate, Duration, eDetails, bottomBtns);
-        layout.setSpacing(10);
+        layout.setPadding(new Insets(10));
         stage.setScene(new Scene(layout));
         stage.setMaxHeight(340);
     }
@@ -288,48 +321,48 @@ public class EventCreatorView {
      * @param eName: Holds the name of the homework event.
      *************************************************************************************************/
     private Homework homeworkCheck(TextField turnInPlace, TextField classFor,
-                                      TextArea eDetails, TextField eName) {
-            Homework newEvent;
-            if(eDate.getEditor().getText().equals("")) {
-                Errors.setError("Please select a date");
+                                   TextArea eDetails, TextField eName) {
+        Homework newEvent;
+        if(eDate.getEditor().getText().equals("")) {
+            Errors.setError("Please select a date");
+            AlertView.display();
+            return null;
+        } else {
+            newEvent = new Homework(eName.getText(), eDetails.getText(),
+                    LocalDate.parse(eDate.getEditor().getText(), DATE_BUILDER.toFormatter()),
+                    turnInPlace.getText(), classFor.getText());
+            if(Errors.getBool()){
                 AlertView.display();
                 return null;
-            } else {
-                newEvent = new Homework(eName.getText(), eDetails.getText(),
-                        LocalDate.parse(eDate.getEditor().getText(), DATE_BUILDER.toFormatter()),
-                        turnInPlace.getText(), classFor.getText());
-                if(Errors.getBool()){
-                    AlertView.display();
-                    return null;
-                }
             }
+        }
         return newEvent;
     }
 
     private Business businessCheck(TextField name, TextField location,
                                    TextField duration, TextArea details ){
         Business newEvent;
-            double temp = 0.0;
-            try {
-                temp = Double.parseDouble(duration.getText());
-            } catch (Exception e1) {
-                Errors.setError("Please enter a number for the duration");
+        double temp = 0.0;
+        try {
+            temp = Double.parseDouble(duration.getText());
+        } catch (Exception e1) {
+            Errors.setError("Please enter a number for the duration");
+            AlertView.display();
+            return null;
+        }
+        if (eDate.getEditor().getText().equals("")) {
+            Errors.setError("Please select a date");
+            AlertView.display();
+            return null;
+        } else {
+            newEvent = new Business(name.getText(), details.getText(),
+                    LocalDate.parse(eDate.getEditor().getText(), DATE_BUILDER.toFormatter()),
+                    location.getText(), temp);
+            if (Errors.getBool()) {
                 AlertView.display();
                 return null;
             }
-            if (eDate.getEditor().getText().equals("")) {
-                Errors.setError("Please select a date");
-                AlertView.display();
-                return null;
-            } else {
-                newEvent = new Business(name.getText(), details.getText(),
-                        LocalDate.parse(eDate.getEditor().getText(), DATE_BUILDER.toFormatter()),
-                        location.getText(), temp);
-                if (Errors.getBool()) {
-                    AlertView.display();
-                    return null;
-                }
-            }
+        }
         return newEvent;
     }
 
@@ -346,6 +379,4 @@ public class EventCreatorView {
         });
         return deleteBtn;
     }
-
-
 }

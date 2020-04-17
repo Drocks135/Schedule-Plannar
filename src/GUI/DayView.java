@@ -71,7 +71,12 @@ public class DayView {
         prevEvent.setOnMouseExited(e -> prevEvent.setStyle(IDLE_BUTTON_STYLE));
 
         Button closeBtn = new Button("Close");
-        closeBtn.setOnAction(e -> dayView.close());
+        closeBtn.setCancelButton(true);
+        closeBtn.setOnAction(e -> {
+            System.out.println("close button");
+            index = 0;
+            dayView.close();
+        });
         Button addBtn = new Button("Add Event");
         addBtn.setOnAction(e -> {
             dayView.close();
@@ -79,7 +84,7 @@ public class DayView {
         });
         HBox bottomBtns = new HBox(10, closeBtn, addBtn);
 
-        if(events == null) {
+        if(events == null || events.size() == 0) {
             lilBox.getChildren().add(new Label("No Events Today"));
             eventNum.setText("None");
         } else {
@@ -108,7 +113,6 @@ public class DayView {
             Button editEvent = new Button("Edit Event");
             editEvent.setOnAction(e -> {
                 dayView.close();
-                index = 0;
                 if(events.get(index).toString().charAt(0) == 'h') {
                     new EventCreatorView(date).editHomework((Homework) events.get(index));
                 } else {
@@ -125,7 +129,10 @@ public class DayView {
         bigBox.setPadding(new Insets(10));
 
         dayView.setScene(new Scene(bigBox));
-        dayView.setOnCloseRequest(e -> index = 0);
+        dayView.setOnCloseRequest(e -> {
+            System.out.println("set on close request");
+            index = 0;
+        });
         dayView.show();
     }
 

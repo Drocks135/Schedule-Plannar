@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -36,6 +37,9 @@ public class YearView {
 
         MonthView monthView = new MonthView();
         GridPane layout = new GridPane();
+        layout.setVgap(5);
+        layout.setHgap(5);
+        layout.setPadding(new Insets(5));
         Stage yearView = new Stage();
         for (int i = 0; i < 12; i++) {
             int month = i;

@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.time.LocalDate;
 
 /**************************************************************************************************
  *  @author: Dalton Claybaugh
@@ -39,13 +39,10 @@ public class EventStorage {
     public static EventStorage getInstance() {
         if (storage == null) {
             storage = new EventStorage();
-            try {
-                File SaveLocation = new File("Save.txt");
-                if (SaveLocation.exists())
-                    storage.load();
-            } catch (Exception e) {
-                System.out.println("Invalid Load");
-            }
+            File SaveLocation = new File("Save.txt");
+            if (SaveLocation.exists())
+                storage.load();
+
         }
         return storage;
     }
@@ -63,23 +60,20 @@ public class EventStorage {
         if (EventMap.containsKey(key)) {
             list = EventMap.get(key);
             list.add(event);
-            size++;
         } else {
             list = CreateList(event);
             EventMap.put(key, list);
-            size++;
         }
-        try {
-            storage.save();
-        } catch (Exception e) {
-            System.out.println("Program did not save");
-        }
+        size++;
+        storage.save();
+
     }
 
     /**********************************************************************************************
      *  Retrieves the head of a linked list that contains all the events for a particular day
      * @param date: A LocalDate object for the day of events to be retrieved
      * @return The head of a linked list of Events that contains all the Events of a specific day
+     * or returns null if no event is on that day.
      *********************************************************************************************/
     public LinkedList<Events> GetListOfDay(LocalDate date) {
         String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
@@ -98,8 +92,15 @@ public class EventStorage {
             ListIterator<Events> iter = temp.listIterator(0);
             while (iter.hasNext()) {
                 Events e = iter.next();
-                if (e.getName() == name)
+                if (e.getName().equals(name))
                     iter.remove();
+<<<<<<< HEAD
+                size--;
+                storage.save();
+=======
+                    size--;
+                    storage.save();
+>>>>>>> bb807457a86cdaa2a559ba264392ab382ce9f8ed
             }
         }
     }
@@ -120,6 +121,10 @@ public class EventStorage {
         return allEvents;
     }
 
+    public void Clear(){
+        storage = null;
+    }
+
     /**********************************************************************************************
      *
      *********************************************************************************************/
@@ -132,7 +137,7 @@ public class EventStorage {
     /**********************************************************************************************
      *
      *********************************************************************************************/
-    public static String readFileAsString(String fileName) throws IOException {
+    private static String readFileAsString(String fileName) throws IOException {
         String data;
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
@@ -141,7 +146,7 @@ public class EventStorage {
     /**********************************************************************************************
      *
      *********************************************************************************************/
-    private void save() throws IOException {
+    private void save() {
         File file = new File("Save.txt");
         StringBuilder eventString = new StringBuilder();
         ArrayList<Events> events = EventStorage.getInstance().toArray();
@@ -149,10 +154,14 @@ public class EventStorage {
             eventString.append(events.get(i).toString());
         }
         // overwrites in case file already exists.
-        FileOutputStream fos = new FileOutputStream(file, false);
-        fos.write(eventString.toString().getBytes());
-        fos.close();
-        System.out.println("saved");
+        try {
+            FileOutputStream fos = new FileOutputStream(file, false);
+            fos.write(eventString.toString().getBytes());
+            fos.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /**********************************************************************************************
@@ -185,11 +194,17 @@ public class EventStorage {
     /**********************************************************************************************
      *
      *********************************************************************************************/
-    private void load() throws IOException, ParseException {
-        String data = readFileAsString("Save.txt");
-        String[] events = data.split(";"); // split file into different events
-        for (int i = 0; i < events.length; i++) {
-            EventStorage.getInstance().addEvent(stringTo(events[i]));
+    private void load() {
+        try {
+            String data = readFileAsString("Save.txt");
+            if(data.isBlank())
+                throw new Exception();
+            String[] events = data.split(";"); // split file into different events
+            for (String event : events) {
+                storage.addEvent(stringTo(event));
+            }
+        } catch (Exception e){
+//            e.printStackTrace();
         }
     }
 }
