@@ -10,13 +10,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 
-/**************************************************************************************************
+/******************************************************************************
  *  @author: Dalton Claybaugh
  *  @Version: 1.0
- *  EventStorage is a data structure designed to store Events. It's implementation is a hash map
- *  of linked list. A hash of a specific day will return the head to a linked list that contains
- *  an unsorted list of all events that will occur on a specific day.
- **************************************************************************************************/
+ *  EventStorage is a data structure designed to store Events. It's
+ *  implementation is a hash mapof linked list. A hash of a specific day will
+ *  return the head to a linked list that containsan unsorted list of all events
+ *  that will occur on a specific day.
+ *****************************************************************************/
 public class EventStorage {
     private final HashMap<String, LinkedList<Events>> EventMap;
 
@@ -29,13 +30,14 @@ public class EventStorage {
 
     }
 
-    /**********************************************************************************************
-     *  This is a singleton implementation of EventStorage, by calling getInstance the return will
-     *  either be a new instance if one does not exist or the existing instance. On program start
-     *  the program will check for an existing save file and if it exists, will load from that
-     *  into EventStorage.
+    /**************************************************************************
+     *  This is a singleton implementation of EventStorage, by calling
+     *  getInstance the return willeither be a new instance if one does not
+     *  exist or the existing instance. On program start the program will check
+     *  for an existing save file and if it exists, will load from that into
+     *  EventStorage.
      * @return The EventStorage object that the program is currently using
-     *********************************************************************************************/
+     *************************************************************************/
     public static EventStorage getInstance() {
         if (storage == null) {
             storage = new EventStorage();
@@ -47,15 +49,17 @@ public class EventStorage {
         return storage;
     }
 
-    /**********************************************************************************************
-     *  Adds an event into the EventStorage container. If the key exists it will append it to the
-     *  end of the linked list of all events that exist with that key.
-     * @param event: An Events object
-     *********************************************************************************************/
+    /**************************************************************************
+     *  Adds an event into the EventStorage container. If the key exists it
+     *  will append it to the end of the linked list of all events that exist
+     *  with that key.
+     * @param event An Events object
+     *************************************************************************/
     public void addEvent(Events event) {
         LocalDate date = event.getDue();
 
-        String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
+        String key = Integer.toString(date.getDayOfMonth()) +
+                             date.getMonthValue() + date.getYear();
         LinkedList<Events> list;
         if (EventMap.containsKey(key)) {
             list = EventMap.get(key);
@@ -69,25 +73,28 @@ public class EventStorage {
 
     }
 
-    /**********************************************************************************************
-     *  Retrieves the head of a linked list that contains all the events for a particular day
-     * @param date: A LocalDate object for the day of events to be retrieved
-     * @return The head of a linked list of Events that contains all the Events of a specific day
-     * or returns null if no event is on that day.
-     *********************************************************************************************/
+    /**************************************************************************
+     *  Retrieves the head of a linked list that contains all the events for a
+     *  particular day.
+     * @param date A LocalDate object for the day of events to be retrieved
+     * @return The head of a linked list of Events that contains all the Events
+     * of a specific day or returns null if no event is on that day.
+     *************************************************************************/
     public LinkedList<Events> GetListOfDay(LocalDate date) {
-        String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
+        String key = Integer.toString(date.getDayOfMonth()) +
+                             date.getMonthValue() + date.getYear();
         return EventMap.get(key);
     }
 
-    /**********************************************************************************************
-     * Deletes an Event from the EventStorage object. This will disassociate the key from the
-     * table if the last element of the list is removed.
-     * @param date: A LocalDate that the event that you want to remove is on
-     * @param name: The name of an event that you want to remove
-     *********************************************************************************************/
+    /**************************************************************************
+     * Deletes an Event from the EventStorage object. This will disassociate
+     * the key from the table if the last element of the list is removed.
+     * @param date A LocalDate that the event that you want to remove is on
+     * @param name The name of an event that you want to remove
+     *************************************************************************/
     public void DeleteEvent(LocalDate date, String name) {
-        String key = Integer.toString(date.getDayOfMonth()) + date.getMonthValue() + date.getYear();
+        String key = Integer.toString(date.getDayOfMonth()) +
+                             date.getMonthValue() + date.getYear();
         if (EventMap.containsKey(key)) {
             LinkedList<Events> temp = EventMap.get(key);
             ListIterator<Events> iter = temp.listIterator(0);
@@ -105,11 +112,11 @@ public class EventStorage {
         }
     }
 
-    /**********************************************************************************************
+    /**************************************************************************
      * Creates an ArrayList of all events that exist in EventStorage
-     * @return An ArrayList containing all events in EventStorage. Returns null if list doesn't
-     * exist
-     *********************************************************************************************/
+     * @return An ArrayList containing all events in EventStorage. Returns null
+     * if list doesn't exist
+     *************************************************************************/
     public ArrayList<Events> toArray() {
         ArrayList<Events> allEvents = new ArrayList<>(size);
         Set<String> keySet = EventMap.keySet();
@@ -122,10 +129,10 @@ public class EventStorage {
         return allEvents;
     }
 
-    /**********************************************************************************************
-     * Clears the EventStorage object
-     *********************************************************************************************/
-    public void Clear(){
+    /**************************************************************************
+     * Clears the EventStorage object.
+     *************************************************************************/
+    public void Clear() {
         storage = null;
     }
 
@@ -188,11 +195,12 @@ public class EventStorage {
             String data = readFileAsString("Save.txt");
             if(data.isBlank())
                 throw new Exception();
-            String[] events = data.split(";"); // split file into different events
+            // split file into different events
+            String[] events = data.split(";");
             for (String event : events) {
                 storage.addEvent(stringTo(event));
             }
-        } catch (Exception e){
+        } catch (Exception e) {
 //            e.printStackTrace();
         }
     }

@@ -8,12 +8,13 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
-/**************************************************************************************************
+/******************************************************************************
  * @author FredO
  * @version 1.0
- * The View which displays all of the months for the user to select from. Will also be able to
- * display an expanded view which will display all of the months in a year.
- **************************************************************************************************/
+ * The View which displays all of the months for the user to select from. Will
+ * also be able to display an expanded view which will display all of the
+ * months in a year.
+ *****************************************************************************/
 public class YearView {
 
     /**Holds the string for each month.*/
@@ -22,12 +23,12 @@ public class YearView {
             "August", "September", "October", "November",
             "December"};
 
-    /**********************************************************************************************
+    /**************************************************************************
      * Display will handle the window that displays the months of the year.
      *      Buttons include:
      *          One for each button -> month view of that month
      * @param date Holds the current year of the Scheduler.
-     *********************************************************************************************/
+     *************************************************************************/
     public void display(LocalDate date) {
 
         Stage yearView = new Stage();

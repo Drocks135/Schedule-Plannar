@@ -13,14 +13,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatterBuilder;
 
 
-/**
+/******************************************************************************
  * @author FredO
  * @version 1.0
- * EventCreatorView will display a window based on the user's selected event type.
- * There is still a bunch of work to be done here, but the idea is to have a user
- * enter in the required info, then relay that info to main, which will in turn create
- * an event to be stored for later use.
- */
+ * EventCreatorView will display a window based on the user's selected event
+ * type. The idea is to have a user enter in the required info, then relay that
+ * info to main, which will in turn create an event to be stored for later use.
+ *****************************************************************************/
 public class EventCreatorView {
     /**The ocmponent that the user uses to set the date of the event */
     private DatePicker eDate;
@@ -29,48 +28,54 @@ public class EventCreatorView {
     private LocalDate date;
 
     /**Used to parse the information saved in eDate into a new LocalDate*/
-    private final DateTimeFormatterBuilder DATE_BUILDER = new DateTimeFormatterBuilder()
+    private final DateTimeFormatterBuilder DATE_BUILDER =
+            new DateTimeFormatterBuilder()
             .appendPattern("[M/d/yyyy]")
             .appendPattern("[MM/d/yyyy]")
             .appendPattern("[M/dd/yyyy]")
             .appendPattern("[MM/dd/yyyy]");
 
-    /**************************************************************************************************
-     * Default constructor will set the date for the date picker field to the current date.
-     *************************************************************************************************/
+    /**************************************************************************
+     * Default constructor will set the date for the date picker field to the
+     * current date.
+     *************************************************************************/
 
-    /**************************************************************************************************
-     * Default constructor will set the date for the date picker field to the current date.
-     *************************************************************************************************/
+    /**************************************************************************
+     * Default constructor will set the date for the date picker field to the
+     * current date.
+     *************************************************************************/
     public EventCreatorView(){
         eDate = new DatePicker(LocalDate.now());
     }
 
-    /**************************************************************************************************
-     * This constructor overloads the default constructor and allows the date picker field to be set to
+    /**************************************************************************
+     * This constructor overloads the default constructor and allows the date
+     * picker field to be set to
      * the day from which the user navigated from.
      * @param eDate: A local date object that holds the date of selected day
-     *************************************************************************************************/
+     *************************************************************************/
     public EventCreatorView(LocalDate eDate){
         this.date = eDate;
         this.eDate = new DatePicker(eDate);
     }
 
-    /**************************************************************************************************
-     *This overload of display will set the date picker to be autofilled with the selected date.
-     * @param date: A local date object that holds the date of selected day
-     *************************************************************************************************/
+    /**************************************************************************
+     *This overload of display will set the date picker to be autofilled with
+     * the selected date.
+     * @param date A local date object that holds the date of selected day
+     *************************************************************************/
     public void display(LocalDate date){
         this.date = date;
         eDate = new DatePicker(date);
         display();
     }
 
-    /**************************************************************************************************
-     * This method will create a window, which will allow the user to edit all of the elements of the
-     * selected event, including deleting said event.
-     * @param originalEvent: A homework object that holds the event that will be edited.
-     *************************************************************************************************/
+    /**************************************************************************
+     * This method will create a window, which will allow the user to edit all
+     * of the elements of the selected event, including deleting said event.
+     * @param originalEvent A homework object that holds the event that will
+     *                      be edited.
+     *************************************************************************/
     public void editHomework(Homework originalEvent){
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -117,11 +122,12 @@ public class EventCreatorView {
         stage.showAndWait();
     }
 
-    /**************************************************************************************************
-     *This method will create a window, which will allow the user to edit all of the elements of the
-     * selected event, including deleting said event.
-     * @param originalEvent: A Business object that holds the event that will be edited.
-     *************************************************************************************************/
+    /*************************************************************************
+     *This method will create a window, which will allow the user to edit all
+     * of the elements of the selected event, including deleting said event.
+     * @param originalEvent A Business object that holds the event that will
+     *                      be edited.
+     *************************************************************************/
     public void editBusiness(Business originalEvent){
         Stage stage = new Stage();
 
@@ -161,11 +167,11 @@ public class EventCreatorView {
         stage.showAndWait();
     }
 
-    /**********************************************************************************************
+    /**************************************************************************
      * This method will be called when the user chooses to create a new event.
      * Based on what the user selects, this method will then call the window,
      * which is where the user will be prompted for info about the new event.
-     *********************************************************************************************/
+     *************************************************************************/
     public void display () {
 
         Stage addEventStage = new Stage();
@@ -197,10 +203,11 @@ public class EventCreatorView {
     }
 
 
-    /**************************************************************************************************
-     * This method is where the event creation window in generated for a homework event.
+    /**************************************************************************
+     * This method is where the event creation window in generated for a
+     * homework event.
      * @param stage: Takes in the stage from display to generate the new window for the user.
-     *************************************************************************************************/
+     *************************************************************************/
     private void createHomework(Stage stage){
 
         VBox layout = new VBox(10);

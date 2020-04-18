@@ -15,27 +15,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-/***************************************************************************************************
+/******************************************************************************
  HUMAN TESTING
 
- ***************************************************************************************************/
+ *****************************************************************************/
 /*
 Testing Opening
     NO SAVE FILE: GUI opens succesfully on launch
     WITH EMPTY SAVE FILE: GUI opens succesfully on launch
-    WITH NON-EMPTY SAVE FILE: GUI Launches with red box around events that were in the save file and loaded
+    WITH NON-EMPTY SAVE FILE: GUI Launches with red box around events that
+    were in the save file and loaded
  */
 
 /*
 Testing NULL NAMES AND DESCRIPTION Errors
 
-    Created a homework event and tried to put in nothing for the name and and class
+    Created a homework event and tried to put in nothing for the name and class
 
-    When trying to save event, says there is an invalid input and that class can't be null.
+    When trying to save event, says there is an invalid input and that class
+    can't be null.
 
-    If class is put in validly and tried to save again says the name is not valid
+    If class is put in validly and tried to save again says the name is not
+    valid
 
-    if name is put in correctly then all events have valid inputs then it saves properly
+    if name is put in correctly then all events have valid inputs then it saves
+    properly
 
  */
 
@@ -44,17 +48,22 @@ Testing NULL NAMES AND DESCRIPTION Errors
 Testing Names, Classes and Descriptions that are too long Errors
 
 
-    Created a homework event and tried to put in a long string of over 40 characters for the name
-    When trying to save event, says there is an invalid input and that class can't be over x amount of characters
-    If class name is put in validly after error box is shown, and everything else is valid then it can be saved succesfully
+    Created a homework event and tried to put in a long string of over 40
+    characters for the name
+    When trying to save event, says there is an invalid input and that class
+    can't be over x amount of characters
+    If class name is put in validly after error box is shown, and everything
+    else is valid then it can be saved succesfully
 
 
-    Repeated with valid inputs for everything but Class, where class was over character limit
+    Repeated with valid inputs for everything but Class, where class was over
+    character limit
     Error box shows up "Enter valid class name"
     tried saving again with valid class name of "a"
     Saved succesfully
 
-    Repeated with valid inputs for everything but Details, where details was over character limit of 250
+    Repeated with valid inputs for everything but Details, where details was
+    over character limit of 250
     Error box shows up "Event details can not be over 250 characters long"
     tried saving again with valid class details of "a"
     Saved succesfully
@@ -132,17 +141,18 @@ Can delete all 5 correctly ans save and load after correctly
 
 /*
 BUGS encountered in human testing
--javaFX refresh frames reload eachtime this makes it possible to click on applications behind the program when it runs.
--names can not be made up of ;'s or ,'s and spaces/whitespace counts as a character
+-javaFX refresh frames reload eachtime this makes it possible to click on
+applications behind the program when it runs.
+-names can not be made up of ;'s or ,'s and spaces/whitespace counts as a
+character
 -names can be made with nothing but spaces and still be valid
--Deletes all events that share the same name if they are on the same day - unintended
-
-
+-Deletes all events that share the same name if they are on the same
+day - unintended.
  */
 
-/***************************************************************************************************
- JUNIT TEST CASES
- ***************************************************************************************************/
+/******************************************************************************
+ JUNIT TEST CASES.
+ *****************************************************************************/
 
 public class TestCases {
     @BeforeEach
@@ -180,8 +190,10 @@ public class TestCases {
         LocalDate date = LocalDate.of(2020, 4, 16);
         Events event = new Events("Birthday", "Mom's Birthday", date);
         Events event2 = new Events("Go Shopping", "Mom needs flowers", date);
-        Events event3 = new Events("Shower", "You smell, shower before mom's birthday", date);
-        Events event4 = new Events("Rember deodernt", "I'm running out of ideas for details", date);
+        Events event3 = new Events("Shower", "You smell, shower before " +
+                                                     "mom's birthday", date);
+        Events event4 = new Events("Rember deodernt", "I'm running out of " +
+                                                              "ideas for details", date);
 
         storage.addEvent(event);
         storage.addEvent(event2);
@@ -303,7 +315,8 @@ public class TestCases {
 
         Errors e = Errors.getInstance();
         a.setDuration(34);
-        assertEquals("Business events cannot last longer than 24 hours", e.getError());
+        assertEquals("Business events cannot last longer than 24 hours",
+                e.getError());
         a.setDuration(-2);
         assertEquals("Duration of an event cannot be zero", e.getError());
 
@@ -327,12 +340,14 @@ public class TestCases {
 
         a.setclassFor("");
         assertEquals("enter valid class name", e.getError());
-        a.setclassFor("asdjfhlakjdsfhlkjadshflkjasdhflkjadshflhasdfcJAHRIULAHFDahsdlCGDKjbafkGWIDHcidyufgLWDNkwcgbiuHFKL" +
+        a.setclassFor("asdjfhlakjdsfhlkjadshflkjasdhflkjadshflhasdfcJAHRIUL" +
+                              "AHFDahsdlCGDKjbafkGWIDHcidyufgLWDNkwcgbiuHFKL" +
                 "DGfjkdsklhgSKDLSHAGFYAGDFLhjfsagld");
         assertEquals("enter valid class name", e.getError());
 
         a.setgradeGot(-20);
-        assertEquals("Did you really get less than 0 on this assignment", e.getError());
+        assertEquals("Did you really get less than 0 on this assignment",
+                e.getError());
         a.setgradeGot(101);
         assertEquals("Dont tell me you got over 100% you scrub", e.getError());
 
