@@ -63,8 +63,8 @@ public class Events {
      ***************************************************************/
     public void setDetails(String details) {
         Errors e = Errors.getInstance();
-        if(details.length() > 250){
-            e.setError("Event details cannot be over 250 characters long");
+        if(details.length() > 50){
+            e.setError("Event details cannot be over 50 characters long");
         }
         else
             this.details = details;

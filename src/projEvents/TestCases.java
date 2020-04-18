@@ -10,16 +10,44 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EventStorageTest {
+
+
+
+
+
+/***************************************************************************************************
+ HUMAN TESTING
+
+ ***************************************************************************************************/
+/*
+Testing Opening
+GUI opens succesfully on launch with red box around current date.
+ */
+
+/*
+Testing Error, invalid names with homework and event
+Created a homework event and tried to put in nothing for the name and and class
+When trying to save event, says there is an invalid input and that class can't be null.
+If class is put in validly and tried to save again says the name is not valid
+if name is put in correctly then all events have valid inputs then it saves properly
+ */
+
+
+
+/***************************************************************************************************
+ JUNIT TEST CASES
+ ***************************************************************************************************/
+
+public class TestCases {
     @BeforeEach
     @AfterEach
-    public void DeleteSave(){
+    public void DeleteSave() {
         File file = new File("Save.txt");
         file.delete();
     }
 
     @Test
-    public void TestOneEventCreation(){
+    public void TestOneEventCreation() {
 
         EventStorage storage = EventStorage.getInstance();
 
@@ -39,7 +67,7 @@ public class EventStorageTest {
     }
 
     @Test
-    public void TestMultipleEventsOnOneDay(){
+    public void TestMultipleEventsOnOneDay() {
 
         EventStorage storage = EventStorage.getInstance();
 
@@ -72,7 +100,7 @@ public class EventStorageTest {
     }
 
     @Test
-    public void TestMultipleEventsOn30DifferentDays(){
+    public void TestMultipleEventsOn30DifferentDays() {
         EventStorage storage = EventStorage.getInstance();
 
         LocalDate date = LocalDate.of(2020, 4, 20);
@@ -81,7 +109,7 @@ public class EventStorageTest {
 
         String name = "";
 
-        for(int i = 0; i < 31; i++){
+        for (int i = 0; i < 31; i++) {
             name = name + "a";
             date = date.plusDays(1);
             Events e = new Events(name, "", date);
@@ -94,7 +122,7 @@ public class EventStorageTest {
         name = "";
 
         //Run through 30 days in a row checking each name as it comes out of event storage
-        for(int i = 0; i < 31; i++){
+        for (int i = 0; i < 31; i++) {
             date = date.plusDays(1);
 
             Events assertEvent = trueList.remove();
@@ -106,7 +134,7 @@ public class EventStorageTest {
     }
 
     @Test
-    public void TestSaveLoad(){
+    public void TestSaveLoad() {
         EventStorage storage = EventStorage.getInstance();
 
         LocalDate date = LocalDate.of(2020, 4, 20);
@@ -132,7 +160,7 @@ public class EventStorageTest {
     }
 
     @Test
-    public void testDelete(){
+    public void testDelete() {
         LocalDate date = LocalDate.of(2020, 4, 20);
         Events e = new Events("Test Event", "details", date);
         EventStorage storage = EventStorage.getInstance();
@@ -157,8 +185,8 @@ public class EventStorageTest {
 
     @Test
     public void TestBusiness() {
-        LocalDate date = LocalDate.of(1234,1,5);
-        LocalDate datw = LocalDate.of(3,5,7);
+        LocalDate date = LocalDate.of(1234, 1, 5);
+        LocalDate datw = LocalDate.of(3, 5, 7);
         Business a = new Business("sdf", "deets", date, "loc", 2.7);
         Business b = new Business("sdf", "deets", date, "loc", 2.7);
         Business c = new Business("f", "dets", datw, "lc", 2.1);
@@ -179,10 +207,10 @@ public class EventStorageTest {
 
     @Test
     public void TestHomework() {
-        LocalDate date = LocalDate.of(1234,1,5);
-        LocalDate datw = LocalDate.of(3,5,7);
-        Homework a = new Homework("sdf", "deets", date, "loc", "cheese",69);
-        Homework b = new Homework("sdf", "deets", date, "loc", "cheese",69);
+        LocalDate date = LocalDate.of(1234, 1, 5);
+        LocalDate datw = LocalDate.of(3, 5, 7);
+        Homework a = new Homework("sdf", "deets", date, "loc", "cheese", 69);
+        Homework b = new Homework("sdf", "deets", date, "loc", "cheese", 69);
         Homework c = new Homework("f", "dets", datw, "lc", "lava", 42);
         Homework d = new Homework();
 
@@ -193,7 +221,8 @@ public class EventStorageTest {
 
         a.setclassFor("");
         assertEquals("enter valid class name", e.getError());
-        a.setclassFor("asdjfhlakjdsfhlkjadshflkjasdhflkjadshflhasdfcJAHRIULAHFDahsdlCGDKjbafkGWIDHcidyufgLWDNkwcgbiuHFKLDGfjkdsklhgSKDLSHAGFYAGDFLhjfsagld");
+        a.setclassFor("asdjfhlakjdsfhlkjadshflkjasdhflkjadshflhasdfcJAHRIULAHFDahsdlCGDKjbafkGWIDHcidyufgLWDNkwcgbiuHFKL" +
+                "DGfjkdsklhgSKDLSHAGFYAGDFLhjfsagld");
         assertEquals("enter valid class name", e.getError());
 
         a.setgradeGot(-20);
@@ -206,7 +235,6 @@ public class EventStorageTest {
         assertNull(e.getError());
         a.setgradeOut(39);
         assertEquals("Dont tell me you got over 100% you scrub", e.getError());
-
 
 
     }
