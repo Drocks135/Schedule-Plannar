@@ -13,25 +13,29 @@ import java.time.format.DateTimeFormatter;
   * GradeGot, GradeOut These variables are to make the homework object be able
   * to contain all the information a student should wish to know about
   * their assignment
- ******************************************************************************/
+ *****************************************************************************/
 public class Homework extends Events {
 
+    /** turn in place for Homework. */
     private String turnInPlace;
+    /** class for Homework. */
     private String classFor;
+    /** grade got for Homework. */
     private int gradeGot;
+    /** grade out of for Homework. */
     private int gradeOut;
 
 
     /**************************************************************************
      * Constructor for the homework object that sets all initial values except
-     * gradeOut
-     * @param name: The name of the homework assignment, extended from Events
-     * @param details: What is the homework assignment about, extended from
+     * gradeOut.
+     * @param name The name of the homework assignment, extended from Events
+     * @param details What is the homework assignment about, extended from
      *               Events
-     * @param due: When should this homework assignment be turned in, extended
+     * @param due When should this homework assignment be turned in, extended
      *           from Events
-     * @param turnInPlace: Where should this homework assignment be turned in
-     * @param classFor: What class is this homework assignment for
+     * @param turnInPlace Where should this homework assignment be turned in
+     * @param classFor What class is this homework assignment for
      *************************************************************************/
     public Homework(String name, String details, LocalDate due, String turnInPlace, String classFor) {
         setName(name);
@@ -42,21 +46,21 @@ public class Homework extends Events {
     }
 
     /**************************************************************************
-     * Default Constructor of the Homework object
+     * Default Constructor of the Homework object.
      *************************************************************************/
     public Homework() {
     }
 
     /**************************************************************************
-     * Constructor for the homework object that sets all initial values
-     * @param name: The name of the homework assignment, extended from Events
-     * @param details: What is the homework assignment about, extended from
+     * Constructor for the homework object that sets all initial values.
+     * @param name The name of the homework assignment, extended from Events
+     * @param details What is the homework assignment about, extended from
      *               Events
-     * @param due: When should this homework assignment be turned in, extended
+     * @param due When should this homework assignment be turned in, extended
      *           from Events
-     * @param turnInPlace: Where should this homework assignment be turned in
-     * @param classFor: What class is this homework assignment for
-     * @param gradeOut: How many points are possible to get in this homework
+     * @param turnInPlace Where should this homework assignment be turned in
+     * @param classFor What class is this homework assignment for
+     * @param gradeOut How many points are possible to get in this homework
      *                assignment
      *************************************************************************/
     public Homework(String name, String details, LocalDate due, String turnInPlace, String classFor, int gradeOut) {
@@ -70,7 +74,7 @@ public class Homework extends Events {
 
 
     /**************************************************************************
-     * Gets the place where the homework object needs to be turned in
+     * Gets the place where the homework object needs to be turned in.
      * @return turnInPlace: A string representing where this homework
      * should be turned in at
      *************************************************************************/
@@ -79,7 +83,7 @@ public class Homework extends Events {
     }
 
     /**************************************************************************
-     * Gets the class that the homework object was assigned for
+     * Gets the class that the homework object was assigned for.
      * @return classFor: A string representing what class is this homework
      * assignment for
      *************************************************************************/
@@ -88,7 +92,7 @@ public class Homework extends Events {
     }
 
     /**************************************************************************
-     * Gets the grade amount that was achieved on the homework assignment
+     * Gets the grade amount that was achieved on the homework assignment.
      * @return gradeGot: An integer representing what grade the user got on a
      * homework assignment
      **************************************************************************/
@@ -97,7 +101,7 @@ public class Homework extends Events {
     }
 
     /**************************************************************************
-     * Gets the point amount the homework assignment is out of
+     * Gets the point amount the homework assignment is out of.
      * @return gradeOut: An integer representing the total amount of points
      * available on an assignment
      **************************************************************************/
@@ -106,8 +110,8 @@ public class Homework extends Events {
     }
 
     /**************************************************************************
-     * Sets the place this object should be turned in at
-     * @param turnInPlace: A String that sets here should this homework
+     * Sets the place this object should be turned in at.
+     * @param turnInPlace A String that sets here should this homework
      * assignment be turned in
      *************************************************************************/
     public void setturnInPlace(String turnInPlace) {
@@ -116,28 +120,28 @@ public class Homework extends Events {
 
     /**************************************************************************
       * Sets the value of classFor which represents which class this
-      * homework assignment is for
-      * @param classFor: A string representing what class the assignment is for
+      * homework assignment is for.
+      * @param classFor A string representing what class the assignment is for
      **************************************************************************/
     public void setclassFor(String classFor) {
         Errors e = Errors.getInstance();
-        if(classFor.length() == 0 || classFor.length() > 50){
+        if (classFor.length() == 0 || classFor.length() > 50) {
             e.setError("enter valid class name");
         }
         else
             this.classFor = classFor;
     }
     /**************************************************************************
-      * Sets the grade you received on a homework assignment
-      * @param gradeGot: An integer representing the grade achieved on the
+      * Sets the grade you received on a homework assignment.
+      * @param gradeGot An integer representing the grade achieved on the
      *                assignment
      **************************************************************************/
     public void setgradeGot(int gradeGot) {
         Errors e = Errors.getInstance();
-        if(gradeGot > this.gradeOut){
+        if(gradeGot > this.gradeOut) {
             e.setError("Dont tell me you got over 100% you scrub");
         }
-        else if(gradeGot < 0){
+        else if(gradeGot < 0) {
             e.setError("Did you really get less than 0 on this assignment");
         }
         else
@@ -145,16 +149,16 @@ public class Homework extends Events {
     }
 
     /**************************************************************************
-     *  Sets the how many points a homework assignment is out of
-      * @param gradeOut: An integer representing the total amounts of points
+     *  Sets the how many points a homework assignment is out of.
+      * @param gradeOut An integer representing the total amounts of points
      *                on the assignment
      *************************************************************************/
     public void setgradeOut(int gradeOut) {
         Errors e = Errors.getInstance();
-        if(gradeOut < this.gradeGot){
+        if (gradeOut < this.gradeGot) {
             e.setError("Dont tell me you got over 100% you scrub");
         }
-        else if(gradeOut < 0){
+        else if (gradeOut < 0) {
             e.setError("Assignment cant be worth negative points");
         }
         else
@@ -162,7 +166,7 @@ public class Homework extends Events {
     }
     /**************************************************************************
      * Returns a string format of all the fields of homework seperated by
-     * commas and with a semicolon at the end
+     * commas and with a semicolon at the end.
      * @return String: A string format of Homework
      *************************************************************************/
     public String toString() {
@@ -178,8 +182,8 @@ public class Homework extends Events {
     @Override
     /**************************************************************************
      * Compares an Object to Business objects and returns if their
-     * members are equal
-     * @param o: Any object to compare to a Homework
+     * members are equal.
+     * @param o Any object to compare to a Homework
      * @return returns true if every field in the objects are equal returns
      * false else
      *************************************************************************/

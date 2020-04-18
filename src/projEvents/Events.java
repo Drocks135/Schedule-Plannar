@@ -15,18 +15,19 @@ import java.time.format.DateTimeFormatter;
  *****************************************************************************/
 public class Events {
 
-    private String name=null;
-    private String details=null;
-    private LocalDate due=null;
-    
+    /** name of event. */
+    private String name = null;
+    /** details of event. */
+    private String details = null;
+    /** date of event. */
+    private LocalDate due = null;
+
     public Events() { }
 
     /**************************************************************************
-     * @param
-     * name: The name of the event
-     * details: What is the event about
-     * due: When is the vent happening
-     * @return none
+     * @param name The name of the event
+     * @param details What is the event about
+     * @param due When is the vent happening
      *************************************************************************/
     public Events(String name, String details, LocalDate due) {
         setDetails(details);
@@ -35,7 +36,7 @@ public class Events {
     }
 
      /*************************************************************************
-      * Gets the date the the event will take place
+      * Gets the date the the event will take place.
      * @return due: This is when the Event is going to happen
      *************************************************************************/
     public LocalDate getDue() {
@@ -43,7 +44,7 @@ public class Events {
     }
 
     /**************************************************************************
-     * Gets the details of the event
+     * Gets the details of the event.
      * @return A String representing the details of an event
      *************************************************************************/
     public String getDetails() {
@@ -51,7 +52,7 @@ public class Events {
     }
 
     /**************************************************************************
-     * Gets the name of the event
+     * Gets the name of the event.
      * @return Name: The name of an event
      *************************************************************************/
     public String getName() {
@@ -60,12 +61,12 @@ public class Events {
 
 
     /**************************************************************************
-     * Sets the details value of an Event
-     * @param details: A string describing the details of an event
+     * Sets the details value of an Event.
+     * @param details A string describing the details of an event
      *************************************************************************/
     public void setDetails(String details) {
         Errors e = Errors.getInstance();
-        if(details.length() > 50){
+        if (details.length() > 50) {
             e.setError("Event details cannot be over 50 characters long");
         }
         else
@@ -73,7 +74,7 @@ public class Events {
     }
 
     /**************************************************************************
-     * Sets the date that an event will be put on the calendar
+     * Sets the date that an event will be put on the calendar.
      * @param due: A LocalDate of the day an event will take place on
      *************************************************************************/
     public void setDue(LocalDate due) {
@@ -81,15 +82,15 @@ public class Events {
     }
 
     /**************************************************************************
-     * Sets the name of an event
+     * Sets the name of an event.
      * @param name: A String that is the name of the event
      *************************************************************************/
     public void setName(String name) {
         Errors e = Errors.getInstance();
-        if(name.length() > 50){
+        if (name.length() > 50) {
             e.setError("Event name cannot be over 50 characters long");
         }
-        else if(name.length() == 0){
+        else if (name.length() == 0) {
             e.setError("Event name cannot be blank");
         }
         else
@@ -97,7 +98,7 @@ public class Events {
     }
 
     /**
-     * Converts an event to a string format
+     * Converts an event to a string format.
      * @return String: An event in the format of the string
      */
     public String toString() {
@@ -111,7 +112,7 @@ public class Events {
 
     @Override
     /**************************************************************************
-     * Compares to Events objects and returns if their members are equal
+     * Compares to Events objects and returns if their members are equal.
      * @param o: Any object to compare to an Events
      * @return returns true if every field in the objects are equal returns
      * false else
