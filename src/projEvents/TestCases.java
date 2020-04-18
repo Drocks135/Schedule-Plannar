@@ -21,18 +21,124 @@ import static org.junit.jupiter.api.Assertions.*;
  ***************************************************************************************************/
 /*
 Testing Opening
-GUI opens succesfully on launch with red box around current date.
+    NO SAVE FILE: GUI opens succesfully on launch
+    WITH EMPTY SAVE FILE: GUI opens succesfully on launch
+    WITH NON-EMPTY SAVE FILE: GUI Launches with red box around events that were in the save file and loaded
  */
 
 /*
-Testing Error, invalid names with homework and event
-Created a homework event and tried to put in nothing for the name and and class
-When trying to save event, says there is an invalid input and that class can't be null.
-If class is put in validly and tried to save again says the name is not valid
-if name is put in correctly then all events have valid inputs then it saves properly
+Testing NULL NAMES AND DESCRIPTION Errors
+
+    Created a homework event and tried to put in nothing for the name and and class
+
+    When trying to save event, says there is an invalid input and that class can't be null.
+
+    If class is put in validly and tried to save again says the name is not valid
+
+    if name is put in correctly then all events have valid inputs then it saves properly
+
  */
 
 
+/*
+Testing Names, Classes and Descriptions that are too long Errors
+
+
+    Created a homework event and tried to put in a long string of over 40 characters for the name
+    When trying to save event, says there is an invalid input and that class can't be over x amount of characters
+    If class name is put in validly after error box is shown, and everything else is valid then it can be saved succesfully
+
+
+    Repeated with valid inputs for everything but Class, where class was over character limit
+    Error box shows up "Enter valid class name"
+    tried saving again with valid class name of "a"
+    Saved succesfully
+
+    Repeated with valid inputs for everything but Details, where details was over character limit of 250
+    Error box shows up "Event details can not be over 250 characters long"
+    tried saving again with valid class details of "a"
+    Saved succesfully
+
+
+    TESTED ALL THREE AGAIN AFTER SAVING BY USING EDIT: Same results as above
+ */
+
+/*
+Testing business class Durations
+
+    Created a new business class and attempted to put in 0 for duration time
+    Got an error box "Duration of an event cannot be 0"
+
+    Tried to put duration as -1
+    Got same error box
+
+    Tried to put duration as -2,147,483,648
+    Got same error box
+
+    Tried to put duration as 2,147,483,647
+    Got error "Duration of event cannot exceed 24 hours"
+
+    Tried to put duration as 24
+    worked
+
+    Tried to put duration as .0
+    got error "Duration of event cannot be 0"
+
+    Tried to put duration as 24.0
+    Worked
+
+
+
+ */
+
+
+/*
+Testing event creations in past
+
+    Tried creating an event in 2014
+    Saved it, showed up as red for correct date
+    Closed program
+    Rechecked for event
+    Events were in correct spot in 2014 and nowhere else
+ */
+
+/*
+Testing event creations in future
+
+    Tried creating two events in 2023
+    Saved it, showed up as red for correct date
+    Closed program
+    Rechecked for event
+    Events were in correct spot in 2023 and nowhere else
+ */
+
+/*
+MULTIPLE EVENTS ON SAME DAY
+
+made 5 valid homework/business events on April 17th 2020
+All event fields are a
+saves and loads correctly
+Can arrow through all 5 events correctly
+Deletes all 5 events because they share name - unintended
+
+
+Tried again with having each a unique name
+Saves and loads correctly
+And arrow through all 5 events, cycles through
+On delete, deletes them 1 at a time like intended
+Can delete all 5 correctly ans save and load after correctly
+ */
+
+
+/*
+BUGS encountered in human testing
+-javaFX refresh frames reload eachtime this makes it possible to click on applications behind the program when it runs.
+-names can not be made up of ;'s or ,'s and spaces/whitespace counts as a character
+-names can be made with nothing but spaces and still be valid
+-Deletes all events that share the same name if they are on the same day - unintended
+
+
+ */
 
 /***************************************************************************************************
  JUNIT TEST CASES

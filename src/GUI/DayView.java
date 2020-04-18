@@ -138,7 +138,6 @@ public class DayView {
 
         dayView.setScene(new Scene(bigBox));
         dayView.setOnCloseRequest(e -> {
-            System.out.println("set on close request");
             index = 0;
         });
         dayView.show();
